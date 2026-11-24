@@ -1,0 +1,2976 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión y Menú - Gala Fest</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --accent-hover: #d35400;
+            --bg: #f4f7f6;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --border: #e0e0e0;
+            --success: #27ae60;
+            --danger: #c0392b;
+            --info: #2980b9;
+            --purple: #8e44ad;
+            --warning: #d68910;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 4rem;
+        }
+
+        /* Mensaje fijo en la esquina: Se cobra a tasa del día */
+        .tasa-corner-badge {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            z-index: 950;
+            background: var(--primary);
+            color: #ffffff;
+            border: 2px solid var(--accent);
+            border-radius: 10px;
+            padding: 0.6rem 1rem;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            max-width: 290px;
+        }
+
+        .tasa-corner-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background-color: #2ecc71;
+            flex-shrink: 0;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        nav button {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: #ffffff;
+            border: none;
+            padding: 0.45rem 0.85rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: background-color 0.2s, transform 0.15s;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #1ebe5d;
+            transform: translateY(-1px);
+        }
+
+        .btn-whatsapp svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        nav button:hover, nav button.active {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .user-pill {
+            background: rgba(255,255,255,0.15);
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+            font-size: 2.2rem;
+        }
+
+        .menu-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-category {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0.3rem 0;
+            color: var(--primary);
+        }
+
+        .product-desc {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            padding-top: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--success);
+        }
+
+        .product-stock {
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        .cart-bar {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--success);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .evento-banner {
+            background: linear-gradient(135deg, #fff8f2, #ffffff);
+            border: 1px solid #f5cba7;
+            border-left: 5px solid var(--accent);
+            border-radius: 8px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .admin-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.35rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .btn-success:hover {
+            background-color: #219150;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.45rem 0.85rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 0.35rem 0.6rem;
+            font-size: 0.8rem;
+            width: auto;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            color: white;
+            margin-bottom: 2px;
+        }
+
+        .btn-sell { background-color: var(--success); }
+        .btn-info { background-color: var(--info); }
+        .btn-delete { background-color: var(--danger); }
+        .btn-purple { background-color: var(--purple); }
+        .btn-warning { background-color: var(--warning); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 0.65rem 0.5rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: var(--primary);
+        }
+
+        .inline-input {
+            width: 75px;
+            padding: 0.3rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            text-align: right;
+        }
+
+        .inline-input:disabled {
+            background-color: #f2f4f4;
+            color: #7f8c8d;
+            cursor: not-allowed;
+        }
+
+        .inline-input:focus {
+            border-color: var(--accent);
+            outline: none;
+            background-color: #fffdf9;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: var(--card-bg);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            flex: 1;
+            min-width: 170px;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .stat-box.clickable {
+            cursor: pointer;
+        }
+
+        .stat-box.clickable:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .stat-box span {
+            display: block;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .stat-box strong {
+            font-size: 1.35rem;
+            color: var(--primary);
+        }
+
+        .stat-hint {
+            font-size: 0.72rem;
+            color: var(--accent);
+            margin-top: 3px;
+            font-weight: 600;
+        }
+
+        .badge-margin {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .badge-role {
+            display: inline-block;
+            padding: 0.15rem 0.45rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .role-admin { background: #e8f4fd; color: #1a5276; }
+        .role-emp { background: #fef5e7; color: #9c640c; }
+
+        .badge-anulada {
+            background-color: #fadbd8;
+            color: #922b21;
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .badge-activa {
+            background-color: #d4edda;
+            color: #155724;
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .badge-pendiente {
+            background-color: #fcf3cf;
+            color: #7d6608;
+            border: 1px solid #f7dc6f;
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .badge-vip {
+            background-color: #e8daef;
+            color: #5b2c6f;
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .venta-anulada-row td {
+            opacity: 0.65;
+            text-decoration: line-through;
+        }
+
+        .venta-anulada-row td.no-strike {
+            text-decoration: none;
+        }
+
+        .margin-good { background: #d4edda; color: #155724; }
+        .margin-low { background: #fff3cd; color: #856404; }
+        .margin-bad { background: #f8d7da; color: #721c24; }
+
+        .cat-no-registrada {
+            color: #c0392b !important;
+            background-color: #fdecea !important;
+            border: 1px solid #e74c3c !important;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .evento-card-alerta {
+            border-left: 4px solid #c0392b !important;
+            background-color: #fff6f5 !important;
+        }
+
+        .calc-result {
+            background: #f8f9fa;
+            padding: 0.8rem;
+            border-radius: 5px;
+            margin-top: 0.8rem;
+            border: 1px dashed #ccc;
+            font-size: 0.9rem;
+        }
+
+        .payment-methods-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.4rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .payment-method-btn {
+            background: #f8f9fa;
+            color: var(--primary);
+            border: 1.5px solid #cbd5e1;
+            padding: 0.5rem 0.85rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+
+        .payment-method-btn:hover {
+            border-color: var(--accent);
+        }
+
+        .payment-method-btn.selected {
+            background: var(--accent);
+            color: #ffffff;
+            border-color: var(--accent);
+        }
+
+        .payment-details-box {
+            background: #f4f7f6;
+            border: 1px solid #d5dbdb;
+            border-left: 4px solid var(--info);
+            border-radius: 6px;
+            padding: 0.85rem;
+            font-size: 0.88rem;
+            margin-bottom: 1rem;
+            white-space: pre-line;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.65);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal-box {
+            background: white;
+            padding: 1.8rem;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+        }
+
+        .modal-box.modal-wide {
+            max-width: 860px;
+        }
+
+        .modal-box h3 {
+            margin-bottom: 0.4rem;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .modal-box p.subtitle {
+            font-size: 0.88rem;
+            color: #666;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+
+        .cart-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.92rem;
+        }
+
+        .order-card {
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--info);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: #fafafa;
+        }
+
+        .order-card.pendiente-pago {
+            border-left-color: var(--warning);
+            background: #fffdf5;
+        }
+
+        .order-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e5e5;
+            padding-bottom: 0.4rem;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .active-staff-badge {
+            background: #eef2f7;
+            border: 1px solid #d0d7de;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .export-toolbar {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            justify-content: flex-end;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mensaje en la esquina indicando que se cobra a tasa del día -->
+    <div id="tasa-corner-badge" class="tasa-corner-badge" title="Todos los precios se calculan y cobran a la tasa del día">
+        <span class="tasa-corner-dot"></span>
+        <span id="tasa-corner-texto">Se cobra a tasa del día</span>
+    </div>
+
+    <header>
+        <h1 id="store-name" onclick="intentarAccesoAdmin()" title="Gala Fest">Gala Fest</h1>
+        <nav>
+            <div id="cliente-status-pill" class="user-pill" style="display: none;">
+                <span id="cliente-nombre-nav"></span>
+                <button onclick="abrirModalRegistroCliente()" style="padding: 0.2rem 0.5rem; font-size: 0.75rem; border-radius: 4px;">Editar datos</button>
+            </div>
+            <button id="btn-registro-header" onclick="abrirModalRegistroCliente()">👤 Registrarme / Pedir</button>
+            <a href="https://w.app/galafest" target="_blank" rel="noopener noreferrer" class="btn-whatsapp" title="Contactar por WhatsApp">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20.52 3.48A11.82 11.82 0 0 0 12.07 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.15 1.6 5.96L0 24l6.33-1.66a11.85 11.85 0 0 0 5.74 1.46h.01c6.56 0 11.9-5.34 11.9-11.9 0-3.18-1.24-6.17-3.46-8.42zm-8.45 18.31h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.76.99 1-3.66-.24-.38a9.84 9.84 0 0 1-1.51-5.25c0-5.45 4.44-9.89 9.9-9.89 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.9 7c0 5.45-4.44 9.88-9.9 9.88zm5.43-7.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.05 1.02-1.05 2.5s1.07 2.9 1.22 3.1c.15.2 2.11 3.22 5.11 4.52.71.31 1.27.49 1.7.63.72.23 1.37.2 1.89.12.58-.09 1.76-.72 2.01-1.41.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/>
+                </svg>
+                <span>WhatsApp</span>
+            </a>
+            <button id="btn-menu" class="active" onclick="cambiarVista('menu')">Ver Menú</button>
+        </nav>
+    </header>
+
+    <!-- MODAL DE REGISTRO DE CLIENTE PARA HACER PEDIDOS -->
+    <div id="cliente-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>Registro para Pedidos</h3>
+            <p class="subtitle">Completa tus datos de contacto y entrega para realizar tu pedido.</p>
+            <form id="cliente-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cli-nombre">Nombre *</label>
+                        <input type="text" id="cli-nombre" placeholder="Ej. María" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cli-apellido">Apellido *</label>
+                        <input type="text" id="cli-apellido" placeholder="Ej. Pérez" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cli-telefono">Teléfono / WhatsApp *</label>
+                    <input type="tel" id="cli-telefono" placeholder="Ej. 0414-1234567" required>
+                </div>
+                <div class="form-group">
+                    <label for="cli-correo">Correo Electrónico *</label>
+                    <input type="email" id="cli-correo" placeholder="ejemplo@correo.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="cli-direccion">Dirección de Entrega *</label>
+                    <textarea id="cli-direccion" rows="2" placeholder="Urbanización, calle, edificio/casa, punto de referencia..." required></textarea>
+                </div>
+                <div style="display: flex; gap: 0.6rem; margin-top: 1rem;">
+                    <button type="button" class="btn-outline" style="flex: 1;" onclick="cerrarModalCliente()">Cancelar</button>
+                    <button type="submit" class="btn" style="flex: 1;">Guardar y Continuar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE RESUMEN Y SELECCIÓN DE MÉTODO DE PAGO DEL CLIENTE -->
+    <div id="carrito-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>🛒 Tu Pedido</h3>
+            <p class="subtitle">Se cobra a tasa del día. Selecciona cómo realizarás el pago; la venta se concreta al verificarse como pagada.</p>
+            
+            <div id="carrito-datos-cliente" style="background: #f4f7f6; padding: 0.8rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 1rem; border-left: 3px solid var(--accent);"></div>
+
+            <div id="carrito-lista" style="margin-bottom: 1rem;"></div>
+
+            <div class="form-group" style="margin-bottom: 0.5rem;">
+                <label>¿Cómo realizarás el pago? *</label>
+                <div id="cliente-metodos-pago-btns" class="payment-methods-grid"></div>
+                <div id="cliente-datos-pago-box" class="payment-details-box" style="display: none;"></div>
+            </div>
+
+            <div id="carrito-desglose-totales" style="padding: 0.6rem 0; border-top: 2px solid var(--border); font-size: 0.95rem;"></div>
+
+            <div style="display: flex; gap: 0.6rem; margin-top: 1rem;">
+                <button type="button" class="btn-outline" style="flex: 1;" onclick="cerrarModalCarrito()">Seguir viendo</button>
+                <button type="button" class="btn-success" style="flex: 1;" onclick="confirmarPedidoCliente()">Enviar Pedido (Por Verificar)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE PEDIDO PARA EVENTOS ESPECIALES (CLIENTES) -->
+    <div id="evento-modal" class="modal-overlay">
+        <div class="modal-box modal-wide">
+            <h3>🎉 Pedido para Eventos Especiales</h3>
+            <p class="subtitle">Solicita cantidades grandes para celebraciones, reuniones o eventos corporativos (se cobra a tasa del día).</p>
+            <form id="evento-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ev-nombre">Tu Nombre / Empresa *</label>
+                        <input type="text" id="ev-nombre" required placeholder="Ej. Laura Gómez / Eventos XYZ">
+                    </div>
+                    <div class="form-group">
+                        <label for="ev-telefono">Teléfono / WhatsApp *</label>
+                        <input type="tel" id="ev-telefono" required placeholder="Ej. 0414-5550000">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ev-fecha">Fecha del Evento *</label>
+                        <input type="date" id="ev-fecha" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ev-hora">Hora del Evento *</label>
+                        <input type="time" id="ev-hora" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ev-categoria">Categoría del Evento *</label>
+                    <select id="ev-categoria" required onchange="toggleCategoriaOtrosEvento()"></select>
+                </div>
+
+                <div id="ev-otros-grupo" class="form-group" style="display: none;">
+                    <label for="ev-categoria-otros">Especifica la Categoría ("Otros") *</label>
+                    <input type="text" id="ev-categoria-otros" placeholder="Ej. Quinceañera Temática, Bautizo, Graduación...">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ev-cantidad-total">Cantidad Aproximada / Unidades *</label>
+                        <input type="number" id="ev-cantidad-total" min="10" required placeholder="Ej. 100">
+                    </div>
+                    <div class="form-group">
+                        <label for="ev-producto-ref">Producto / Paquete Deseado</label>
+                        <input type="text" id="ev-producto-ref" placeholder="Ej. Mini tequeños, Vasitos de Oreo, Surtido...">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ev-detalles">Detalles del Pedido Grande / Sabores / Observaciones</label>
+                    <textarea id="ev-detalles" rows="3" placeholder="Indica presentaciones, cantidades por sabor, lugar de entrega o instrucciones especiales..."></textarea>
+                </div>
+
+                <div style="display: flex; gap: 0.6rem; margin-top: 1rem;">
+                    <button type="button" class="btn-outline" style="flex: 1;" onclick="cerrarModalEvento()">Cancelar</button>
+                    <button type="submit" class="btn" style="flex: 1;">Enviar Solicitud de Evento</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE REGISTRO DE VENTA (CON ESTADO DE PAGO VERIFICADO / PENDIENTE) -->
+    <div id="venta-confirm-modal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 450px;">
+            <h3>💳 Registrar Venta</h3>
+            <p class="subtitle">La venta se concreta y descuenta inventario cuando el pago está verificado y marcado como pagado.</p>
+
+            <div id="venta-prod-resumen" style="background: #f4f7f6; padding: 0.8rem; border-radius: 6px; margin-bottom: 1rem; border-left: 3px solid var(--success); font-size: 0.9rem;"></div>
+
+            <form id="venta-confirm-form">
+                <div class="form-group">
+                    <label for="venta-cantidad-input">Cantidad a vender *</label>
+                    <input type="number" id="venta-cantidad-input" min="1" value="1" required oninput="recalcularVistaPreviaVenta()">
+                </div>
+
+                <div class="form-group">
+                    <label for="venta-cliente-select">Cliente (opcional — aplica descuento automático si cumple meta)</label>
+                    <select id="venta-cliente-select" onchange="recalcularVistaPreviaVenta()">
+                        <option value="">-- Venta general / Sin cliente asignado --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="venta-estado-pago">Estado de Verificación de Pago *</label>
+                    <select id="venta-estado-pago" onchange="recalcularVistaPreviaVenta()">
+                        <option value="PAGADO">Pagado y verificado (Concretar venta ahora)</option>
+                        <option value="PENDIENTE">Pendiente de verificar pago (No descuenta aún)</option>
+                    </select>
+                </div>
+
+                <div id="venta-calculo-box" style="background: #fffdf9; border: 1px dashed var(--accent); padding: 0.8rem; border-radius: 6px; margin-bottom: 1rem; font-size: 0.9rem;"></div>
+
+                <div style="display: flex; gap: 0.6rem;">
+                    <button type="button" class="btn-outline" style="flex: 1; border-color: var(--danger); color: var(--danger);" onclick="cancelarModalVenta()">Cancelar Venta</button>
+                    <button type="submit" class="btn-success" style="flex: 1;">Guardar / Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE MÉTODOS DE PAGO Y DATOS DE PAGO (SOLO ADMIN AGREGA Y EDITA) -->
+    <div id="metodos-pago-modal" class="modal-overlay">
+        <div class="modal-box modal-wide">
+            <h3>💳 Métodos de Pago y Datos de Pago (Solo Admin)</h3>
+            <p class="subtitle">Agrega botones de métodos de pago para los clientes y administra los datos para realizar el pago. Nadie más puede editarlos.</p>
+
+            <form id="nuevo-metodo-pago-form" style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1.2rem;">
+                <div class="form-row">
+                    <div class="form-group" style="margin-bottom: 0.6rem;">
+                        <label for="mp-nombre">Nombre del Método de Pago *</label>
+                        <input type="text" id="mp-nombre" placeholder="Ej. Pago Móvil, Zelle, Transferencia, Efectivo" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0.6rem; display: flex; align-items: flex-end;">
+                        <button type="submit" class="btn">➕ Agregar Botón de Método de Pago</button>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 0.6rem;">
+                    <label for="mp-datos">Datos para realizar el pago (Banco, Teléfono, CI/RIF, Correo, Titular, etc.) *</label>
+                    <textarea id="mp-datos" rows="3" placeholder="Ej. Banco Mercantil (0105) | Tel: 0414-0000000 | CI: V-12345678" required></textarea>
+                </div>
+            </form>
+
+            <div id="lista-metodos-pago-admin"></div>
+
+            <button type="button" class="btn-outline" style="width: 100%; margin-top: 1rem;" onclick="cerrarModalMetodosPago()">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONTRASEÑA DE ADMINISTRADOR / EMPLEADO -->
+    <div id="login-modal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 390px;">
+            <h3>Acceso al Panel Interno</h3>
+            <p class="subtitle">Ingresa tu PIN de Administrador o Empleado.</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <input type="password" id="admin-pin-input" placeholder="PIN (Admin por defecto: 1234)" required style="text-align: center; font-size: 1.2rem; letter-spacing: 3px;">
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button type="button" class="btn-outline" style="flex: 1;" onclick="cerrarModalLogin()">Cancelar</button>
+                    <button type="submit" class="btn" style="flex: 1;">Entrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 1: LISTA DETALLADA DE PRODUCTOS EN MENÚ -->
+    <div id="detalle-productos-modal" class="modal-overlay">
+        <div class="modal-box modal-wide">
+            <h3>📋 Lista Detallada de Productos en Menú</h3>
+            <p class="subtitle">Inventario completo con costos, precios de venta, márgenes y valoración en stock.</p>
+            <div style="overflow-x: auto; margin-bottom: 1rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Categoría</th>
+                            <th>Costo</th>
+                            <th>Precio</th>
+                            <th>Ganancia</th>
+                            <th>Stock</th>
+                            <th>Valor Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modal-productos-tbody"></tbody>
+                </table>
+            </div>
+            <button type="button" class="btn" onclick="cerrarModalDetalleProductos()">Cerrar Lista</button>
+        </div>
+    </div>
+
+    <!-- MODAL 2: REGISTRO DETALLADO DE VENTAS (EXPORTABLE A PDF O EXCEL) -->
+    <div id="detalle-ventas-modal" class="modal-overlay">
+        <div class="modal-box modal-wide">
+            <h3>🧾 Registro Detallado de Ventas</h3>
+            <p class="subtitle">Solo las ventas con pago verificado y marcado como pagado se concretan y suman al total.</p>
+
+            <div class="export-toolbar">
+                <button type="button" class="btn-sm btn-sell" style="padding: 0.45rem 0.8rem;" onclick="exportarVentasExcel()">📊 Exportar Excel (.xls)</button>
+                <button type="button" class="btn-sm btn-info" style="padding: 0.45rem 0.8rem;" onclick="exportarVentasPDF()">📄 Exportar PDF</button>
+            </div>
+
+            <div style="overflow-x: auto; margin-bottom: 1rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha y Hora</th>
+                            <th>Detalle / Producto</th>
+                            <th>Cant.</th>
+                            <th>Cliente / Pago</th>
+                            <th>Total</th>
+                            <th>Usuario / Origen</th>
+                            <th>Estado / Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modal-ventas-tbody"></tbody>
+                </table>
+            </div>
+            <div style="display: flex; gap: 0.6rem;">
+                <button type="button" id="btn-limpiar-ventas-hist" class="btn-outline" style="flex: 1; border-color: var(--danger); color: var(--danger);" onclick="limpiarHistorialVentas()">Borrar Historial</button>
+                <button type="button" class="btn" style="flex: 2;" onclick="cerrarModalDetalleVentas()">Cerrar Historial</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: GESTIÓN DE USUARIOS Y PINES DE EMPLEADOS (SOLO ADMIN) -->
+    <div id="usuarios-modal" class="modal-overlay">
+        <div class="modal-box modal-wide">
+            <h3>👥 Gestión de Usuarios y PINs</h3>
+            <p class="subtitle">Crea accesos con PIN único para cada empleado y controla quién registra cada venta.</p>
+
+            <form id="nuevo-usuario-form" style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1.2rem;">
+                <div class="form-row">
+                    <div class="form-group" style="margin-bottom: 0.6rem;">
+                        <label for="usr-nombre">Nombre del Usuario / Empleado *</label>
+                        <input type="text" id="usr-nombre" placeholder="Ej. Carlos (Caja)" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0.6rem;">
+                        <label for="usr-pin">PIN de Acceso (mín. 4 dígitos) *</label>
+                        <input type="text" id="usr-pin" placeholder="Ej. 2580" minlength="4" required>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 0.8rem;">
+                    <label for="usr-rol">Rol de Acceso</label>
+                    <select id="usr-rol">
+                        <option value="Empleado">Empleado (Ventas y Verificación de Pago)</option>
+                        <option value="Administrador">Administrador (Control Total e Inventario)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">➕ Crear Usuario</button>
+            </form>
+
+            <div style="overflow-x: auto; margin-bottom: 1rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Rol</th>
+                            <th>PIN Asignado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usuarios-tbody"></tbody>
+                </table>
+            </div>
+
+            <button type="button" class="btn-outline" style="width: 100%;" onclick="cerrarModalUsuarios()">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- MODAL 4: VERIFICACIÓN DE PIN DE ADMINISTRADOR PARA ANULAR VENTA -->
+    <div id="anular-venta-modal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 400px;">
+            <h3>🔒 Anular Venta Registrada</h3>
+            <p class="subtitle">Solo un PIN de <strong>Administrador</strong> puede anular una venta y devolver el stock.</p>
+            <div id="anular-venta-info" style="background: #f8f9fa; padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border); font-size: 0.88rem; margin-bottom: 1rem;"></div>
+            <form id="anular-venta-form">
+                <div class="form-group">
+                    <label for="anular-admin-pin">PIN de Administrador *</label>
+                    <input type="password" id="anular-admin-pin" placeholder="Ingresa PIN de Admin" required style="text-align: center; font-size: 1.2rem; letter-spacing: 3px;">
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button type="button" class="btn-outline" style="flex: 1;" onclick="cerrarModalAnularVenta()">Cancelar</button>
+                    <button type="submit" class="btn-sm btn-delete" style="flex: 1; padding: 0.7rem; font-size: 0.92rem; font-weight: 600;">Confirmar Anulación</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 5: DIRECTORIO DE CLIENTES, CONTADOR Y DESCUENTO AUTOMÁTICO -->
+    <div id="directorio-clientes-modal" class="modal-overlay">
+        <div class="modal-box modal-wide">
+            <h3>📇 Directorio de Clientes y Descuentos Automáticos</h3>
+            <p class="subtitle">Control de compras y ventas por cliente, con descuento automático al cumplir la meta de compras.</p>
+
+            <form id="config-descuento-form" style="background: #f4f7f6; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1rem;">
+                <strong style="display:block; margin-bottom:0.5rem; color:var(--primary);">⚙️ Regla de Descuento Automático por Fidelidad</strong>
+                <div class="form-row">
+                    <div class="form-group" style="margin-bottom:0.4rem;">
+                        <label for="cfg-compras-meta">Compras requeridas para activar descuento</label>
+                        <input type="number" id="cfg-compras-meta" min="1" value="3" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0.4rem;">
+                        <label for="cfg-porcentaje-desc">Porcentaje de Descuento Automático (%)</label>
+                        <input type="number" id="cfg-porcentaje-desc" min="1" max="90" value="10" required>
+                    </div>
+                </div>
+                <small style="color:#666; display:block; margin-bottom:0.6rem;">
+                    Ejemplo: si la meta es <strong>3</strong> compras, a partir de su 3.ª compra el sistema aplica automáticamente el descuento configurado.
+                </small>
+                <button type="submit" class="btn-sm btn-info" style="padding: 0.45rem 0.9rem;">Guardar Regla de Descuento</button>
+            </form>
+
+            <form id="nuevo-cliente-dir-form" style="background: #fffdf9; padding: 1rem; border-radius: 8px; border: 1px solid #f5cba7; margin-bottom: 1rem;">
+                <strong style="display:block; margin-bottom:0.5rem; color:var(--primary);">➕ Registrar Cliente en Directorio</strong>
+                <div class="form-row">
+                    <div class="form-group" style="margin-bottom:0.4rem;">
+                        <label for="dir-nombre">Nombre Completo *</label>
+                        <input type="text" id="dir-nombre" placeholder="Ej. Ana Rodríguez" required>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0.4rem;">
+                        <label for="dir-telefono">Teléfono / WhatsApp *</label>
+                        <input type="tel" id="dir-telefono" placeholder="Ej. 0412-9876543" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="margin-bottom:0.4rem;">
+                        <label for="dir-correo">Correo</label>
+                        <input type="email" id="dir-correo" placeholder="correo@ejemplo.com">
+                    </div>
+                    <div class="form-group" style="margin-bottom:0.4rem;">
+                        <label for="dir-compras-iniciales">Compras Previas</label>
+                        <input type="number" id="dir-compras-iniciales" min="0" value="0">
+                    </div>
+                </div>
+                <button type="submit" class="btn-sm btn-sell" style="padding: 0.45rem 0.9rem;">Agregar al Directorio</button>
+            </form>
+
+            <div class="export-toolbar">
+                <button type="button" class="btn-sm btn-sell" style="padding: 0.45rem 0.8rem;" onclick="exportarClientesExcel()">📊 Exportar Excel (.xls)</button>
+                <button type="button" class="btn-sm btn-info" style="padding: 0.45rem 0.8rem;" onclick="exportarClientesPDF()">📄 Exportar PDF</button>
+            </div>
+
+            <div style="overflow-x: auto; margin-bottom: 1rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Contacto</th>
+                            <th>Cant. Compras</th>
+                            <th>Total Ventas ($)</th>
+                            <th>Estado Descuento</th>
+                        </tr>
+                    </thead>
+                    <tbody id="directorio-clientes-tbody"></tbody>
+                </table>
+            </div>
+
+            <button type="button" class="btn" onclick="cerrarModalDirectorio()">Cerrar Directorio</button>
+        </div>
+    </div>
+
+    <!-- MODAL 6: CATEGORÍAS DE EVENTOS (SOLO ADMIN AGREGA) Y SOLICITUDES DE EVENTOS -->
+    <div id="categorias-eventos-modal" class="modal-overlay">
+        <div class="modal-box modal-wide">
+            <h3>🎊 Categorías y Solicitudes de Eventos Especiales</h3>
+            <p class="subtitle">Solo el Administrador puede agregar categorías oficiales. Las categorías marcadas en <strong style="color:#c0392b;">rojo</strong> fueron enviadas como "Otros" y no están registradas.</p>
+
+            <form id="nueva-cat-evento-form" style="background: #f8f9fa; padding: 1rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1.2rem;">
+                <div class="form-row">
+                    <div class="form-group" style="margin-bottom: 0.4rem;">
+                        <label for="cat-evento-input">Nueva Categoría de Evento *</label>
+                        <input type="text" id="cat-evento-input" placeholder="Ej. Boda, Cumpleaños, Corporativo..." required>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0.4rem; display: flex; align-items: flex-end;">
+                        <button type="submit" class="btn">➕ Agregar Categoría</button>
+                    </div>
+                </div>
+                <div id="lista-categorias-oficiales" style="margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.4rem;"></div>
+            </form>
+
+            <h4 style="color:var(--primary); margin-bottom:0.6rem;">Solicitudes de Eventos Recibidas</h4>
+            <div id="admin-eventos-list"></div>
+
+            <button type="button" class="btn-outline" style="width: 100%; margin-top: 1rem;" onclick="cerrarModalCategoriasEventos()">Cerrar</button>
+        </div>
+    </div>
+
+    <main>
+        <!-- SECCIÓN 1: MENÚ PARA CLIENTES -->
+        <section id="menu" class="active">
+            <div class="menu-header-bar">
+                <h2 style="margin-bottom: 0;">Nuestro Menú</h2>
+                <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                    <button class="btn-outline" onclick="abrirModalEvento()">🎉 Pedido para Evento Especial</button>
+                    <button class="btn-outline" onclick="abrirModalRegistroCliente()">📋 Mis Datos de Registro</button>
+                </div>
+            </div>
+
+            <div class="evento-banner">
+                <div>
+                    <strong>🎊 ¿Tienes un evento especial o necesitas grandes cantidades?</strong>
+                    <p style="font-size:0.88rem; color:#555;">Indica fecha, hora, categoría y cantidades aproximadas para preparar tu cotización o pedido especial. Se cobra a tasa del día.</p>
+                </div>
+                <button class="btn-sm btn-purple" style="padding: 0.55rem 1rem; font-size:0.9rem;" onclick="abrirModalEvento()">Solicitar Evento Especial</button>
+            </div>
+
+            <!-- Barra de carrito activo -->
+            <div id="cart-bar" class="cart-bar" style="display: none;">
+                <div>
+                    <strong>🛒 Pedido en curso:</strong> <span id="cart-count">0</span> producto(s) — Total: <strong id="cart-bar-total" style="color: var(--success);">$0.00</strong>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn-outline" onclick="vaciarCarrito()">Vaciar</button>
+                    <button class="btn-success" onclick="abrirModalCarrito()">Ver y Elegir Pago</button>
+                </div>
+            </div>
+
+            <div id="menu-container" class="menu-grid"></div>
+        </section>
+
+        <!-- SECCIÓN 2: PANEL DE ADMINISTRADOR / EMPLEADOS -->
+        <section id="gestion">
+            <div class="admin-header-bar">
+                <div>
+                    <h2 style="margin-bottom: 0.3rem;">Panel de Gestión</h2>
+                    <div id="usuario-activo-banner" class="active-staff-badge">Sesión activa: Administrador</div>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <button id="btn-metodos-pago" class="btn-outline" onclick="abrirModalMetodosPago()">💳 Métodos y Datos de Pago</button>
+                    <button class="btn-outline" onclick="abrirModalDirectorio()">📇 Directorio de Clientes</button>
+                    <button id="btn-categorias-eventos" class="btn-outline" onclick="abrirModalCategoriasEventos()">🎊 Categorías y Eventos</button>
+                    <button id="btn-gestionar-usuarios" class="btn-outline" onclick="abrirModalUsuarios()">👥 Usuarios y PINs</button>
+                    <button id="btn-cambiar-pin-propio" class="btn-outline" onclick="cambiarPinAdmin()">🔑 Cambiar mi PIN</button>
+                    <button class="btn-outline" onclick="cerrarSesionAdmin()">Cerrar Sesión</button>
+                </div>
+            </div>
+
+            <!-- Resumen rápido -->
+            <div class="stats-bar">
+                <div class="stat-box clickable" onclick="abrirModalDetalleProductos()" title="Haz clic para ver la lista detallada de productos">
+                    <span>Productos en Menú</span>
+                    <strong id="stat-total-productos">0</strong>
+                    <div class="stat-hint">🔍 Ver lista detallada →</div>
+                </div>
+                <div class="stat-box">
+                    <span>Unidades en Stock</span>
+                    <strong id="stat-total-stock">0</strong>
+                </div>
+                <div class="stat-box" style="border-left-color: var(--info);">
+                    <span>Costo Total Inventario</span>
+                    <strong id="stat-costo-inventario">$0.00</strong>
+                </div>
+                <div class="stat-box clickable" style="border-left-color: var(--success);" onclick="abrirModalDetalleVentas()" title="Haz clic para ver el historial detallado de ventas concretadas">
+                    <span>Ventas Concretadas</span>
+                    <strong id="stat-ventas">$0.00</strong>
+                    <div class="stat-hint" style="color: var(--success);">🧾 Ver detalle y exportar →</div>
+                </div>
+            </div>
+
+            <div class="admin-grid">
+                <!-- Columna Izquierda: Calculadora de Costos + Agregar Producto (SOLO ADMIN) -->
+                <div>
+                    <div class="card">
+                        <h3>🧮 Calculadora de Costos</h3>
+                        <p style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">Calcula el costo por unidad y el precio sugerido según tu margen.</p>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="calc-lote-costo">Costo Total Lote ($)</label>
+                                <input type="number" id="calc-lote-costo" step="0.01" min="0" placeholder="Ej. 15.00" oninput="calcularCostoSugerido()">
+                            </div>
+                            <div class="form-group">
+                                <label for="calc-lote-unidades">Unidades Producidas</label>
+                                <input type="number" id="calc-lote-unidades" min="1" placeholder="Ej. 12" oninput="calcularCostoSugerido()">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="calc-margen">Margen de Ganancia Deseado (%)</label>
+                            <input type="number" id="calc-margen" min="0" max="500" value="50" oninput="calcularCostoSugerido()">
+                        </div>
+
+                        <div class="calc-result" id="calc-output">
+                            <div>Costo por unidad: <strong>$0.00</strong></div>
+                            <div>Ganancia por unidad: <strong>$0.00</strong></div>
+                            <div style="margin-top: 4px; color: var(--success); font-size: 1rem;">Precio sugerido: <strong>$0.00</strong></div>
+                        </div>
+                        <button type="button" class="btn-outline" style="width: 100%; margin-top: 0.8rem;" onclick="pasarAlFormulario()">Usar estos valores abajo ↓</button>
+                    </div>
+
+                    <div id="card-agregar-producto" class="card">
+                        <h3>➕ Agregar al Menú (Solo Admin)</h3>
+                        <form id="product-form" style="margin-top: 1rem;">
+                            <div class="form-group">
+                                <label for="prod-nombre">Nombre del Producto</label>
+                                <input type="text" id="prod-nombre" placeholder="Ej. Vasito de Oreo" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="prod-categoria">Categoría</label>
+                                <select id="prod-categoria">
+                                    <option value="Postres">Postres</option>
+                                    <option value="Pasapalos">Pasapalos / Snacks</option>
+                                    <option value="Principal">Principal</option>
+                                    <option value="Bebidas">Bebidas</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="prod-costo">Costo Unitario ($)</label>
+                                    <input type="number" id="prod-costo" step="0.01" min="0" placeholder="0.00" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="prod-precio">Precio Venta ($)</label>
+                                    <input type="number" id="prod-precio" step="0.01" min="0" placeholder="0.00" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="prod-stock">Cantidad en Stock</label>
+                                <input type="number" id="prod-stock" min="0" placeholder="10" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="prod-desc">Descripción corta</label>
+                                <textarea id="prod-desc" rows="2" placeholder="Ingredientes o detalles..."></textarea>
+                            </div>
+                            <button type="submit" id="btn-guardar-producto" class="btn">Guardar Producto</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Tabla de Inventario + Pedidos (Verificación de Pago) + Eventos -->
+                <div>
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+                            <h3>📋 Control de Costos, Precios y Stock</h3>
+                            <button id="btn-reajuste-masivo" class="btn-outline" onclick="reajustarPreciosMasivo()">% Reajuste Masivo de Precios</button>
+                        </div>
+                        <p id="aviso-permisos-inventario" style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">Solo el Administrador puede modificar costos, precios, stock o eliminar productos.</p>
+                        
+                        <div style="overflow-x: auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Costo ($)</th>
+                                        <th>Precio ($)</th>
+                                        <th>Ganancia</th>
+                                        <th>Stock</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="inventory-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Pedidos realizados por clientes (se concretan al verificar y marcar como PAGADO) -->
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap:wrap; gap:0.5rem; margin-bottom: 1rem;">
+                            <h3>📦 Pedidos de Clientes y Verificación de Pago</h3>
+                            <button id="btn-limpiar-pedidos" class="btn-outline" onclick="limpiarPedidos()">Limpiar Historial</button>
+                        </div>
+                        <div id="admin-orders-list">
+                            <p style="font-size: 0.9rem; color: #777;">Aún no hay pedidos registrados.</p>
+                        </div>
+                    </div>
+
+                    <!-- Solicitudes de Eventos Especiales -->
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap:wrap; gap:0.5rem; margin-bottom: 1rem;">
+                            <h3>🎉 Pedidos de Eventos Especiales</h3>
+                            <button id="btn-gestionar-cat-card" class="btn-outline" onclick="abrirModalCategoriasEventos()">Gestionar Categorías</button>
+                        </div>
+                        <div id="admin-eventos-resumen-list">
+                            <p style="font-size: 0.9rem; color: #777;">Aún no hay solicitudes de eventos especiales.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let pinLegacy = localStorage.getItem('tienda_admin_pin') || '1234';
+        let usuariosSistema = JSON.parse(localStorage.getItem('tienda_usuarios_sistema')) || [
+            { id: 1, nombre: 'Administrador Principal', rol: 'Administrador', pin: pinLegacy }
+        ];
+        let usuarioSesion = JSON.parse(sessionStorage.getItem('tienda_usuario_sesion')) || null;
+
+        function esAdministrador() {
+            return usuarioSesion && usuarioSesion.rol === 'Administrador';
+        }
+
+        let clienteActual = JSON.parse(localStorage.getItem('tienda_cliente_actual')) || null;
+        let carrito = [];
+        let productoPendienteId = null;
+        let pedidosRecibidos = JSON.parse(localStorage.getItem('tienda_pedidos')) || [];
+        let historialVentas = JSON.parse(localStorage.getItem('tienda_historial_ventas')) || [];
+
+        let reglaDescuento = JSON.parse(localStorage.getItem('tienda_regla_descuento')) || {
+            comprasRequeridas: 3,
+            porcentajeDescuento: 10
+        };
+
+        let directorioClientes = JSON.parse(localStorage.getItem('tienda_directorio_clientes')) || [];
+
+        let metodosPago = JSON.parse(localStorage.getItem('tienda_metodos_pago')) || [
+            { id: 1, nombre: 'Pago Móvil', datos: 'Configura tus datos de Pago Móvil desde el panel de Administrador.' },
+            { id: 2, nombre: 'Transferencia / Zelle', datos: 'Configura tus datos bancarios o Zelle desde el panel de Administrador.' },
+            { id: 3, nombre: 'Efectivo', datos: 'Pago en efectivo al momento de la entrega o retiro (a tasa del día).' }
+        ];
+        let metodoPagoSeleccionadoId = null;
+
+        let categoriasEventos = JSON.parse(localStorage.getItem('tienda_categorias_eventos')) || [
+            'Cumpleaños',
+            'Boda / Aniversario',
+            'Evento Corporativo',
+            'Reunión Familiar'
+        ];
+
+        let pedidosEventos = JSON.parse(localStorage.getItem('tienda_pedidos_eventos')) || [];
+
+        let productos = JSON.parse(localStorage.getItem('tienda_productos')) || [
+            { id: 1, nombre: 'Producto de Ejemplo 1', categoria: 'Postres', costo: 2.00, precio: 5.00, stock: 12, desc: 'Descripción editable desde el panel de gestión.' },
+            { id: 2, nombre: 'Producto de Ejemplo 2', categoria: 'Pasapalos', costo: 1.50, precio: 3.50, stock: 8, desc: 'Ideal para acompañar o pedir por encargo.' }
+        ];
+
+        let totalVentas = parseFloat(localStorage.getItem('tienda_ventas')) || 0;
+
+        function obtenerFechaHoraActual() {
+            const ahora = new Date();
+            const fecha = ahora.toLocaleDateString('es-VE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const hora = ahora.toLocaleTimeString('es-VE', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+            return `${fecha} - ${hora}`;
+        }
+
+        function guardarUsuariosSistema() {
+            localStorage.setItem('tienda_usuarios_sistema', JSON.stringify(usuariosSistema));
+            const adminPrincipal = usuariosSistema.find(u => u.rol === 'Administrador');
+            if (adminPrincipal) {
+                localStorage.setItem('tienda_admin_pin', adminPrincipal.pin);
+            }
+        }
+
+        function guardarDirectorioClientes() {
+            localStorage.setItem('tienda_directorio_clientes', JSON.stringify(directorioClientes));
+        }
+
+        function guardarMetodosPago() {
+            localStorage.setItem('tienda_metodos_pago', JSON.stringify(metodosPago));
+        }
+
+        function guardarCategoriasEventos() {
+            localStorage.setItem('tienda_categorias_eventos', JSON.stringify(categoriasEventos));
+        }
+
+        function guardarPedidosEventos() {
+            localStorage.setItem('tienda_pedidos_eventos', JSON.stringify(pedidosEventos));
+        }
+
+        function abrirModalMetodosPago() {
+            if (!esAdministrador()) {
+                alert('Solo el Administrador puede agregar o editar métodos y datos de pago.');
+                return;
+            }
+            renderizarMetodosPagoAdmin();
+            document.getElementById('metodos-pago-modal').style.display = 'flex';
+        }
+
+        function cerrarModalMetodosPago() {
+            document.getElementById('metodos-pago-modal').style.display = 'none';
+        }
+
+        document.getElementById('nuevo-metodo-pago-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!esAdministrador()) {
+                alert('Solo el Administrador puede agregar métodos de pago.');
+                return;
+            }
+            const nombre = document.getElementById('mp-nombre').value.trim();
+            const datos = document.getElementById('mp-datos').value.trim();
+            if (!nombre || !datos) return;
+
+            metodosPago.push({
+                id: Date.now(),
+                nombre,
+                datos
+            });
+            guardarMetodosPago();
+            this.reset();
+            renderizarMetodosPagoAdmin();
+        });
+
+        function guardarEdicionMetodoPago(id) {
+            if (!esAdministrador()) {
+                alert('Solo el Administrador puede editar los datos de pago.');
+                return;
+            }
+            const mp = metodosPago.find(m => m.id === id);
+            if (!mp) return;
+            const nombreInput = document.getElementById(`mp-edit-nombre-${id}`);
+            const datosInput = document.getElementById(`mp-edit-datos-${id}`);
+            if (!nombreInput || !datosInput) return;
+
+            mp.nombre = nombreInput.value.trim() || mp.nombre;
+            mp.datos = datosInput.value.trim();
+            guardarMetodosPago();
+            renderizarMetodosPagoAdmin();
+            alert('Método y datos de pago actualizados.');
+        }
+
+        function eliminarMetodoPago(id) {
+            if (!esAdministrador()) {
+                alert('Solo el Administrador puede eliminar métodos de pago.');
+                return;
+            }
+            if (metodosPago.length <= 1) {
+                alert('Debe existir al menos un método de pago.');
+                return;
+            }
+            if (confirm('¿Eliminar este método de pago?')) {
+                metodosPago = metodosPago.filter(m => m.id !== id);
+                if (metodoPagoSeleccionadoId === id) {
+                    metodoPagoSeleccionadoId = null;
+                }
+                guardarMetodosPago();
+                renderizarMetodosPagoAdmin();
+            }
+        }
+
+        function renderizarMetodosPagoAdmin() {
+            const cont = document.getElementById('lista-metodos-pago-admin');
+            cont.innerHTML = '';
+            metodosPago.forEach(mp => {
+                const div = document.createElement('div');
+                div.className = 'order-card';
+                div.innerHTML = `
+                    <div class="form-group" style="margin-bottom:0.5rem;">
+                        <label>Nombre del Botón / Método</label>
+                        <input type="text" id="mp-edit-nombre-${mp.id}" value="${mp.nombre.replace(/"/g, '&quot;')}">
+                    </div>
+                    <div class="form-group" style="margin-bottom:0.6rem;">
+                        <label>Datos para realizar el pago</label>
+                        <textarea id="mp-edit-datos-${mp.id}" rows="2">${mp.datos}</textarea>
+                    </div>
+                    <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
+                        <button type="button" class="btn-sm btn-sell" onclick="guardarEdicionMetodoPago(${mp.id})">💾 Guardar Cambios</button>
+                        <button type="button" class="btn-sm btn-delete" onclick="eliminarMetodoPago(${mp.id})">Eliminar</button>
+                    </div>
+                `;
+                cont.appendChild(div);
+            });
+        }
+
+        function renderizarBotonesPagoCliente() {
+            const cont = document.getElementById('cliente-metodos-pago-btns');
+            const box = document.getElementById('cliente-datos-pago-box');
+            cont.innerHTML = '';
+
+            if (!metodoPagoSeleccionadoId && metodosPago.length > 0) {
+                metodoPagoSeleccionadoId = metodosPago[0].id;
+            }
+
+            metodosPago.forEach(mp => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'payment-method-btn' + (mp.id === metodoPagoSeleccionadoId ? ' selected' : '');
+                btn.textContent = mp.nombre;
+                btn.onclick = () => {
+                    metodoPagoSeleccionadoId = mp.id;
+                    renderizarBotonesPagoCliente();
+                };
+                cont.appendChild(btn);
+            });
+
+            const activo = metodosPago.find(m => m.id === metodoPagoSeleccionadoId);
+            if (activo) {
+                box.style.display = 'block';
+                box.innerHTML = `<strong>Datos para pagar con ${activo.nombre}:</strong>\n${activo.datos}`;
+            } else {
+                box.style.display = 'none';
+            }
+        }
+
+        function sincronizarClienteEnDirectorio(datosCli) {
+            if (!datosCli || !datosCli.nombre) return null;
+            const nombreCompleto = `${datosCli.nombre} ${datosCli.apellido || ''}`.trim();
+            const telNorm = (datosCli.telefono || '').trim();
+            let existente = directorioClientes.find(c =>
+                (telNorm && c.telefono === telNorm) ||
+                c.nombre.toLowerCase() === nombreCompleto.toLowerCase()
+            );
+            if (!existente) {
+                existente = {
+                    id: Date.now() + Math.floor(Math.random() * 1000),
+                    nombre: nombreCompleto,
+                    telefono: telNorm,
+                    correo: (datosCli.correo || '').trim(),
+                    direccion: (datosCli.direccion || '').trim(),
+                    compras: 0,
+                    totalVentas: 0
+                };
+                directorioClientes.push(existente);
+            } else {
+                if (datosCli.correo) existente.correo = datosCli.correo.trim();
+                if (datosCli.direccion) existente.direccion = datosCli.direccion.trim();
+            }
+            guardarDirectorioClientes();
+            return existente;
+        }
+
+        function obtenerPorcentajeDescuentoCliente(clienteObj) {
+            if (!clienteObj) return 0;
+            const meta = Number(reglaDescuento.comprasRequeridas) || 3;
+            const pct = Number(reglaDescuento.porcentajeDescuento) || 0;
+            if (clienteObj.compras >= meta && pct > 0) {
+                return pct;
+            }
+            return 0;
+        }
+
+        function registrarCompraEnCliente(clienteId, montoFinal) {
+            if (!clienteId) return;
+            const cli = directorioClientes.find(c => c.id === clienteId);
+            if (!cli) return;
+            cli.compras = (Number(cli.compras) || 0) + 1;
+            cli.totalVentas = (Number(cli.totalVentas) || 0) + (Number(montoFinal) || 0);
+            guardarDirectorioClientes();
+        }
+
+        function revertirCompraEnCliente(clienteId, montoVenta) {
+            if (!clienteId) return;
+            const cli = directorioClientes.find(c => c.id === clienteId);
+            if (!cli) return;
+            cli.compras = Math.max(0, (Number(cli.compras) || 0) - 1);
+            cli.totalVentas = Math.max(0, (Number(cli.totalVentas) || 0) - (Number(montoVenta) || 0));
+            guardarDirectorioClientes();
+        }
+
+        function abrirModalDirectorio() {
+            document.getElementById('cfg-compras-meta').value = reglaDescuento.comprasRequeridas;
+            document.getElementById('cfg-porcentaje-desc').value = reglaDescuento.porcentajeDescuento;
+            renderizarDirectorioClientes();
+            document.getElementById('directorio-clientes-modal').style.display = 'flex';
+        }
+
+        function cerrarModalDirectorio() {
+            document.getElementById('directorio-clientes-modal').style.display = 'none';
+        }
+
+        document.getElementById('config-descuento-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            reglaDescuento = {
+                comprasRequeridas: Math.max(1, parseInt(document.getElementById('cfg-compras-meta').value) || 3),
+                porcentajeDescuento: Math.min(90, Math.max(0, parseFloat(document.getElementById('cfg-porcentaje-desc').value) || 0))
+            };
+            localStorage.setItem('tienda_regla_descuento', JSON.stringify(reglaDescuento));
+            renderizarDirectorioClientes();
+            alert(`Regla guardada: descuento automático del ${reglaDescuento.porcentajeDescuento}% a partir de ${reglaDescuento.comprasRequeridas} compras.`);
+        });
+
+        document.getElementById('nuevo-cliente-dir-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('dir-nombre').value.trim();
+            const telefono = document.getElementById('dir-telefono').value.trim();
+            const correo = document.getElementById('dir-correo').value.trim();
+            const comprasIni = Math.max(0, parseInt(document.getElementById('dir-compras-iniciales').value) || 0);
+
+            directorioClientes.push({
+                id: Date.now(),
+                nombre,
+                telefono,
+                correo,
+                direccion: '',
+                compras: comprasIni,
+                totalVentas: 0
+            });
+            guardarDirectorioClientes();
+            this.reset();
+            renderizarDirectorioClientes();
+        });
+
+        function renderizarDirectorioClientes() {
+            const tbody = document.getElementById('directorio-clientes-tbody');
+            tbody.innerHTML = '';
+
+            if (directorioClientes.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#777;">No hay clientes en el directorio todavía.</td></tr>';
+                return;
+            }
+
+            directorioClientes.forEach(c => {
+                const descPct = obtenerPorcentajeDescuentoCliente(c);
+                const faltan = Math.max(0, reglaDescuento.comprasRequeridas - c.compras);
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${c.nombre}</strong></td>
+                    <td>${c.telefono || '-'}<br><small style="color:#777;">${c.correo || ''}</small></td>
+                    <td><strong>${c.compras}</strong> compra(s)</td>
+                    <td style="color:var(--success); font-weight:bold;">$${Number(c.totalVentas || 0).toFixed(2)}</td>
+                    <td>
+                        ${descPct > 0
+                            ? `<span class="badge-vip">✨ ${descPct}% Desc. Activo</span>`
+                            : `<small style="color:#666;">Faltan ${faltan} compra(s) para ${reglaDescuento.porcentajeDescuento}%</small>`
+                        }
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function actualizarEstadoClienteUI() {
+            const pill = document.getElementById('cliente-status-pill');
+            const btnHeader = document.getElementById('btn-registro-header');
+            if (clienteActual) {
+                pill.style.display = 'flex';
+                document.getElementById('cliente-nombre-nav').textContent = `Hola, ${clienteActual.nombre} ${clienteActual.apellido}`;
+                btnHeader.style.display = 'none';
+            } else {
+                pill.style.display = 'none';
+                btnHeader.style.display = 'inline-block';
+            }
+        }
+
+        function abrirModalRegistroCliente() {
+            if (clienteActual) {
+                document.getElementById('cli-nombre').value = clienteActual.nombre || '';
+                document.getElementById('cli-apellido').value = clienteActual.apellido || '';
+                document.getElementById('cli-telefono').value = clienteActual.telefono || '';
+                document.getElementById('cli-correo').value = clienteActual.correo || '';
+                document.getElementById('cli-direccion').value = clienteActual.direccion || '';
+            }
+            document.getElementById('cliente-modal').style.display = 'flex';
+        }
+
+        function cerrarModalCliente() {
+            document.getElementById('cliente-modal').style.display = 'none';
+            productoPendienteId = null;
+        }
+
+        document.getElementById('cliente-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            clienteActual = {
+                nombre: document.getElementById('cli-nombre').value.trim(),
+                apellido: document.getElementById('cli-apellido').value.trim(),
+                telefono: document.getElementById('cli-telefono').value.trim(),
+                correo: document.getElementById('cli-correo').value.trim(),
+                direccion: document.getElementById('cli-direccion').value.trim()
+            };
+            localStorage.setItem('tienda_cliente_actual', JSON.stringify(clienteActual));
+            sincronizarClienteEnDirectorio(clienteActual);
+            actualizarEstadoClienteUI();
+            document.getElementById('cliente-modal').style.display = 'none';
+
+            if (productoPendienteId !== null) {
+                const idTemp = productoPendienteId;
+                productoPendienteId = null;
+                agregarAlCarrito(idTemp);
+            }
+        });
+
+        function intentarPedirProducto(id) {
+            if (!clienteActual) {
+                productoPendienteId = id;
+                abrirModalRegistroCliente();
+                return;
+            }
+            agregarAlCarrito(id);
+        }
+
+        function agregarAlCarrito(id) {
+            const prod = productos.find(p => p.id === id);
+            if (!prod || prod.stock <= 0) {
+                alert('Producto agotado.');
+                return;
+            }
+            const itemEnCarrito = carrito.find(i => i.id === id);
+            const cantidadActual = itemEnCarrito ? itemEnCarrito.cantidad : 0;
+
+            if (cantidadActual + 1 > prod.stock) {
+                alert(`Solo hay ${prod.stock} unidades disponibles de este producto.`);
+                return;
+            }
+
+            if (itemEnCarrito) {
+                itemEnCarrito.cantidad += 1;
+            } else {
+                carrito.push({ id: prod.id, nombre: prod.nombre, precio: prod.precio, cantidad: 1 });
+            }
+            actualizarBarraCarrito();
+        }
+
+        function actualizarBarraCarrito() {
+            const bar = document.getElementById('cart-bar');
+            if (carrito.length === 0) {
+                bar.style.display = 'none';
+                return;
+            }
+            bar.style.display = 'flex';
+            const totalItems = carrito.reduce((acc, i) => acc + i.cantidad, 0);
+            const subtotal = carrito.reduce((acc, i) => acc + (i.precio * i.cantidad), 0);
+            const cliDir = clienteActual ? sincronizarClienteEnDirectorio(clienteActual) : null;
+            const descPct = obtenerPorcentajeDescuentoCliente(cliDir);
+            const montoDesc = subtotal * (descPct / 100);
+            const totalFinal = Math.max(0, subtotal - montoDesc);
+
+            document.getElementById('cart-count').textContent = totalItems;
+            document.getElementById('cart-bar-total').innerHTML = descPct > 0
+                ? `$${totalFinal.toFixed(2)} <small style="color:var(--purple);">(-${descPct}% desc.)</small>`
+                : `$${totalFinal.toFixed(2)}`;
+        }
+
+        function vaciarCarrito() {
+            carrito = [];
+            actualizarBarraCarrito();
+        }
+
+        function abrirModalCarrito() {
+            if (!clienteActual) {
+                abrirModalRegistroCliente();
+                return;
+            }
+            const cliDir = sincronizarClienteEnDirectorio(clienteActual);
+            const descPct = obtenerPorcentajeDescuentoCliente(cliDir);
+
+            document.getElementById('carrito-datos-cliente').innerHTML = `
+                <strong>Cliente:</strong> ${clienteActual.nombre} ${clienteActual.apellido} (${cliDir ? cliDir.compras : 0} compra(s) concretadas)<br>
+                <strong>Teléfono:</strong> ${clienteActual.telefono} | <strong>Correo:</strong> ${clienteActual.correo}<br>
+                <strong>Dirección:</strong> ${clienteActual.direccion}
+            `;
+
+            const lista = document.getElementById('carrito-lista');
+            lista.innerHTML = '';
+            let subtotal = 0;
+
+            carrito.forEach(item => {
+                const subItem = item.precio * item.cantidad;
+                subtotal += subItem;
+                const div = document.createElement('div');
+                div.className = 'cart-item-row';
+                div.innerHTML = `
+                    <div><strong>${item.cantidad}x</strong> ${item.nombre}</div>
+                    <div>
+                        <span>$${subItem.toFixed(2)}</span>
+                        <button class="btn-sm btn-delete" style="margin-left: 8px;" onclick="quitarDelCarrito(${item.id})">-</button>
+                    </div>
+                `;
+                lista.appendChild(div);
+            });
+
+            renderizarBotonesPagoCliente();
+
+            const montoDesc = subtotal * (descPct / 100);
+            const totalPagar = Math.max(0, subtotal - montoDesc);
+
+            document.getElementById('carrito-desglose-totales').innerHTML = `
+                <div style="display:flex; justify-content:space-between;"><span>Subtotal:</span><span>$${subtotal.toFixed(2)}</span></div>
+                ${descPct > 0 ? `<div style="display:flex; justify-content:space-between; color:var(--purple); font-weight:600;"><span>Descuento automático (${descPct}%):</span><span>-$${montoDesc.toFixed(2)}</span></div>` : ''}
+                <div style="display:flex; justify-content:space-between; font-size: 1.15rem; font-weight: bold; margin-top:0.4rem;">
+                    <span>Total a Pagar (Tasa del día):</span>
+                    <span style="color: var(--success);">$${totalPagar.toFixed(2)}</span>
+                </div>
+            `;
+
+            document.getElementById('carrito-modal').style.display = 'flex';
+        }
+
+        function quitarDelCarrito(id) {
+            const idx = carrito.findIndex(i => i.id === id);
+            if (idx > -1) {
+                if (carrito[idx].cantidad > 1) {
+                    carrito[idx].cantidad -= 1;
+                } else {
+                    carrito.splice(idx, 1);
+                }
+            }
+            actualizarBarraCarrito();
+            if (carrito.length === 0) {
+                cerrarModalCarrito();
+            } else {
+                abrirModalCarrito();
+            }
+        }
+
+        function cerrarModalCarrito() {
+            document.getElementById('carrito-modal').style.display = 'none';
+        }
+
+        function confirmarPedidoCliente() {
+            if (carrito.length === 0) return;
+
+            const metodoObj = metodosPago.find(m => m.id === metodoPagoSeleccionadoId) || metodosPago[0];
+            const nombreMetodo = metodoObj ? metodoObj.nombre : 'Por definir';
+
+            const fechaHora = obtenerFechaHoraActual();
+            const cliDir = sincronizarClienteEnDirectorio(clienteActual);
+            const descPct = obtenerPorcentajeDescuentoCliente(cliDir);
+            const factorDesc = 1 - (descPct / 100);
+
+            const subtotal = carrito.reduce((acc, i) => acc + (i.precio * i.cantidad), 0);
+            const totalPedidoFinal = Math.max(0, subtotal * factorDesc);
+
+            const nuevoPedido = {
+                id: Date.now(),
+                fecha: fechaHora,
+                cliente: { ...clienteActual },
+                clienteId: cliDir ? cliDir.id : null,
+                items: carrito.map(i => ({ ...i })),
+                metodoPago: nombreMetodo,
+                descuentoAplicado: descPct,
+                total: totalPedidoFinal,
+                pagado: false
+            };
+
+            pedidosRecibidos.unshift(nuevoPedido);
+            localStorage.setItem('tienda_pedidos', JSON.stringify(pedidosRecibidos));
+
+            carrito = [];
+            actualizarBarraCarrito();
+            cerrarModalCarrito();
+            renderizarPedidosAdmin();
+            alert(`¡Pedido enviado, ${clienteActual.nombre}! Método de pago: ${nombreMetodo} (a tasa del día). La venta se concretará y descontará inventario una vez que el pago sea verificado y marcado como PAGADO.`);
+        }
+
+        function verificarYMarcarPedidoPagado(pedidoId) {
+            const ped = pedidosRecibidos.find(p => p.id === pedidoId);
+            if (!ped || ped.pagado) return;
+
+            for (const item of ped.items) {
+                const prod = productos.find(p => p.id === item.id);
+                if (!prod || prod.stock < item.cantidad) {
+                    alert(`Stock insuficiente para concretar "${item.nombre}". Disponible: ${prod ? prod.stock : 0}, requerido: ${item.cantidad}.`);
+                    return;
+                }
+            }
+
+            const factorDesc = 1 - ((ped.descuentoAplicado || 0) / 100);
+            const fechaVerificacion = obtenerFechaHoraActual();
+
+            ped.items.forEach(item => {
+                const prod = productos.find(p => p.id === item.id);
+                if (prod) {
+                    prod.stock = Math.max(0, prod.stock - item.cantidad);
+                }
+                const totalItemDesc = (item.precio * item.cantidad) * factorDesc;
+
+                historialVentas.unshift({
+                    id: Date.now() + Math.floor(Math.random() * 10000),
+                    productId: item.id,
+                    clienteId: ped.clienteId || null,
+                    clienteNombre: `${ped.cliente.nombre} ${ped.cliente.apellido}`,
+                    fechaHora: fechaVerificacion,
+                    producto: item.nombre + (ped.descuentoAplicado > 0 ? ` (-${ped.descuentoAplicado}% desc.)` : ''),
+                    cantidad: item.cantidad,
+                    total: totalItemDesc,
+                    metodoPago: ped.metodoPago || 'N/A',
+                    usuario: `Pago Verificado (${usuarioSesion ? usuarioSesion.nombre : 'Admin'})`,
+                    anulada: false
+                });
+            });
+
+            ped.pagado = true;
+            ped.fechaPagoVerificado = fechaVerificacion;
+
+            if (ped.clienteId) {
+                registrarCompraEnCliente(ped.clienteId, ped.total);
+            }
+
+            totalVentas += Number(ped.total) || 0;
+            localStorage.setItem('tienda_pedidos', JSON.stringify(pedidosRecibidos));
+            localStorage.setItem('tienda_historial_ventas', JSON.stringify(historialVentas));
+            guardarDatos();
+            alert('Pago verificado y marcado como PAGADO. La venta se ha concretado y descontado del inventario.');
+        }
+
+        function rechazarPedidoPendiente(pedidoId) {
+            if (!confirm('¿Deseas rechazar y eliminar este pedido pendiente?')) return;
+            pedidosRecibidos = pedidosRecibidos.filter(p => p.id !== pedidoId);
+            localStorage.setItem('tienda_pedidos', JSON.stringify(pedidosRecibidos));
+            renderizarPedidosAdmin();
+        }
+
+        function limpiarPedidos() {
+            if (!esAdministrador()) {
+                alert('Solo el Administrador puede limpiar el historial de pedidos.');
+                return;
+            }
+            if (confirm('¿Deseas borrar el historial de pedidos registrados?')) {
+                pedidosRecibidos = [];
+                localStorage.setItem('tienda_pedidos', JSON.stringify(pedidosRecibidos));
+                renderizarPedidosAdmin();
+            }
+        }
+
+        function renderizarPedidosAdmin() {
+            const container = document.getElementById('admin-orders-list');
+            if (pedidosRecibidos.length === 0) {
+                container.innerHTML = '<p style="font-size: 0.9rem; color: #777;">Aún no hay pedidos registrados.</p>';
+                return;
+            }
+            container.innerHTML = '';
+            pedidosRecibidos.forEach(ped => {
+                const itemsTexto = ped.items.map(i => `${i.cantidad}x ${i.nombre} ($${(i.precio * i.cantidad).toFixed(2)})`).join(', ');
+                const estaPagado = ped.pagado === true;
+                const div = document.createElement('div');
+                div.className = `order-card ${estaPagado ? '' : 'pendiente-pago'}`;
+                div.innerHTML = `
+                    <div class="order-card-header">
+                        <div>
+                            <strong>${ped.cliente.nombre} ${ped.cliente.apellido}</strong>
+                            ${estaPagado
+                                ? '<span class="badge-activa" style="margin-left:6px;">✅ PAGADO / CONCRETADA</span>'
+                                : '<span class="badge-pendiente" style="margin-left:6px;">⏳ PENDIENTE DE VERIFICAR PAGO</span>'
+                            }
+                        </div>
+                        <span style="color: var(--success); font-weight: bold;">$${Number(ped.total).toFixed(2)} ${ped.descuentoAplicado > 0 ? `<small style="color:var(--purple);">(-${ped.descuentoAplicado}%)</small>` : ''}</span>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #444; margin-bottom: 0.4rem;">
+                        💳 <strong>Método de pago:</strong> ${ped.metodoPago || 'No especificado'} | 📞 <strong>Tel:</strong> ${ped.cliente.telefono}<br>
+                        📍 <strong>Dirección:</strong> ${ped.cliente.direccion}
+                    </div>
+                    <div style="font-size: 0.88rem; background: white; padding: 0.5rem; border-radius: 4px; border: 1px solid #eee; margin-bottom: 0.5rem;">
+                        <strong>Pedido:</strong> ${itemsTexto}
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                        <span style="font-size: 0.75rem; color: #888;">${ped.fecha}${estaPagado && ped.fechaPagoVerificado ? ` • Pagado: ${ped.fechaPagoVerificado}` : ''}</span>
+                        ${!estaPagado
+                            ? `<div style="display:flex; gap:0.4rem;">
+                                <button type="button" class="btn-sm btn-sell" onclick="verificarYMarcarPedidoPagado(${ped.id})">✔ Verificar y Marcar como Pagado</button>
+                                <button type="button" class="btn-sm btn-delete" onclick="rechazarPedidoPendiente(${ped.id})">Rechazar</button>
+                               </div>`
+                            : ''
+                        }
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function abrirModalEvento() {
+            const select = document.getElementById('ev-categoria');
+            select.innerHTML = '<option value="">-- Selecciona una categoría --</option>';
+            categoriasEventos.forEach(cat => {
+                const opt = document.createElement('option');
+                opt.value = cat;
+                opt.textContent = cat;
+                select.appendChild(opt);
+            });
+            const optOtros = document.createElement('option');
+            optOtros.value = '__OTROS__';
+            optOtros.textContent = 'Otros (especificar categoría no listada)';
+            select.appendChild(optOtros);
+
+            if (clienteActual) {
+                document.getElementById('ev-nombre').value = `${clienteActual.nombre} ${clienteActual.apellido}`.trim();
+                document.getElementById('ev-telefono').value = clienteActual.telefono || '';
+            }
+            document.getElementById('ev-otros-grupo').style.display = 'none';
+            document.getElementById('ev-categoria-otros').value = '';
+            document.getElementById('evento-modal').style.display = 'flex';
+        }
+
+        function toggleCategoriaOtrosEvento() {
+            const val = document.getElementById('ev-categoria').value;
+            const grupoOtros = document.getElementById('ev-otros-grupo');
+            const inputOtros = document.getElementById('ev-categoria-otros');
+            if (val === '__OTROS__') {
+                grupoOtros.style.display = 'block';
+                inputOtros.required = true;
+            } else {
+                grupoOtros.style.display = 'none';
+                inputOtros.required = false;
+            }
+        }
+
+        function cerrarModalEvento() {
+            document.getElementById('evento-modal').style.display = 'none';
+        }
+
+        document.getElementById('evento-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const selCat = document.getElementById('ev-categoria').value;
+            let categoriaFinal = selCat;
+            let esCategoriaNoRegistrada = false;
+
+            if (selCat === '__OTROS__') {
+                const textoLibre = document.getElementById('ev-categoria-otros').value.trim();
+                categoriaFinal = textoLibre || 'Otros';
+                const existeOficial = categoriasEventos.some(c => c.toLowerCase() === categoriaFinal.toLowerCase());
+                esCategoriaNoRegistrada = !existeOficial;
+            }
+
+            const nuevaSolicitud = {
+                id: Date.now(),
+                creadoEn: obtenerFechaHoraActual(),
+                clienteNombre: document.getElementById('ev-nombre').value.trim(),
+                telefono: document.getElementById('ev-telefono').value.trim(),
+                fechaEvento: document.getElementById('ev-fecha').value,
+                horaEvento: document.getElementById('ev-hora').value,
+                categoria: categoriaFinal,
+                categoriaNoRegistrada: esCategoriaNoRegistrada,
+                cantidadAprox: parseInt(document.getElementById('ev-cantidad-total').value) || 0,
+                productoRef: document.getElementById('ev-producto-ref').value.trim(),
+                detalles: document.getElementById('ev-detalles').value.trim()
+            };
+
+            pedidosEventos.unshift(nuevaSolicitud);
+            guardarPedidosEventos();
+            this.reset();
+            cerrarModalEvento();
+            renderizarEventosAdmin();
+            alert('¡Solicitud de evento especial enviada! Pronto nos pondremos en contacto contigo.');
+        });
+
+        function renderizarEventosAdmin() {
+            const resContainer = document.getElementById('admin-eventos-resumen-list');
+            const modalContainer = document.getElementById('admin-eventos-list');
+
+            if (pedidosEventos.length === 0) {
+                const vacio = '<p style="font-size: 0.9rem; color: #777;">Aún no hay solicitudes de eventos especiales.</p>';
+                if (resContainer) resContainer.innerHTML = vacio;
+                if (modalContainer) modalContainer.innerHTML = vacio;
+                return;
+            }
+
+            const htmlCards = pedidosEventos.map(ev => {
+                const sigueSinRegistrar = ev.categoriaNoRegistrada && !categoriasEventos.some(c => c.toLowerCase() === ev.categoria.toLowerCase());
+                const badgeCat = sigueSinRegistrar
+                    ? `<span class="cat-no-registrada">⚠️ ${ev.categoria} (No registrada)</span>`
+                    : `<span class="badge-role role-admin">${ev.categoria}</span>`;
+
+                return `
+                    <div class="order-card ${sigueSinRegistrar ? 'evento-card-alerta' : ''}">
+                        <div class="order-card-header">
+                            <strong>${ev.clienteNombre}</strong>
+                            ${badgeCat}
+                        </div>
+                        <div style="font-size:0.86rem; color:#333; margin-bottom:0.35rem;">
+                            📅 <strong>Fecha Evento:</strong> ${ev.fechaEvento} | 🕒 <strong>Hora:</strong> ${ev.horaEvento} | 📞 <strong>Tel:</strong> ${ev.telefono}
+                        </div>
+                        <div style="font-size:0.88rem; background:white; padding:0.5rem; border-radius:4px; border:1px solid #eee;">
+                            <strong>Cantidad aprox.:</strong> ${ev.cantidadAprox} unid. ${ev.productoRef ? `| <strong>Referencia:</strong> ${ev.productoRef}` : ''}
+                            ${ev.detalles ? `<br><strong>Detalles:</strong> ${ev.detalles}` : ''}
+                        </div>
+                        <div style="font-size:0.75rem; color:#888; margin-top:0.35rem; text-align:right;">Recibido: ${ev.creadoEn}</div>
+                    </div>
+                `;
+            }).join('');
+
+            if (resContainer) resContainer.innerHTML = htmlCards;
+            if (modalContainer) modalContainer.innerHTML = htmlCards;
+        }
+
+        function abrirModalCategoriasEventos() {
+            if (!esAdministrador()) {
+                alert('Solo el Administrador puede agregar o gestionar categorías de eventos.');
+                return;
+            }
+            renderizarListaCategoriasOficiales();
+            renderizarEventosAdmin();
+            document.getElementById('categorias-eventos-modal').style.display = 'flex';
+        }
+
+        function cerrarModalCategoriasEventos() {
+            document.getElementById('categorias-eventos-modal').style.display = 'none';
+        }
+
+        function renderizarListaCategoriasOficiales() {
+            const cont = document.getElementById('lista-categorias-oficiales');
+            cont.innerHTML = '';
+            categoriasEventos.forEach((cat, idx) => {
+                const span = document.createElement('span');
+                span.className = 'badge-role role-admin';
+                span.style.padding = '0.3rem 0.6rem';
+                span.style.fontSize = '0.82rem';
+                span.innerHTML = `${cat} <button type="button" onclick="eliminarCategoriaEvento(${idx})" style="background:none; border:none; color:#c0392b; font-weight:bold; cursor:pointer; margin-left:4px;" title="Eliminar categoría">×</button>`;
+                cont.appendChild(span);
+            });
+        }
+
+        document.getElementById('nueva-cat-evento-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!esAdministrador()) {
+                alert('Solo el Administrador puede agregar categorías.');
+                return;
+            }
+            const nuevaCat = document.getElementById('cat-evento-input').value.trim();
+            if (!nuevaCat) return;
+            if (categoriasEventos.some(c => c.toLowerCase() === nuevaCat.toLowerCase())) {
+                alert('Esa categoría ya está registrada.');
+                return;
+            }
+            categoriasEventos.push(nuevaCat);
+            guardarCategoriasEventos();
+            this.reset();
+            renderizarListaCategoriasOficiales();
+            renderizarEventosAdmin();
+        });
+
+        function eliminarCategoriaEvento(idx) {
+            if (!esAdministrador()) {
+                alert('Solo el Administrador puede eliminar categorías.');
+                return;
+            }
+            categoriasEventos.splice(idx, 1);
+            guardarCategoriasEventos();
+            renderizarListaCategoriasOficiales();
+            renderizarEventosAdmin();
+        }
+
+        function actualizarUIUsuarioSesion() {
+            if (!usuarioSesion) return;
+            const banner = document.getElementById('usuario-activo-banner');
+            banner.textContent = `Sesión activa: ${usuarioSesion.nombre} (${usuarioSesion.rol})`;
+
+            const isAdmin = esAdministrador();
+            const btnUsuarios = document.getElementById('btn-gestionar-usuarios');
+            const btnLimpiarVentas = document.getElementById('btn-limpiar-ventas-hist');
+            const btnCatEventos = document.getElementById('btn-categorias-eventos');
+            const btnCatCard = document.getElementById('btn-gestionar-cat-card');
+            const btnMetodosPago = document.getElementById('btn-metodos-pago');
+            const btnReajuste = document.getElementById('btn-reajuste-masivo');
+            const btnLimpiarPedidos = document.getElementById('btn-limpiar-pedidos');
+            const avisoInv = document.getElementById('aviso-permisos-inventario');
+
+            if (btnUsuarios) btnUsuarios.style.display = isAdmin ? 'inline-block' : 'none';
+            if (btnLimpiarVentas) btnLimpiarVentas.style.display = isAdmin ? 'inline-block' : 'none';
+            if (btnCatEventos) btnCatEventos.style.display = isAdmin ? 'inline-block' : 'none';
+            if (btnCatCard) btnCatCard.style.display = isAdmin ? 'inline-block' : 'none';
+            if (btnMetodosPago) btnMetodosPago.style.display = isAdmin ? 'inline-block' : 'none';
+            if (btnReajuste) btnReajuste.style.display = isAdmin ? 'inline-block' : 'none';
+            if (btnLimpiarPedidos) btnLimpiarPedidos.style.display = isAdmin ? 'inline-block' : 'none';
+
+            ['prod-nombre', 'prod-categoria', 'prod-costo', 'prod-precio', 'prod-stock', 'prod-desc', 'btn-guardar-producto'].forEach(idEl => {
+                const el = document.getElementById(idEl);
+                if (el) el.disabled = !isAdmin;
+            });
+
+            if (avisoInv) {
+                avisoInv.textContent = isAdmin
+                    ? 'Modo Administrador: puedes modificar costos, precios, stock o eliminar productos al instante.'
+                    : 'Modo Empleado (Solo lectura de inventario): solo el Administrador puede modificar el inventario.';
+            }
+        }
+
+        function cambiarVista(vista) {
+            document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(vista).classList.add('active');
+            if (document.getElementById('btn-' + vista)) {
+                document.getElementById('btn-' + vista).classList.add('active');
+            }
+        }
+
+        function intentarAccesoAdmin() {
+            if (usuarioSesion) {
+                actualizarUIUsuarioSesion();
+                renderizarTodo();
+                cambiarVista('gestion');
+            } else {
+                document.getElementById('login-modal').style.display = 'flex';
+                document.getElementById('admin-pin-input').value = '';
+                document.getElementById('admin-pin-input').focus();
+            }
+        }
+
+        function cerrarModalLogin() {
+            document.getElementById('login-modal').style.display = 'none';
+        }
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const pinIngresado = document.getElementById('admin-pin-input').value.trim();
+            const usuarioEncontrado = usuariosSistema.find(u => u.pin === pinIngresado);
+
+            if (usuarioEncontrado) {
+                usuarioSesion = usuarioEncontrado;
+                sessionStorage.setItem('tienda_usuario_sesion', JSON.stringify(usuarioSesion));
+                cerrarModalLogin();
+                actualizarUIUsuarioSesion();
+                renderizarTodo();
+                cambiarVista('gestion');
+            } else {
+                alert('PIN incorrecto. Verifica tu código de acceso.');
+                document.getElementById('admin-pin-input').value = '';
+            }
+        });
+
+        function cerrarSesionAdmin() {
+            usuarioSesion = null;
+            sessionStorage.removeItem('tienda_usuario_sesion');
+            cambiarVista('menu');
+        }
+
+        function cambiarPinAdmin() {
+            if (!usuarioSesion) return;
+            const nuevoPin = prompt(`Ingresa el nuevo PIN para ${usuarioSesion.nombre} (mínimo 4 dígitos):`);
+            if (nuevoPin === null) return;
+            const pinLimpio = nuevoPin.trim();
+            if (pinLimpio.length < 4) {
+                alert('El PIN debe tener al menos 4 caracteres.');
+                return;
+            }
+            const pinDuplicado = usuariosSistema.some(u => u.pin === pinLimpio && u.id !== usuarioSesion.id);
+            if (pinDuplicado) {
+                alert('Ese PIN ya está asignado a otro usuario. Elige uno diferente.');
+                return;
+            }
+            const usr = usuariosSistema.find(u => u.id === usuarioSesion.id);
+            if (usr) {
+                usr.pin = pinLimpio;
+                usuarioSesion.pin = pinLimpio;
+                sessionStorage.setItem('tienda_usuario_sesion', JSON.stringify(usuarioSesion));
+                guardarUsuariosSistema();
+                alert('Tu PIN ha sido actualizado correctamente.');
+            }
+        }
+
+        let productoVentaActualId = null;
+
+        function abrirModalConfirmarVenta(productId) {
+            const prod = productos.find(p => p.id === productId);
+            if (!prod || prod.stock <= 0) {
+                alert('No hay stock disponible de este producto.');
+                return;
+            }
+            productoVentaActualId = productId;
+
+            document.getElementById('venta-prod-resumen').innerHTML = `
+                <strong>Producto:</strong> ${prod.nombre}<br>
+                <strong>Precio unitario:</strong> $${Number(prod.precio).toFixed(2)} | <strong>Stock disponible:</strong> ${prod.stock} unid.
+            `;
+
+            const cantInput = document.getElementById('venta-cantidad-input');
+            cantInput.max = prod.stock;
+            cantInput.value = 1;
+
+            const selCliente = document.getElementById('venta-cliente-select');
+            selCliente.innerHTML = '<option value="">-- Venta general / Sin cliente asignado --</option>';
+            directorioClientes.forEach(c => {
+                const descPct = obtenerPorcentajeDescuentoCliente(c);
+                const opt = document.createElement('option');
+                opt.value = c.id;
+                opt.textContent = `${c.nombre} (${c.compras} compras${descPct > 0 ? ` • ${descPct}% desc. listo` : ''})`;
+                selCliente.appendChild(opt);
+            });
+
+            document.getElementById('venta-estado-pago').value = 'PAGADO';
+            recalcularVistaPreviaVenta();
+            document.getElementById('venta-confirm-modal').style.display = 'flex';
+            cantInput.focus();
+        }
+
+        function recalcularVistaPreviaVenta() {
+            const prod = productos.find(p => p.id === productoVentaActualId);
+            if (!prod) return;
+            const cant = Math.max(1, parseInt(document.getElementById('venta-cantidad-input').value) || 1);
+            const cliId = document.getElementById('venta-cliente-select').value;
+            const cli = cliId ? directorioClientes.find(c => String(c.id) === String(cliId)) : null;
+            const descPct = obtenerPorcentajeDescuentoCliente(cli);
+            const estadoPago = document.getElementById('venta-estado-pago').value;
+
+            const subtotal = prod.precio * cant;
+            const montoDesc = subtotal * (descPct / 100);
+            const totalFinal = Math.max(0, subtotal - montoDesc);
+
+            document.getElementById('venta-calculo-box').innerHTML = `
+                <div>Estado seleccionado: <strong>${estadoPago === 'PAGADO' ? 'Pagado y verificado (Concreta venta y descuenta stock)' : 'Pendiente de verificar pago (No descuenta ni suma aún)'}</strong></div>
+                <div>Subtotal: <strong>$${subtotal.toFixed(2)}</strong></div>
+                ${descPct > 0 ? `<div style="color:var(--purple); font-weight:600;">Descuento automático (${descPct}%): -$${montoDesc.toFixed(2)}</div>` : ''}
+                <div style="font-size:1.05rem; color:var(--success); font-weight:bold; margin-top:4px;">Total: $${totalFinal.toFixed(2)}</div>
+            `;
+        }
+
+        function cancelarModalVenta() {
+            productoVentaActualId = null;
+            document.getElementById('venta-confirm-modal').style.display = 'none';
+        }
+
+        document.getElementById('venta-confirm-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const prod = productos.find(p => p.id === productoVentaActualId);
+            if (!prod) return;
+
+            const cant = parseInt(document.getElementById('venta-cantidad-input').value) || 0;
+            if (cant <= 0) {
+                alert('Ingresa una cantidad válida mayor a 0.');
+                return;
+            }
+            if (cant > prod.stock) {
+                alert(`La cantidad (${cant}) supera el stock disponible (${prod.stock}).`);
+                return;
+            }
+
+            const cliId = document.getElementById('venta-cliente-select').value;
+            const cli = cliId ? directorioClientes.find(c => String(c.id) === String(cliId)) : null;
+            const descPct = obtenerPorcentajeDescuentoCliente(cli);
+            const estadoPago = document.getElementById('venta-estado-pago').value;
+
+            const subtotal = prod.precio * cant;
+            const totalFinal = Math.max(0, subtotal - (subtotal * (descPct / 100)));
+            const nombreOperador = usuarioSesion ? `${usuarioSesion.nombre} (${usuarioSesion.rol})` : 'Administrador';
+            const fechaHora = obtenerFechaHoraActual();
+
+            if (estadoPago === 'PAGADO') {
+                prod.stock -= cant;
+                totalVentas += totalFinal;
+
+                historialVentas.unshift({
+                    id: Date.now() + Math.floor(Math.random() * 10000),
+                    productId: prod.id,
+                    clienteId: cli ? cli.id : null,
+                    clienteNombre: cli ? cli.nombre : 'General',
+                    fechaHora: fechaHora,
+                    producto: prod.nombre + (descPct > 0 ? ` (-${descPct}% desc.)` : ''),
+                    cantidad: cant,
+                    total: totalFinal,
+                    metodoPago: 'Venta Directa (Pagada)',
+                    usuario: nombreOperador,
+                    anulada: false
+                });
+
+                if (cli) {
+                    registrarCompraEnCliente(cli.id, totalFinal);
+                }
+
+                localStorage.setItem('tienda_historial_ventas', JSON.stringify(historialVentas));
+                cancelarModalVenta();
+                guardarDatos();
+                alert('Venta concretada: pago verificado y marcado como PAGADO.');
+            } else {
+                pedidosRecibidos.unshift({
+                    id: Date.now(),
+                    fecha: fechaHora,
+                    cliente: {
+                        nombre: cli ? cli.nombre : 'Venta Directa',
+                        apellido: '',
+                        telefono: cli ? (cli.telefono || '-') : '-',
+                        correo: cli ? (cli.correo || '-') : '-',
+                        direccion: 'Registro en panel interno'
+                    },
+                    clienteId: cli ? cli.id : null,
+                    items: [{ id: prod.id, nombre: prod.nombre, precio: prod.precio, cantidad: cant }],
+                    metodoPago: 'Por verificar',
+                    descuentoAplicado: descPct,
+                    total: totalFinal,
+                    pagado: false
+                });
+                localStorage.setItem('tienda_pedidos', JSON.stringify(pedidosRecibidos));
+                cancelarModalVenta();
+                renderizarPedidosAdmin();
+                alert('Registrada como PENDIENTE DE VERIFICAR PAGO. Se concretará cuando se marque como PAGADO.');
+            }
+        });
+
+        function abrirModalDetalleProductos() {
+            const tbody = document.getElementById('modal-productos-tbody');
+            tbody.innerHTML = '';
+
+            if (productos.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#777;">No hay productos registrados en el menú.</td></tr>';
+            } else {
+                productos.forEach(prod => {
+                    const costo = prod.costo || 0;
+                    const ganancia = prod.precio - costo;
+                    const margen = costo > 0 ? ((ganancia / costo) * 100).toFixed(0) : 100;
+                    const valorStock = prod.precio * prod.stock;
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${prod.nombre}</strong><br><small style="color:#777">${prod.desc || ''}</small></td>
+                        <td>${prod.categoria}</td>
+                        <td>$${costo.toFixed(2)}</td>
+                        <td style="color:var(--success); font-weight:bold;">$${prod.precio.toFixed(2)}</td>
+                        <td>$${ganancia.toFixed(2)} (${margen}%)</td>
+                        <td><strong>${prod.stock}</strong> unid.</td>
+                        <td>$${valorStock.toFixed(2)}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+            document.getElementById('detalle-productos-modal').style.display = 'flex';
+        }
+
+        function cerrarModalDetalleProductos() {
+            document.getElementById('detalle-productos-modal').style.display = 'none';
+        }
+
+        let ventaPendienteAnularId = null;
+
+        function abrirModalDetalleVentas() {
+            const tbody = document.getElementById('modal-ventas-tbody');
+            tbody.innerHTML = '';
+
+            if (historialVentas.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#777;">No hay ventas concretadas aún.</td></tr>';
+            } else {
+                historialVentas.forEach(v => {
+                    const esAnulada = v.anulada === true;
+                    const tr = document.createElement('tr');
+                    if (esAnulada) tr.className = 'venta-anulada-row';
+                    tr.innerHTML = `
+                        <td style="white-space:nowrap;">${v.fechaHora}</td>
+                        <td><strong>${v.producto}</strong>${esAnulada ? `<br><small style="color:var(--danger); text-decoration:none; display:inline-block;">Anulada por: ${v.anuladaPor || 'Admin'}</small>` : ''}</td>
+                        <td>${v.cantidad}</td>
+                        <td>${v.clienteNombre || 'General'}<br><small style="color:#666;">${v.metodoPago || ''}</small></td>
+                        <td style="color:${esAnulada ? '#888' : 'var(--success)'}; font-weight:bold;">$${Number(v.total).toFixed(2)}</td>
+                        <td><span class="badge-role role-admin">${v.usuario}</span></td>
+                        <td class="no-strike">
+                            ${esAnulada
+                                ? '<span class="badge-anulada">ANULADA</span>'
+                                : `<span class="badge-activa" style="margin-right:4px;">PAGADA</span><button type="button" class="btn-sm btn-delete" onclick="solicitarAnularVenta(${v.id})">Anular</button>`
+                            }
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+            document.getElementById('detalle-ventas-modal').style.display = 'flex';
+        }
+
+        function solicitarAnularVenta(ventaId) {
+            const venta = historialVentas.find(v => v.id === ventaId);
+            if (!venta || venta.anulada) return;
+            ventaPendienteAnularId = ventaId;
+            document.getElementById('anular-venta-info').innerHTML = `
+                <strong>Producto:</strong> ${venta.producto} (${venta.cantidad} unid.)<br>
+                <strong>Monto:</strong> $${Number(venta.total).toFixed(2)}<br>
+                <strong>Fecha:</strong> ${venta.fechaHora}
+            `;
+            document.getElementById('anular-admin-pin').value = '';
+            document.getElementById('anular-venta-modal').style.display = 'flex';
+            document.getElementById('anular-admin-pin').focus();
+        }
+
+        function cerrarModalAnularVenta() {
+            ventaPendienteAnularId = null;
+            document.getElementById('anular-venta-modal').style.display = 'none';
+        }
+
+        document.getElementById('anular-venta-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (ventaPendienteAnularId === null) return;
+
+            const pinIngresado = document.getElementById('anular-admin-pin').value.trim();
+            const adminValido = usuariosSistema.find(u => u.rol === 'Administrador' && u.pin === pinIngresado);
+
+            if (!adminValido) {
+                alert('Acceso denegado: el PIN ingresado no corresponde a un Administrador.');
+                document.getElementById('anular-admin-pin').value = '';
+                document.getElementById('anular-admin-pin').focus();
+                return;
+            }
+
+            const venta = historialVentas.find(v => v.id === ventaPendienteAnularId);
+            if (!venta || venta.anulada) {
+                cerrarModalAnularVenta();
+                return;
+            }
+
+            venta.anulada = true;
+            venta.anuladaPor = adminValido.nombre;
+            venta.fechaAnulacion = obtenerFechaHoraActual();
+
+            if (venta.productId) {
+                const prod = productos.find(p => p.id === venta.productId);
+                if (prod) {
+                    prod.stock += (Number(venta.cantidad) || 1);
+                }
+            }
+
+            if (venta.clienteId) {
+                revertirCompraEnCliente(venta.clienteId, venta.total);
+            }
+
+            totalVentas = Math.max(0, totalVentas - (Number(venta.total) || 0));
+            localStorage.setItem('tienda_historial_ventas', JSON.stringify(historialVentas));
+            cerrarModalAnularVenta();
+            guardarDatos();
+            abrirModalDetalleVentas();
+            alert('Venta anulada correctamente. El monto se descontó del total y el stock fue restaurado.');
+        });
+
+        function cerrarModalDetalleVentas() {
+            document.getElementById('detalle-ventas-modal').style.display = 'none';
+        }
+
+        function limpiarHistorialVentas() {
+            if (!esAdministrador()) {
+                alert('Solo el Administrador puede borrar el historial de ventas.');
+                return;
+            }
+            if (confirm('¿Seguro que deseas reiniciar el historial detallado de ventas y el contador a $0.00?')) {
+                historialVentas = [];
+                totalVentas = 0;
+                localStorage.setItem('tienda_historial_ventas', JSON.stringify(historialVentas));
+                guardarDatos();
+                abrirModalDetalleVentas();
+            }
+        }
+
+        function descargarArchivoExcel(nombreArchivo, titulo, headers, filas) {
+            let tablaHtml = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+            <head><meta charset="UTF-8"></head><body><h3>${titulo} - Gala Fest</h3><table border="1"><thead><tr>`;
+            headers.forEach(h => { tablaHtml += `<th>${h}</th>`; });
+            tablaHtml += `</tr></thead><tbody>`;
+            filas.forEach(fila => {
+                tablaHtml += `<tr>`;
+                fila.forEach(celda => { tablaHtml += `<td>${String(celda ?? '').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</td>`; });
+                tablaHtml += `</tr>`;
+            });
+            tablaHtml += `</tbody></table></body></html>`;
+
+            const blob = new Blob([tablaHtml], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `${nombreArchivo}.xls`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function imprimirReportePDF(titulo, headers, filas) {
+            const win = window.open('', '_blank');
+            if (!win) {
+                alert('Permite las ventanas emergentes para generar el PDF.');
+                return;
+            }
+            const thHtml = headers.map(h => `<th style="border:1px solid #ccc; padding:8px; background:#f4f7f6; text-align:left;">${h}</th>`).join('');
+            const trHtml = filas.map(f => `<tr>${f.map(c => `<td style="border:1px solid #ddd; padding:7px;">${c}</td>`).join('')}</tr>`).join('');
+
+            win.document.write(`
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>${titulo} - Gala Fest</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; color: #222; }
+                        h2 { color: #2c3e50; margin-bottom: 6px; }
+                        p { color: #666; font-size: 12px; margin-bottom: 14px; }
+                        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+                    </style>
+                </head>
+                <body>
+                    <h2>Gala Fest — ${titulo}</h2>
+                    <p>Generado el: ${obtenerFechaHoraActual()} (Se cobra a tasa del día)</p>
+                    <table><thead><tr>${thHtml}</tr></thead><tbody>${trHtml}</tbody></table>
+                    <script>window.onload = function() { window.print(); };<\/script>
+                </body>
+                </html>
+            `);
+            win.document.close();
+        }
+
+        function exportarVentasExcel() {
+            const headers = ['Fecha y Hora', 'Producto', 'Cantidad', 'Cliente', 'Método de Pago', 'Total ($)', 'Usuario / Origen', 'Estado'];
+            const filas = historialVentas.map(v => [
+                v.fechaHora,
+                v.producto,
+                v.cantidad,
+                v.clienteNombre || 'General',
+                v.metodoPago || 'N/A',
+                Number(v.total).toFixed(2),
+                v.usuario,
+                v.anulada ? 'ANULADA' : 'PAGADA'
+            ]);
+            descargarArchivoExcel('registro_ventas_galafest', 'Registro de Ventas', headers, filas);
+        }
+
+        function exportarVentasPDF() {
+            const headers = ['Fecha y Hora', 'Producto', 'Cant.', 'Cliente', 'Total ($)', 'Usuario', 'Estado'];
+            const filas = historialVentas.map(v => [
+                v.fechaHora,
+                v.producto,
+                v.cantidad,
+                v.clienteNombre || 'General',
+                '$' + Number(v.total).toFixed(2),
+                v.usuario,
+                v.anulada ? 'ANULADA' : 'PAGADA'
+            ]);
+            imprimirReportePDF('Registro de Ventas', headers, filas);
+        }
+
+        function exportarClientesExcel() {
+            const headers = ['Cliente', 'Teléfono', 'Correo', 'Cantidad Compras', 'Total Ventas ($)', 'Descuento Activo (%)'];
+            const filas = directorioClientes.map(c => [
+                c.nombre,
+                c.telefono || '',
+                c.correo || '',
+                c.compras || 0,
+                Number(c.totalVentas || 0).toFixed(2),
+                obtenerPorcentajeDescuentoCliente(c) + '%'
+            ]);
+            descargarArchivoExcel('directorio_clientes_galafest', 'Directorio de Clientes', headers, filas);
+        }
+
+        function exportarClientesPDF() {
+            const headers = ['Cliente', 'Teléfono', 'Correo', 'Compras', 'Total Ventas', 'Descuento'];
+            const filas = directorioClientes.map(c => [
+                c.nombre,
+                c.telefono || '-',
+                c.correo || '-',
+                c.compras || 0,
+                '$' + Number(c.totalVentas || 0).toFixed(2),
+                obtenerPorcentajeDescuentoCliente(c) + '%'
+            ]);
+            imprimirReportePDF('Directorio de Clientes', headers, filas);
+        }
+
+        function abrirModalUsuarios() {
+            if (!esAdministrador()) {
+                alert('Solo el Administrador puede gestionar usuarios.');
+                return;
+            }
+            renderizarTablaUsuarios();
+            document.getElementById('usuarios-modal').style.display = 'flex';
+        }
+
+        function cerrarModalUsuarios() {
+            document.getElementById('usuarios-modal').style.display = 'none';
+        }
+
+        function renderizarTablaUsuarios() {
+            const tbody = document.getElementById('usuarios-tbody');
+            tbody.innerHTML = '';
+            usuariosSistema.forEach(u => {
+                const esPrincipal = u.id === 1;
+                const claseRol = u.rol === 'Administrador' ? 'role-admin' : 'role-emp';
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${u.nombre}</strong></td>
+                    <td><span class="badge-role ${claseRol}">${u.rol}</span></td>
+                    <td><code>${u.pin}</code></td>
+                    <td>
+                        <button class="btn-sm btn-info" onclick="editarPinUsuario(${u.id})">Cambiar PIN</button>
+                        ${!esPrincipal ? `<button class="btn-sm btn-delete" onclick="eliminarUsuario(${u.id})">Eliminar</button>` : '<small style="color:#888; margin-left:4px;">Principal</small>'}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        document.getElementById('nuevo-usuario-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('usr-nombre').value.trim();
+            const pin = document.getElementById('usr-pin').value.trim();
+            const rol = document.getElementById('usr-rol').value;
+
+            if (pin.length < 4) {
+                alert('El PIN debe tener al menos 4 dígitos o caracteres.');
+                return;
+            }
+            if (usuariosSistema.some(u => u.pin === pin)) {
+                alert('Ese PIN ya está en uso por otro usuario. Asigna un PIN único.');
+                return;
+            }
+
+            usuariosSistema.push({
+                id: Date.now(),
+                nombre: nombre,
+                rol: rol,
+                pin: pin
+            });
+            guardarUsuariosSistema();
+            this.reset();
+            renderizarTablaUsuarios();
+        });
+
+        function editarPinUsuario(id) {
+            const usr = usuariosSistema.find(u => u.id === id);
+            if (!usr) return;
+            const nuevoPin = prompt(`Nuevo PIN para ${usr.nombre} (mínimo 4 dígitos):`, usr.pin);
+            if (nuevoPin === null) return;
+            const limpio = nuevoPin.trim();
+            if (limpio.length < 4) {
+                alert('El PIN debe tener al menos 4 caracteres.');
+                return;
+            }
+            if (usuariosSistema.some(u => u.pin === limpio && u.id !== id)) {
+                alert('Ese PIN ya pertenece a otro usuario.');
+                return;
+            }
+            usr.pin = limpio;
+            if (usuarioSesion && usuarioSesion.id === id) {
+                usuarioSesion.pin = limpio;
+                sessionStorage.setItem('tienda_usuario_sesion', JSON.stringify(usuarioSesion));
+            }
+            guardarUsuariosSistema();
+            renderizarTablaUsuarios();
+        }
+
+        function eliminarUsuario(id) {
+            if (id === 1) return;
+            if (confirm('¿Deseas eliminar este usuario del sistema?')) {
+                usuariosSistema = usuariosSistema.filter(u => u.id !== id);
+                guardarUsuariosSistema();
+                renderizarTablaUsuarios();
+            }
+        }
+
+        let ultimoCostoUnitario = 0;
+        let ultimoPrecioSugerido = 0;
+
+        function calcularCostoSugerido() {
+            const costoLote = parseFloat(document.getElementById('calc-lote-costo').value) || 0;
+            const unidades = parseInt(document.getElementById('calc-lote-unidades').value) || 1;
+            const margen = parseFloat(document.getElementById('calc-margen').value) || 0;
+
+            ultimoCostoUnitario = costoLote / unidades;
+            const gananciaUnitaria = ultimoCostoUnitario * (margen / 100);
+            ultimoPrecioSugerido = ultimoCostoUnitario + gananciaUnitaria;
+
+            document.getElementById('calc-output').innerHTML = `
+                <div>Costo por unidad: <strong>$${ultimoCostoUnitario.toFixed(2)}</strong></div>
+                <div>Ganancia por unidad: <strong>$${gananciaUnitaria.toFixed(2)}</strong></div>
+                <div style="margin-top: 4px; color: var(--success); font-size: 1rem;">Precio sugerido: <strong>$${ultimoPrecioSugerido.toFixed(2)}</strong></div>
+            `;
+        }
+
+        function pasarAlFormulario() {
+            if (!esAdministrador()) {
+                alert('Solo el Administrador puede modificar el inventario.');
+                return;
+            }
+            if (ultimoCostoUnitario > 0) {
+                document.getElementById('prod-costo').value = ultimoCostoUnitario.toFixed(2);
+                document.getElementById('prod-precio').value = ultimoPrecioSugerido.toFixed(2);
+                const unidades = parseInt(document.getElementById('calc-lote-unidades').value);
+                if (unidades > 0) {
+                    document.getElementById('prod-stock').value = unidades;
+                }
+            }
+        }
+
+        function guardarDatos() {
+            localStorage.setItem('tienda_productos', JSON.stringify(productos));
+            localStorage.setItem('tienda_ventas', totalVentas.toString());
+            renderizarTodo();
+        }
+
+        function renderizarTodo() {
+            const menuContainer = document.getElementById('menu-container');
+            const inventoryTable = document.getElementById('inventory-table');
+            const isAdmin = esAdministrador();
+
+            menuContainer.innerHTML = '';
+            inventoryTable.innerHTML = '';
+
+            let totalStock = 0;
+            let costoTotalInventario = 0;
+
+            productos.forEach(prod => {
+                const costoProd = prod.costo || 0;
+                totalStock += prod.stock;
+                costoTotalInventario += (costoProd * prod.stock);
+
+                const ganancia = prod.precio - costoProd;
+                const porcentajeMargen = costoProd > 0 ? ((ganancia / costoProd) * 100).toFixed(0) : 100;
+                let claseMargen = 'margin-good';
+                if (ganancia <= 0) claseMargen = 'margin-bad';
+                else if (porcentajeMargen < 30) claseMargen = 'margin-low';
+
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div>
+                        <span class="product-category">${prod.categoria}</span>
+                        <h3 class="product-title">${prod.nombre}</h3>
+                        <p class="product-desc">${prod.desc || 'Sin descripción'}</p>
+                    </div>
+                    <div>
+                        <div class="product-footer">
+                            <span class="product-price">$${prod.precio.toFixed(2)}</span>
+                            <span class="product-stock">${prod.stock > 0 ? 'Disponible: ' + prod.stock : 'Agotado'}</span>
+                        </div>
+                        <button class="btn" ${prod.stock <= 0 ? 'disabled' : ''} onclick="intentarPedirProducto(${prod.id})">
+                            ${prod.stock > 0 ? '+ Agregar al Pedido' : 'Agotado'}
+                        </button>
+                    </div>
+                `;
+                menuContainer.appendChild(card);
+
+                const disabledAttr = isAdmin ? '' : 'disabled';
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <strong>${prod.nombre}</strong><br>
+                        <small style="color:#777">${prod.categoria}</small>
+                    </td>
+                    <td>
+                        <input type="number" class="inline-input" step="0.01" min="0" value="${costoProd.toFixed(2)}" ${disabledAttr}
+                               onchange="actualizarCampo(${prod.id}, 'costo', this.value)" title="Editar costo unitario">
+                    </td>
+                    <td>
+                        <input type="number" class="inline-input" step="0.01" min="0" value="${prod.precio.toFixed(2)}" ${disabledAttr}
+                               onchange="actualizarCampo(${prod.id}, 'precio', this.value)" title="Editar precio de venta">
+                    </td>
+                    <td>
+                        <span class="badge-margin ${claseMargen}">$${ganancia.toFixed(2)} (${porcentajeMargen}%)</span>
+                    </td>
+                    <td>
+                        <input type="number" class="inline-input" style="width: 60px;" min="0" value="${prod.stock}" ${disabledAttr}
+                               onchange="actualizarCampo(${prod.id}, 'stock', this.value)" title="Editar cantidad en stock">
+                    </td>
+                    <td>
+                        <button class="btn-sm btn-sell" onclick="abrirModalConfirmarVenta(${prod.id})" title="Registrar venta y verificar pago">Vender</button>
+                        ${isAdmin ? `<button class="btn-sm btn-delete" onclick="eliminarProducto(${prod.id})" title="Eliminar producto">X</button>` : ''}
+                    </td>
+                `;
+                inventoryTable.appendChild(row);
+            });
+
+            document.getElementById('stat-total-productos').textContent = productos.length;
+            document.getElementById('stat-total-stock').textContent = totalStock;
+            document.getElementById('stat-costo-inventario').textContent = '$' + costoTotalInventario.toFixed(2);
+            document.getElementById('stat-ventas').textContent = '$' + totalVentas.toFixed(2);
+
+            renderizarPedidosAdmin();
+            renderizarEventosAdmin();
+        }
+
+        function actualizarCampo(id, campo, valor) {
+            if (!esAdministrador()) {
+                alert('Solo el Administrador tiene permiso para modificar el inventario.');
+                renderizarTodo();
+                return;
+            }
+            const prod = productos.find(p => p.id === id);
+            if (!prod) return;
+
+            if (campo === 'stock') {
+                prod.stock = Math.max(0, parseInt(valor) || 0);
+            } else {
+                prod[campo] = Math.max(0, parseFloat(valor) || 0);
+            }
+            guardarDatos();
+        }
+
+        function reajustarPreciosMasivo() {
+            if (!esAdministrador()) {
+                alert('Solo el Administrador puede realizar reajustes masivos de precios.');
+                return;
+            }
+            const porcentaje = prompt('Ingresa el porcentaje de ajuste para todos los precios (ej. 10 para subir 10%, o -10 para bajar 10%):');
+            if (porcentaje === null) return;
+            const factor = parseFloat(porcentaje);
+            if (isNaN(factor)) {
+                alert('Por favor ingresa un número válido.');
+                return;
+            }
+            productos.forEach(prod => {
+                prod.precio = Math.max(0, prod.precio * (1 + factor / 100));
+            });
+            guardarDatos();
+            alert(`Precios reajustados en un ${factor}%.`);
+        }
+
+        document.getElementById('product-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!esAdministrador()) {
+                alert('Solo el Administrador puede agregar productos al inventario.');
+                return;
+            }
+            const nuevo = {
+                id: Date.now(),
+                nombre: document.getElementById('prod-nombre').value,
+                categoria: document.getElementById('prod-categoria').value,
+                costo: parseFloat(document.getElementById('prod-costo').value) || 0,
+                precio: parseFloat(document.getElementById('prod-precio').value) || 0,
+                stock: parseInt(document.getElementById('prod-stock').value) || 0,
+                desc: document.getElementById('prod-desc').value
+            };
+            productos.push(nuevo);
+            this.reset();
+            guardarDatos();
+        });
+
+        function eliminarProducto(id) {
+            if (!esAdministrador()) {
+                alert('Solo el Administrador puede eliminar productos del inventario.');
+                return;
+            }
+            if (confirm('¿Seguro que deseas eliminar este producto del menú?')) {
+                productos = productos.filter(p => p.id !== id);
+                guardarDatos();
+            }
+        }
+
+        if (clienteActual) {
+            sincronizarClienteEnDirectorio(clienteActual);
+        }
+        actualizarEstadoClienteUI();
+        actualizarUIUsuarioSesion();
+        renderizarTodo();
+    </script>
+</body>
+</html>
