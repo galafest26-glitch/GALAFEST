@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión y Menú - Mi Tienda</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --accent-hover: #d35400;
+            --bg: #f4f7f6;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --border: #e0e0e0;
+            --success: #27ae60;
+            --danger: #c0392b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        nav button {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            margin-left: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        nav button:hover, nav button.active {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        /* Estilos del Menú Público */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-category {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0.3rem 0;
+            color: var(--primary);
+        }
+
+        .product-desc {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            padding-top: 0.8rem;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--success);
+        }
+
+        .product-stock {
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        /* Estilos del Panel de Gestión */
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid var(--border);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-sm {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+            width: auto;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn-sell { background-color: var(--success); }
+        .btn-delete { background-color: var(--danger); margin-left: 0.3rem; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: var(--primary);
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: var(--card-bg);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .stat-box span {
+            display: block;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .stat-box strong {
+            font-size: 1.4rem;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- EDITA AQUÍ EL NOMBRE DE TU TIENDA -->
+        <h1 id="store-name">Mi Tienda & Menú</h1>
+        <nav>
+            <button id="btn-menu" class="active" onclick="cambiarVista('menu')">Ver Menú</button>
+            <button id="btn-gestion" onclick="cambiarVista('gestion')">Panel de Gestión</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- SECCIÓN 1: MENÚ PARA CLIENTES -->
+        <section id="menu" class="active">
+            <h2>Nuestro Menú</h2>
+            <div id="menu-container" class="menu-grid">
+                <!-- Los productos se cargan automáticamente desde JavaScript -->
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: GESTIÓN DE TIENDA E INVENTARIO -->
+        <section id="gestion">
+            <h2>Gestión de Tienda</h2>
+
+            <!-- Resumen rápido -->
+            <div class="stats-bar">
+                <div class="stat-box">
+                    <span>Productos en Menú</span>
+                    <strong id="stat-total-productos">0</strong>
+                </div>
+                <div class="stat-box">
+                    <span>Unidades en Stock</span>
+                    <strong id="stat-total-stock">0</strong>
+                </div>
+                <div class="stat-box">
+                    <span>Ventas Registradas ($)</span>
+                    <strong id="stat-ventas">$0.00</strong>
+                </div>
+            </div>
+
+            <div class="admin-grid">
+                <!-- Formulario para agregar productos -->
+                <div class="card">
+                    <h3>Agregar al Menú</h3>
+                    <form id="product-form" style="margin-top: 1rem;">
+                        <div class="form-group">
+                            <label for="prod-nombre">Nombre del Producto</label>
+                            <input type="text" id="prod-nombre" placeholder="Ej. Combo Especial" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-categoria">Categoría</label>
+                            <select id="prod-categoria">
+                                <option value="Principal">Principal</option>
+                                <option value="Postres">Postres</option>
+                                <option value="Bebidas">Bebidas</option>
+                                <option value="Pasapalos">Pasapalos / Snacks</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-precio">Precio ($)</label>
+                            <input type="number" id="prod-precio" step="0.01" min="0" placeholder="0.00" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-stock">Cantidad Disponible (Stock)</label>
+                            <input type="number" id="prod-stock" min="0" placeholder="10" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="prod-desc">Descripción corta</label>
+                            <textarea id="prod-desc" rows="2" placeholder="Ingredientes o detalles..."></textarea>
+                        </div>
+                        <button type="submit" class="btn">Guardar Producto</button>
+                    </form>
+                </div>
+
+                <!-- Tabla de inventario y ventas -->
+                <div class="card">
+                    <h3>Inventario y Control</h3>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                    <th>Stock</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventory-table">
+                                <!-- Filas generadas automáticamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Datos iniciales de ejemplo (puedes borrarlos o editarlos desde la web)
+        let productos = JSON.parse(localStorage.getItem('tienda_productos')) || [
+            { id: 1, nombre: 'Producto de Ejemplo 1', categoria: 'Principal', precio: 5.00, stock: 12, desc: 'Descripción editable desde el panel de gestión.' },
+            { id: 2, nombre: 'Producto de Ejemplo 2', categoria: 'Postres', precio: 3.50, stock: 8, desc: 'Ideal para acompañar o pedir por encargo.' }
+        ];
+
+        let totalVentas = parseFloat(localStorage.getItem('tienda_ventas')) || 0;
+
+        // Cambiar entre pestaña de Menú y Gestión
+        function cambiarVista(vista) {
+            document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(vista).classList.add('active');
+            document.getElementById('btn-' + vista).classList.add('active');
+        }
+
+        // Guardar datos en el navegador (LocalStorage)
+        function guardarDatos() {
+            localStorage.setItem('tienda_productos', JSON.stringify(productos));
+            localStorage.setItem('tienda_ventas', totalVentas.toString());
+            renderizarTodo();
+        }
+
+        // Renderizar Menú, Tabla de Gestión y Estadísticas
+        function renderizarTodo() {
+            const menuContainer = document.getElementById('menu-container');
+            const inventoryTable = document.getElementById('inventory-table');
+
+            menuContainer.innerHTML = '';
+            inventoryTable.innerHTML = '';
+
+            let totalStock = 0;
+
+            productos.forEach(prod => {
+                totalStock += prod.stock;
+
+                // 1. Tarjeta en el Menú Público
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div>
+                        <span class="product-category">${prod.categoria}</span>
+                        <h3 class="product-title">${prod.nombre}</h3>
+                        <p class="product-desc">${prod.desc || 'Sin descripción'}</p>
+                    </div>
+                    <div class="product-footer">
+                        <span class="product-price">$${prod.precio.toFixed(2)}</span>
+                        <span class="product-stock">${prod.stock > 0 ? 'Disponible: ' + prod.stock : 'Agotado'}</span>
+                    </div>
+                `;
+                menuContainer.appendChild(card);
+
+                // 2. Fila en la Tabla de Gestión
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${prod.nombre}</strong><br><small style="color:#777">${prod.categoria}</small></td>
+                    <td>$${prod.precio.toFixed(2)}</td>
+                    <td>${prod.stock}</td>
+                    <td>
+                        <button class="btn-sm btn-sell" onclick="registrarVenta(${prod.id})" title="Restar 1 al stock y sumar venta">+ Venta</button>
+                        <button class="btn-sm btn-delete" onclick="eliminarProducto(${prod.id})" title="Eliminar">X</button>
+                    </td>
+                `;
+                inventoryTable.appendChild(row);
+            });
+
+            // Actualizar indicadores
+            document.getElementById('stat-total-productos').textContent = productos.length;
+            document.getElementById('stat-total-stock').textContent = totalStock;
+            document.getElementById('stat-ventas').textContent = '$' + totalVentas.toFixed(2);
+        }
+
+        // Agregar nuevo producto desde el formulario
+        document.getElementById('product-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nuevo = {
+                id: Date.now(),
+                nombre: document.getElementById('prod-nombre').value,
+                categoria: document.getElementById('prod-categoria').value,
+                precio: parseFloat(document.getElementById('prod-precio').value),
+                stock: parseInt(document.getElementById('prod-stock').value),
+                desc: document.getElementById('prod-desc').value
+            };
+            productos.push(nuevo);
+            this.reset();
+            guardarDatos();
+        });
+
+        // Registrar una venta rápida
+        function registrarVenta(id) {
+            const prod = productos.find(p => p.id === id);
+            if (prod && prod.stock > 0) {
+                prod.stock -= 1;
+                totalVentas += prod.precio;
+                guardarDatos();
+            } else {
+                alert('No hay stock disponible de este producto.');
+            }
+        }
+
+        // Eliminar producto
+        function eliminarProducto(id) {
+            if (confirm('¿Seguro que deseas eliminar este producto del menú?')) {
+                productos = productos.filter(p => p.id !== id);
+                guardarDatos();
+            }
+        }
+
+        // Inicializar al abrir la página
+        renderizarTodo();
+    </script>
+</body>
+</html>
