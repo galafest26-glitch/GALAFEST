@@ -1,0 +1,2959 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gala Fest — Diseños Digitales, Dulces y Pasapalos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#FAF6F0',
+            sand: '#F1E8DC',
+            cocoa: '#3B281E',
+            espresso: '#5A4032',
+            terracotta: '#B56547',
+            terracottaDark: '#944D33',
+            goldSoft: '#D6A47C',
+            sage: '#5E7461',
+            linen: '#FFFDF9'
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Inter"', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #FAF6F0;
+      color: #3B281E;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .font-editorial {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-cream text-cocoa selection:bg-terracotta/20 selection:text-cocoa">
+
+  <!-- Contenedor de notificaciones tipo toast -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+  <!-- Barra superior persistente -->
+  <header id="main-header" class="sticky top-0 z-30 bg-linen/95 backdrop-blur border-b border-cocoa/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+      <!-- Marca y monograma GF -->
+      <button type="button" onclick="goHome()" class="flex items-center gap-2.5 text-left group cursor-pointer focus:outline-none">
+        <span class="w-10 h-10 rounded-2xl bg-sand/90 border border-terracotta/25 flex items-center justify-center shadow-xs group-hover:scale-105 transition">
+          <!-- Monograma caligráfico entrelazado GF en acabado cobrizo/terracota sobre fondo transparente -->
+          <svg viewBox="0 0 120 100" class="w-8 h-8 overflow-visible" aria-label="Logo Gala Fest GF">
+            <defs>
+              <linearGradient id="gfCopperGrad" x1="15%" y1="10%" x2="85%" y2="90%">
+                <stop offset="0%" stop-color="#D28B6B" />
+                <stop offset="48%" stop-color="#B56547" />
+                <stop offset="100%" stop-color="#874229" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M 56 26 C 50 18, 30 18, 22 33 C 14 48, 17 70, 32 76 C 43 80, 53 74, 57 65 L 45 65 C 42 68, 36 69, 31 65 C 24 60, 24 44, 31 35 C 37 27, 48 27, 53 33 Z"
+              fill="url(#gfCopperGrad)"
+              stroke="#6E331E"
+              stroke-width="1.2"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M 52 38 C 66 33, 89 32, 98 34 C 102 35, 102 40, 96 41 C 88 42, 76 41, 69 44 L 69 54 L 84 54 C 87 54, 87 59, 83 60 L 69 60 L 69 77 C 69 87, 59 93, 48 90 C 42 88, 41 81, 46 79 C 50 78, 53 81, 52 84 C 57 85, 61 81, 61 75 L 61 45 C 57 46, 53 45, 52 38 Z"
+              fill="url(#gfCopperGrad)"
+              stroke="#6E331E"
+              stroke-width="1.2"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
+        <div>
+          <span class="font-editorial text-xl sm:text-2xl font-bold tracking-tight text-cocoa leading-none block">Gala Fest</span>
+          <span class="text-[11px] text-espresso/75 tracking-wide hidden sm:block">Diseños Digitales · Dulces y Pasapalos</span>
+        </div>
+      </button>
+
+      <!-- Acciones dinámicas según la vista activa -->
+      <div id="header-actions" class="flex items-center gap-2 sm:gap-3"></div>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+
+    <!-- =========================================================
+         1. PANTALLA DE INICIO (Limpia, sin cuadros de estadísticas)
+    ========================================================== -->
+    <section id="view-home" class="py-6 sm:py-12">
+      <div class="max-w-4xl mx-auto rounded-3xl bg-linen border border-cocoa/10 shadow-sm p-6 sm:p-12 text-center space-y-8">
+        <div class="flex flex-col items-center space-y-4">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-sand/80 border border-terracotta/25 flex items-center justify-center shadow-xs">
+            <svg viewBox="0 0 120 100" class="w-20 h-20 sm:w-24 sm:h-24 overflow-visible" aria-label="Monograma Gala Fest">
+              <defs>
+                <linearGradient id="gfCopperHero" x1="15%" y1="10%" x2="85%" y2="90%">
+                  <stop offset="0%" stop-color="#D48E6E" />
+                  <stop offset="50%" stop-color="#B56547" />
+                  <stop offset="100%" stop-color="#843F27" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M 56 26 C 50 18, 30 18, 22 33 C 14 48, 17 70, 32 76 C 43 80, 53 74, 57 65 L 45 65 C 42 68, 36 69, 31 65 C 24 60, 24 44, 31 35 C 37 27, 48 27, 53 33 Z"
+                fill="url(#gfCopperHero)"
+                stroke="#6E331E"
+                stroke-width="1.3"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M 52 38 C 66 33, 89 32, 98 34 C 102 35, 102 40, 96 41 C 88 42, 76 41, 69 44 L 69 54 L 84 54 C 87 54, 87 59, 83 60 L 69 60 L 69 77 C 69 87, 59 93, 48 90 C 42 88, 41 81, 46 79 C 50 78, 53 81, 52 84 C 57 85, 61 81, 61 75 L 61 45 C 57 46, 53 45, 52 38 Z"
+                fill="url(#gfCopperHero)"
+                stroke="#6E331E"
+                stroke-width="1.3"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+
+          <span class="inline-flex items-center px-3.5 py-1 rounded-full bg-sand text-espresso text-xs font-semibold tracking-wide">
+            Estudio Creativo &amp; Mesa Dulce
+          </span>
+
+          <h1 class="font-editorial text-4xl sm:text-6xl font-bold text-cocoa leading-tight">
+            Bienvenidos a <span class="text-terracotta italic">Gala Fest</span>
+          </h1>
+
+          <p class="max-w-2xl text-sm sm:text-base text-espresso/85 leading-relaxed">
+            Descubre nuestra colección de diseños digitales para celebraciones, invitaciones y marcas, junto con dulces artesanales y pasapalos recién preparados para tus eventos.
+          </p>
+        </div>
+
+        <!-- Botones principales: Cliente y Admin (Admin solo visible en inicio) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto pt-2">
+          <button
+            type="button"
+            onclick="openClientAccessModal()"
+            class="group flex flex-col items-center justify-center p-6 rounded-2xl bg-terracotta hover:bg-terracottaDark text-white shadow-sm transition cursor-pointer"
+          >
+            <span class="text-lg font-bold tracking-tight">Entrar como Cliente</span>
+            <span class="text-xs text-white/90 mt-1">Regístrate o ingresa con tu Clave Única y compra en la tienda</span>
+          </button>
+
+          <button
+            type="button"
+            onclick="openAdminLoginModal()"
+            class="group flex flex-col items-center justify-center p-6 rounded-2xl bg-sand hover:bg-cocoa text-cocoa hover:text-white border border-cocoa/15 transition cursor-pointer"
+          >
+            <span class="text-lg font-bold tracking-tight">Entrar como Admin</span>
+            <span class="text-xs opacity-80 mt-1">Gestión de inventario, mermas, costos, recetas y reportes</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         2. TIENDA ONLINE PARA CLIENTES
+    ========================================================== -->
+    <section id="view-store" class="hidden space-y-6">
+      <!-- Encabezado de bienvenida del cliente -->
+      <div class="rounded-3xl bg-linen border border-cocoa/10 p-5 sm:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <p class="text-xs uppercase tracking-wider text-terracotta font-semibold">Tienda Gala Fest</p>
+          <h2 id="client-welcome-title" class="font-editorial text-2xl sm:text-3xl font-bold text-cocoa mt-0.5">Hola, Cliente</h2>
+          <p id="client-welcome-meta" class="text-xs sm:text-sm text-espresso/75 mt-0.5"></p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button type="button" onclick="openClientAccessModal()" class="px-4 py-2 rounded-xl bg-sand hover:bg-cocoa/10 text-cocoa text-xs sm:text-sm font-semibold transition cursor-pointer">
+            Cambiar / Clave de Acceso
+          </button>
+          <button type="button" onclick="toggleClientOrdersModal()" class="px-4 py-2 rounded-xl bg-sand hover:bg-cocoa/10 text-cocoa text-xs sm:text-sm font-semibold transition cursor-pointer flex items-center gap-2">
+            <span>Mis Pedidos</span>
+            <span id="store-orders-count" class="px-2 py-0.5 rounded-full bg-cocoa/10 text-xs font-mono">0</span>
+          </button>
+          <button type="button" onclick="toggleCartDrawer(true)" class="px-4 py-2 rounded-xl bg-terracotta hover:bg-terracottaDark text-white text-xs sm:text-sm font-semibold transition cursor-pointer flex items-center gap-2">
+            <span>Carrito</span>
+            <span id="store-cart-count" class="px-2 py-0.5 rounded-full bg-white/20 text-xs font-mono">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Filtros de categoría y buscador -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+          <button type="button" data-store-cat="Todos" onclick="setStoreCategory('Todos')" class="store-cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer whitespace-nowrap bg-cocoa text-white">
+            Todos
+          </button>
+          <button type="button" data-store-cat="Diseños Digitales" onclick="setStoreCategory('Diseños Digitales')" class="store-cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer whitespace-nowrap bg-sand text-cocoa hover:bg-cocoa/10">
+            Diseños Digitales
+          </button>
+          <button type="button" data-store-cat="Dulces y Pasapalos" onclick="setStoreCategory('Dulces y Pasapalos')" class="store-cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer whitespace-nowrap bg-sand text-cocoa hover:bg-cocoa/10">
+            Dulces y Pasapalos
+          </button>
+        </div>
+
+        <div class="w-full sm:w-72">
+          <input
+            id="store-search-input"
+            type="search"
+            oninput="renderStoreProducts()"
+            placeholder="Buscar diseño, dulce o pasapalo..."
+            class="w-full px-4 py-2 rounded-xl bg-linen border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta"
+          />
+        </div>
+      </div>
+
+      <!-- Catálogo de productos -->
+      <div id="store-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- =========================================================
+         3. PANEL DE ADMINISTRACIÓN
+    ========================================================== -->
+    <section id="view-admin" class="hidden space-y-6">
+      <!-- Cabecera Admin -->
+      <div class="rounded-3xl bg-linen border border-cocoa/10 p-5 sm:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-terracotta/15 text-terracotta text-xs font-bold">Panel Administrativo</span>
+            <span id="admin-role-badge" class="px-2.5 py-0.5 rounded-full bg-sand text-espresso text-xs font-semibold"></span>
+          </div>
+          <h2 id="admin-session-name" class="font-editorial text-2xl sm:text-3xl font-bold text-cocoa mt-1">Administración Gala Fest</h2>
+        </div>
+
+        <button type="button" onclick="logoutAdmin()" class="self-start md:self-auto px-4 py-2 rounded-xl bg-sand hover:bg-red-100 text-cocoa hover:text-red-800 text-xs sm:text-sm font-semibold transition cursor-pointer">
+          Cerrar Sesión Admin
+        </button>
+      </div>
+
+      <!-- Menú de navegación de administración -->
+      <nav id="admin-nav" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1" aria-label="Secciones de administración">
+        <button type="button" data-admin-tab="orders" onclick="switchAdminTab('orders')" class="admin-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer bg-cocoa text-white flex items-center gap-2">
+          <span>Control de Pedidos</span>
+          <span id="admin-pending-orders-badge" class="px-2 py-0.5 rounded-full bg-terracotta text-white text-[11px] font-mono">0</span>
+        </button>
+        <button type="button" data-admin-tab="inventory" onclick="switchAdminTab('inventory')" class="admin-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer bg-sand text-cocoa hover:bg-cocoa/10">
+          Carga de Inventario
+        </button>
+        <button type="button" data-admin-tab="waste" onclick="switchAdminTab('waste')" class="admin-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer bg-sand text-cocoa hover:bg-cocoa/10">
+          Carga de Merma
+        </button>
+        <button type="button" data-admin-tab="costs" onclick="switchAdminTab('costs')" class="admin-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer bg-sand text-cocoa hover:bg-cocoa/10">
+          Cálculo de Costos
+        </button>
+        <button type="button" data-admin-tab="supplies" onclick="switchAdminTab('supplies')" class="admin-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer bg-sand text-cocoa hover:bg-cocoa/10">
+          Inventario de Insumos
+        </button>
+        <button type="button" data-admin-tab="recipes" onclick="switchAdminTab('recipes')" class="admin-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer bg-sand text-cocoa hover:bg-cocoa/10">
+          Creación de Recetas
+        </button>
+        <button type="button" data-admin-tab="clients" onclick="switchAdminTab('clients')" class="admin-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer bg-sand text-cocoa hover:bg-cocoa/10">
+          Lista de Clientes
+        </button>
+        <button type="button" data-admin-tab="reports" onclick="switchAdminTab('reports')" class="admin-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer bg-sand text-cocoa hover:bg-cocoa/10">
+          Reportes (PDF / Excel)
+        </button>
+        <!-- Solo visible si la sesión activa es Admin Maestro -->
+        <button id="tab-btn-admins" type="button" data-admin-tab="admins" onclick="switchAdminTab('admins')" class="hidden admin-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer bg-sand text-cocoa hover:bg-cocoa/10">
+          Gestión de Admins
+        </button>
+      </nav>
+
+      <!-- TAB 0: CONTROL DE PEDIDOS -->
+      <div id="admin-tab-orders" class="admin-panel rounded-3xl bg-linen border border-cocoa/10 p-6 space-y-5">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-cocoa/10 pb-4">
+          <div>
+            <h3 class="font-editorial text-2xl font-bold text-cocoa">Control de Pedidos</h3>
+            <p class="text-xs sm:text-sm text-espresso/75">Supervisa pedidos pendientes, actualiza su estado y consulta el detalle de cada cliente.</p>
+          </div>
+          <div class="grid grid-cols-3 gap-2.5 text-center">
+            <div class="rounded-2xl bg-terracotta/12 border border-terracotta/25 px-3.5 py-2">
+              <span class="block text-[11px] font-semibold text-terracotta">Pendientes</span>
+              <span id="orders-stat-pending" class="font-mono text-lg font-bold text-terracotta">0</span>
+            </div>
+            <div class="rounded-2xl bg-sand px-3.5 py-2">
+              <span class="block text-[11px] font-semibold text-espresso">En Curso</span>
+              <span id="orders-stat-active" class="font-mono text-lg font-bold text-cocoa">0</span>
+            </div>
+            <div class="rounded-2xl bg-sage/15 border border-sage/25 px-3.5 py-2">
+              <span class="block text-[11px] font-semibold text-sage">Entregados</span>
+              <span id="orders-stat-delivered" class="font-mono text-lg font-bold text-sage">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filtros por estado de pedido -->
+        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+          <button type="button" data-order-filter="Todos" onclick="setOrderStatusFilter('Todos')" class="order-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap cursor-pointer bg-cocoa text-white">
+            Todos
+          </button>
+          <button type="button" data-order-filter="Pendiente" onclick="setOrderStatusFilter('Pendiente')" class="order-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap cursor-pointer bg-sand text-cocoa hover:bg-cocoa/10">
+            Pendiente
+          </button>
+          <button type="button" data-order-filter="En preparación" onclick="setOrderStatusFilter('En preparación')" class="order-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap cursor-pointer bg-sand text-cocoa hover:bg-cocoa/10">
+            En preparación
+          </button>
+          <button type="button" data-order-filter="Listo" onclick="setOrderStatusFilter('Listo')" class="order-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap cursor-pointer bg-sand text-cocoa hover:bg-cocoa/10">
+            Listo
+          </button>
+          <button type="button" data-order-filter="Entregado" onclick="setOrderStatusFilter('Entregado')" class="order-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap cursor-pointer bg-sand text-cocoa hover:bg-cocoa/10">
+            Entregado
+          </button>
+          <button type="button" data-order-filter="Cancelado" onclick="setOrderStatusFilter('Cancelado')" class="order-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap cursor-pointer bg-sand text-cocoa hover:bg-cocoa/10">
+            Cancelado
+          </button>
+        </div>
+
+        <div id="admin-orders-list" class="space-y-3"></div>
+      </div>
+
+      <!-- TAB 1: CARGA DE INVENTARIO DE PRODUCTOS -->
+      <div id="admin-tab-inventory" class="admin-panel grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-5 rounded-3xl bg-linen border border-cocoa/10 p-6 space-y-4">
+          <h3 id="inv-form-title" class="font-editorial text-2xl font-bold text-cocoa">Cargar Producto al Inventario</h3>
+          <form id="inventory-form" onsubmit="handleSaveProduct(event)" class="space-y-4">
+            <input type="hidden" id="inv-edit-id" />
+            <input type="hidden" id="inv-photo-data" />
+
+            <div>
+              <label for="inv-name" class="block text-xs font-semibold text-cocoa mb-1">Nombre del producto *</label>
+              <input id="inv-name" type="text" required placeholder="Ej. Invitación Digital Floral o Tequeños Gala" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="inv-category" class="block text-xs font-semibold text-cocoa mb-1">Categoría *</label>
+                <select id="inv-category" class="w-full px-3.5 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta">
+                  <option value="Diseños Digitales">Diseños Digitales</option>
+                  <option value="Dulces y Pasapalos">Dulces y Pasapalos</option>
+                </select>
+              </div>
+              <div>
+                <label for="inv-price" class="block text-xs font-semibold text-cocoa mb-1">Precio de venta ($) *</label>
+                <input id="inv-price" type="number" step="0.01" min="0" required placeholder="15.00" class="w-full px-3.5 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+              </div>
+            </div>
+
+            <div>
+              <label for="inv-stock" class="block text-xs font-semibold text-cocoa mb-1">Stock disponible (unidades) *</label>
+              <input id="inv-stock" type="number" min="0" step="1" required placeholder="25" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+            </div>
+
+            <div>
+              <label for="inv-desc" class="block text-xs font-semibold text-cocoa mb-1">Descripción para el cliente</label>
+              <textarea id="inv-desc" rows="2" placeholder="Detalles del diseño o presentación del dulce/pasapalo..." class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta"></textarea>
+            </div>
+
+            <!-- Carga de foto desde el dispositivo en base64 -->
+            <div class="rounded-2xl bg-cream border border-cocoa/10 p-3.5 space-y-2.5">
+              <label for="inv-photo-file" class="block text-xs font-semibold text-cocoa">Foto del producto (desde tu dispositivo)</label>
+              <input id="inv-photo-file" type="file" accept="image/*" onchange="handleProductPhotoUpload(event)" class="block w-full text-xs text-espresso file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:bg-sand file:text-cocoa file:font-semibold hover:file:bg-cocoa/10 cursor-pointer" />
+              <div class="flex items-center gap-3 pt-1">
+                <img id="inv-photo-preview" src="https://placehold.co/120x90/F1E8DC/3B281E?text=Gala+Fest" alt="Vista previa de foto" onerror="this.src='https://placehold.co/120x90/F1E8DC/3B281E?text=Gala+Fest'" class="w-24 h-18 object-cover rounded-xl border border-cocoa/15 bg-sand" />
+                <button type="button" onclick="clearProductPhoto()" class="px-3 py-1.5 rounded-xl bg-sand hover:bg-cocoa/10 text-xs font-semibold text-cocoa cursor-pointer">
+                  Quitar foto
+                </button>
+              </div>
+            </div>
+
+            <div class="flex gap-2 pt-1">
+              <button type="submit" class="flex-1 py-3 px-4 rounded-xl bg-terracotta hover:bg-terracottaDark text-white font-semibold text-sm transition cursor-pointer">
+                Guardar Producto
+              </button>
+              <button type="button" onclick="resetInventoryForm()" class="py-3 px-4 rounded-xl bg-sand hover:bg-cocoa/10 text-cocoa font-semibold text-sm transition cursor-pointer">
+                Limpiar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="lg:col-span-7 rounded-3xl bg-linen border border-cocoa/10 p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-editorial text-2xl font-bold text-cocoa">Inventario Actual de Productos</h3>
+            <span id="inv-count-badge" class="px-3 py-1 rounded-full bg-sand text-xs font-semibold text-espresso">0 productos</span>
+          </div>
+          <div id="admin-inventory-list" class="space-y-3"></div>
+        </div>
+      </div>
+
+      <!-- TAB 2: CARGA DE MERMA -->
+      <div id="admin-tab-waste" class="admin-panel hidden grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-5 rounded-3xl bg-linen border border-cocoa/10 p-6 space-y-4">
+          <h3 class="font-editorial text-2xl font-bold text-cocoa">Registrar Merma</h3>
+          <form id="waste-form" onsubmit="handleSaveWaste(event)" class="space-y-4">
+            <div>
+              <label for="waste-product-select" class="block text-xs font-semibold text-cocoa mb-1">Producto afectado *</label>
+              <select id="waste-product-select" required class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta"></select>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="waste-qty" class="block text-xs font-semibold text-cocoa mb-1">Cantidad en merma *</label>
+                <input id="waste-qty" type="number" min="1" step="1" required placeholder="2" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+              </div>
+              <div>
+                <label for="waste-date" class="block text-xs font-semibold text-cocoa mb-1">Fecha *</label>
+                <input id="waste-date" type="date" required class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+              </div>
+            </div>
+
+            <div>
+              <label for="waste-reason" class="block text-xs font-semibold text-cocoa mb-1">Motivo de la merma *</label>
+              <input id="waste-reason" type="text" required placeholder="Ej. Daño en transporte, porción no apta, caducidad..." class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+            </div>
+
+            <button type="submit" class="w-full py-3 px-4 rounded-xl bg-terracotta hover:bg-terracottaDark text-white font-semibold text-sm transition cursor-pointer">
+              Registrar y Descontar Stock
+            </button>
+          </form>
+        </div>
+
+        <div class="lg:col-span-7 rounded-3xl bg-linen border border-cocoa/10 p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-editorial text-2xl font-bold text-cocoa">Historial de Merma</h3>
+            <span id="waste-count-badge" class="px-3 py-1 rounded-full bg-sand text-xs font-semibold text-espresso">0 registros</span>
+          </div>
+          <div id="admin-waste-list" class="space-y-3"></div>
+        </div>
+      </div>
+
+      <!-- TAB 3: CÁLCULO DE COSTOS (con edición en cascada) -->
+      <div id="admin-tab-costs" class="admin-panel hidden grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-5 rounded-3xl bg-linen border border-cocoa/10 p-6 space-y-4">
+          <h3 id="cost-form-title" class="font-editorial text-2xl font-bold text-cocoa">Calcular y Guardar Costo</h3>
+          <form id="cost-form" onsubmit="handleSaveCost(event)" class="space-y-4">
+            <input type="hidden" id="cost-edit-id" />
+
+            <div>
+              <label for="cost-name" class="block text-xs font-semibold text-cocoa mb-1">Nombre del insumo o empaque *</label>
+              <input id="cost-name" type="text" required placeholder="Ej. Chocolate cobertura, Caja Kraft, Harina..." class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label for="cost-pack-qty" class="block text-xs font-semibold text-cocoa mb-1">Contenido empaque *</label>
+                <input id="cost-pack-qty" type="number" step="0.01" min="0.01" required oninput="updateCostPreview()" placeholder="1000" class="w-full px-3.5 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+              </div>
+              <div>
+                <label for="cost-unit" class="block text-xs font-semibold text-cocoa mb-1">Unidad *</label>
+                <select id="cost-unit" onchange="updateCostPreview()" class="w-full px-3 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta">
+                  <option value="g">g</option>
+                  <option value="ml">ml</option>
+                  <option value="und">und</option>
+                </select>
+              </div>
+              <div>
+                <label for="cost-buy-price" class="block text-xs font-semibold text-cocoa mb-1">Precio compra ($) *</label>
+                <input id="cost-buy-price" type="number" step="0.01" min="0" required oninput="updateCostPreview()" placeholder="12.00" class="w-full px-3.5 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+              </div>
+            </div>
+
+            <div class="rounded-2xl bg-sand/80 p-4 flex items-center justify-between">
+              <span class="text-xs font-semibold text-espresso">Costo unitario calculado:</span>
+              <span id="cost-unit-preview" class="text-sm font-bold font-mono text-terracotta">$0.0000 / g</span>
+            </div>
+
+            <div class="flex gap-2">
+              <button type="submit" class="flex-1 py-3 px-4 rounded-xl bg-terracotta hover:bg-terracottaDark text-white font-semibold text-sm transition cursor-pointer">
+                Guardar en Lista de Costos
+              </button>
+              <button type="button" onclick="resetCostForm()" class="py-3 px-4 rounded-xl bg-sand hover:bg-cocoa/10 text-cocoa font-semibold text-sm transition cursor-pointer">
+                Limpiar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="lg:col-span-7 rounded-3xl bg-linen border border-cocoa/10 p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-editorial text-2xl font-bold text-cocoa">Lista de Costos</h3>
+            <span id="costs-count-badge" class="px-3 py-1 rounded-full bg-sand text-xs font-semibold text-espresso">0 insumos</span>
+          </div>
+          <p class="text-xs text-espresso/75">Al editar un costo, las recetas que utilicen este insumo se recalculan automáticamente.</p>
+          <div id="admin-costs-list" class="space-y-3"></div>
+        </div>
+      </div>
+
+      <!-- TAB 4: INVENTARIO DE INSUMOS (independiente del área de costos) -->
+      <div id="admin-tab-supplies" class="admin-panel hidden grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-5 rounded-3xl bg-linen border border-cocoa/10 p-6 space-y-4">
+          <h3 id="supply-form-title" class="font-editorial text-2xl font-bold text-cocoa">Registrar / Actualizar Insumo</h3>
+          <form id="supply-form" onsubmit="handleSaveSupply(event)" class="space-y-4">
+            <input type="hidden" id="supply-edit-id" />
+
+            <div>
+              <label for="supply-name" class="block text-xs font-semibold text-cocoa mb-1">Nombre del insumo *</label>
+              <input id="supply-name" type="text" required placeholder="Ej. Azúcar glass, Mantequilla sin sal, Cajas..." class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label for="supply-stock" class="block text-xs font-semibold text-cocoa mb-1">Stock actual *</label>
+                <input id="supply-stock" type="number" step="0.01" min="0" required placeholder="2500" class="w-full px-3.5 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+              </div>
+              <div>
+                <label for="supply-unit" class="block text-xs font-semibold text-cocoa mb-1">Unidad *</label>
+                <select id="supply-unit" class="w-full px-3 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta">
+                  <option value="g">g</option>
+                  <option value="ml">ml</option>
+                  <option value="und">und</option>
+                </select>
+              </div>
+              <div>
+                <label for="supply-min" class="block text-xs font-semibold text-cocoa mb-1">Stock mínimo *</label>
+                <input id="supply-min" type="number" step="0.01" min="0" required placeholder="500" class="w-full px-3.5 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+              </div>
+            </div>
+
+            <div>
+              <label for="supply-linked-cost" class="block text-xs font-semibold text-cocoa mb-1">Vínculo opcional con Lista de Costos</label>
+              <select id="supply-linked-cost" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta"></select>
+            </div>
+
+            <div class="flex gap-2">
+              <button type="submit" class="flex-1 py-3 px-4 rounded-xl bg-terracotta hover:bg-terracottaDark text-white font-semibold text-sm transition cursor-pointer">
+                Guardar en Inventario de Insumos
+              </button>
+              <button type="button" onclick="resetSupplyForm()" class="py-3 px-4 rounded-xl bg-sand hover:bg-cocoa/10 text-cocoa font-semibold text-sm transition cursor-pointer">
+                Limpiar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="lg:col-span-7 rounded-3xl bg-linen border border-cocoa/10 p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-editorial text-2xl font-bold text-cocoa">Inventario de Insumos</h3>
+            <span id="supplies-count-badge" class="px-3 py-1 rounded-full bg-sand text-xs font-semibold text-espresso">0 insumos</span>
+          </div>
+          <div id="admin-supplies-list" class="space-y-3"></div>
+        </div>
+      </div>
+
+      <!-- TAB 5: CREACIÓN DE RECETAS (con rendimiento en raciones y gramos) -->
+      <div id="admin-tab-recipes" class="admin-panel hidden grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-6 rounded-3xl bg-linen border border-cocoa/10 p-6 space-y-4">
+          <h3 id="recipe-form-title" class="font-editorial text-2xl font-bold text-cocoa">Crear o Editar Receta</h3>
+          <form id="recipe-form" onsubmit="handleSaveRecipe(event)" class="space-y-4">
+            <input type="hidden" id="recipe-edit-id" />
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="recipe-name" class="block text-xs font-semibold text-cocoa mb-1">Nombre de la receta *</label>
+                <input id="recipe-name" type="text" required placeholder="Ej. Trufas de Chocolate Gala" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+              </div>
+              <div>
+                <label for="recipe-notes" class="block text-xs font-semibold text-cocoa mb-1">Notas / Categoría</label>
+                <input id="recipe-notes" type="text" placeholder="Ej. Dulces · Mesa de postres" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label for="recipe-yield-portions" class="block text-xs font-semibold text-cocoa mb-1">Rendimiento en unidades / raciones *</label>
+                <input id="recipe-yield-portions" type="number" min="0.1" step="0.1" value="12" required oninput="renderRecipeIngredientBuilder()" placeholder="Ej. 12" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+              </div>
+              <div>
+                <label for="recipe-yield-grams" class="block text-xs font-semibold text-cocoa mb-1">Peso total de la receta (g) *</label>
+                <input id="recipe-yield-grams" type="number" min="1" step="0.1" value="600" required oninput="renderRecipeIngredientBuilder()" placeholder="Ej. 600" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+              </div>
+            </div>
+
+            <!-- Añadir ingrediente desde la lista de costos -->
+            <div class="rounded-2xl bg-cream border border-cocoa/10 p-4 space-y-3">
+              <p class="text-xs font-bold text-cocoa">Agregar ingrediente desde la Lista de Costos</p>
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
+                <div class="sm:col-span-6">
+                  <select id="recipe-cost-select" class="w-full px-3 py-2 rounded-xl bg-linen border border-cocoa/15 text-xs focus:outline-none focus:border-terracotta"></select>
+                </div>
+                <div class="sm:col-span-4">
+                  <input id="recipe-ing-qty" type="number" step="0.01" min="0.01" placeholder="Cantidad a usar" class="w-full px-3 py-2 rounded-xl bg-linen border border-cocoa/15 text-xs focus:outline-none focus:border-terracotta" />
+                </div>
+                <div class="sm:col-span-2">
+                  <button type="button" onclick="addIngredientToDraftRecipe()" class="w-full py-2 px-2.5 rounded-xl bg-cocoa hover:bg-espresso text-white text-xs font-semibold cursor-pointer">
+                    + Añadir
+                  </button>
+                </div>
+              </div>
+
+              <div id="recipe-draft-ingredients" class="space-y-2 pt-1"></div>
+            </div>
+
+            <!-- Resumen calculado en tiempo real -->
+            <div class="rounded-2xl bg-sand/85 p-4 space-y-2 text-xs sm:text-sm">
+              <div class="flex items-center justify-between">
+                <span class="text-espresso font-medium">Costo total de la receta:</span>
+                <span id="recipe-draft-total" class="font-bold text-cocoa font-mono">$0.00</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-espresso font-medium">Costo por unidad / ración:</span>
+                <span id="recipe-draft-per-portion" class="font-bold text-terracotta font-mono">$0.00</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-espresso font-medium">Costo por gramo ($/g):</span>
+                <span id="recipe-draft-per-gram" class="font-bold text-cocoa font-mono">$0.0000 / g</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-espresso font-medium">Peso promedio por ración:</span>
+                <span id="recipe-draft-grams-per-portion" class="font-bold text-sage font-mono">0.0 g</span>
+              </div>
+            </div>
+
+            <div class="flex gap-2">
+              <button type="submit" class="flex-1 py-3 px-4 rounded-xl bg-terracotta hover:bg-terracottaDark text-white font-semibold text-sm transition cursor-pointer">
+                Guardar Receta
+              </button>
+              <button type="button" onclick="resetRecipeForm()" class="py-3 px-4 rounded-xl bg-sand hover:bg-cocoa/10 text-cocoa font-semibold text-sm transition cursor-pointer">
+                Limpiar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="lg:col-span-6 rounded-3xl bg-linen border border-cocoa/10 p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-editorial text-2xl font-bold text-cocoa">Recetas Calculadas</h3>
+            <span id="recipes-count-badge" class="px-3 py-1 rounded-full bg-sand text-xs font-semibold text-espresso">0 recetas</span>
+          </div>
+          <div id="admin-recipes-list" class="space-y-3"></div>
+        </div>
+      </div>
+
+      <!-- TAB 6: LISTA DE CLIENTES -->
+      <div id="admin-tab-clients" class="admin-panel hidden rounded-3xl bg-linen border border-cocoa/10 p-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h3 class="font-editorial text-2xl font-bold text-cocoa">Cartera de Clientes Registrados</h3>
+            <p class="text-xs text-espresso/75">Datos básicos y Clave de Acceso Única asignada por cada cliente.</p>
+          </div>
+          <span id="clients-count-badge" class="px-3 py-1 rounded-full bg-sand text-xs font-semibold text-espresso">0 clientes</span>
+        </div>
+        <div id="admin-clients-list" class="overflow-x-auto"></div>
+      </div>
+
+      <!-- TAB 7: REPORTES TOTALES (PDF / EXCEL) -->
+      <div id="admin-tab-reports" class="admin-panel hidden rounded-3xl bg-linen border border-cocoa/10 p-6 space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-cocoa/10 pb-4">
+          <div>
+            <h3 class="font-editorial text-2xl font-bold text-cocoa">Reporte General Gala Fest</h3>
+            <p class="text-xs sm:text-sm text-espresso/75">Ventas, cartera de clientes, costos de recetas, merma registrada e inventario.</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <label for="report-format-select" class="text-xs font-semibold text-cocoa">Formato:</label>
+            <select id="report-format-select" class="px-3.5 py-2 rounded-xl bg-cream border border-cocoa/15 text-xs sm:text-sm font-semibold focus:outline-none focus:border-terracotta">
+              <option value="pdf">PDF (Vista imprimible / Guardar PDF)</option>
+              <option value="excel">Excel (.xlsx / .csv UTF-8)</option>
+            </select>
+            <button type="button" onclick="exportSelectedReport()" class="px-4 py-2 rounded-xl bg-terracotta hover:bg-terracottaDark text-white text-xs sm:text-sm font-semibold transition cursor-pointer">
+              Exportar Reporte
+            </button>
+          </div>
+        </div>
+
+        <div id="reports-summary-content" class="space-y-5"></div>
+      </div>
+
+      <!-- TAB 8: GESTIÓN DE ADMINS (EXCLUSIVA DEL ADMIN MAESTRO) -->
+      <div id="admin-tab-admins" class="admin-panel hidden grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-5 rounded-3xl bg-linen border border-cocoa/10 p-6 space-y-4">
+          <h3 id="admin-user-form-title" class="font-editorial text-2xl font-bold text-cocoa">Crear / Editar Usuario Admin</h3>
+          <p class="text-xs text-espresso/75">Disponible únicamente para el Admin Maestro con control total.</p>
+
+          <form id="admin-user-form" onsubmit="handleSaveAdminUser(event)" class="space-y-4">
+            <input type="hidden" id="admin-user-edit-id" />
+
+            <div>
+              <label for="admin-user-display" class="block text-xs font-semibold text-cocoa mb-1">Nombre visible *</label>
+              <input id="admin-user-display" type="text" required placeholder="Ej. Coordinador de Eventos" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+            </div>
+
+            <div>
+              <label for="admin-user-username" class="block text-xs font-semibold text-cocoa mb-1">Usuario de acceso *</label>
+              <input id="admin-user-username" type="text" required autocomplete="off" placeholder="Ej. eventos_gf" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+            </div>
+
+            <div>
+              <label for="admin-user-password" class="block text-xs font-semibold text-cocoa mb-1">Contraseña *</label>
+              <input id="admin-user-password" type="password" required autocomplete="new-password" placeholder="Mínimo 4 caracteres" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+            </div>
+
+            <div class="flex gap-2">
+              <button type="submit" class="flex-1 py-3 px-4 rounded-xl bg-terracotta hover:bg-terracottaDark text-white font-semibold text-sm transition cursor-pointer">
+                Guardar Usuario Admin
+              </button>
+              <button type="button" onclick="resetAdminUserForm()" class="py-3 px-4 rounded-xl bg-sand hover:bg-cocoa/10 text-cocoa font-semibold text-sm transition cursor-pointer">
+                Limpiar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="lg:col-span-7 rounded-3xl bg-linen border border-cocoa/10 p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-editorial text-2xl font-bold text-cocoa">Usuarios Administradores</h3>
+            <span id="admins-count-badge" class="px-3 py-1 rounded-full bg-sand text-xs font-semibold text-espresso">0 usuarios</span>
+          </div>
+          <div id="admin-users-list" class="space-y-3"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       MODAL 1: ACCESO DE CLIENTE (Registro o Clave Única)
+  ========================================================== -->
+  <div id="modal-client-access" class="fixed inset-0 z-40 hidden bg-cocoa/50 backdrop-blur-xs items-center justify-center p-4">
+    <div class="bg-linen border border-cocoa/15 rounded-3xl max-w-lg w-full p-6 sm:p-7 space-y-5 shadow-xl relative">
+      <button type="button" onclick="closeModal('modal-client-access')" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-sand hover:bg-cocoa/10 text-cocoa font-bold text-sm cursor-pointer">x</button>
+
+      <div>
+        <span class="text-xs uppercase tracking-wider text-terracotta font-bold">Portal de Clientes Gala Fest</span>
+        <h3 class="font-editorial text-3xl font-bold text-cocoa mt-0.5">Ingresa o Regístrate</h3>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 bg-sand p-1 rounded-2xl">
+        <button type="button" id="btn-mode-register" onclick="switchClientAuthMode('register')" class="py-2 rounded-xl text-xs sm:text-sm font-semibold bg-cocoa text-white transition cursor-pointer">
+          Crear Cuenta (Clave Única)
+        </button>
+        <button type="button" id="btn-mode-login" onclick="switchClientAuthMode('login')" class="py-2 rounded-xl text-xs sm:text-sm font-semibold text-cocoa transition cursor-pointer">
+          Ya Tengo Clave Única
+        </button>
+      </div>
+
+      <!-- Formulario de registro -->
+      <form id="client-register-form" onsubmit="handleClientRegister(event)" class="space-y-3.5">
+        <div>
+          <label for="cli-reg-name" class="block text-xs font-semibold text-cocoa mb-1">Nombre completo *</label>
+          <input id="cli-reg-name" type="text" required placeholder="Ej. Valentina Morales" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="cli-reg-contact" class="block text-xs font-semibold text-cocoa mb-1">Correo o teléfono *</label>
+            <input id="cli-reg-contact" type="text" required placeholder="valentina@correo.com" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+          </div>
+          <div>
+            <label for="cli-reg-city" class="block text-xs font-semibold text-cocoa mb-1">Ciudad *</label>
+            <input id="cli-reg-city" type="text" required placeholder="Ej. Caracas" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+          </div>
+        </div>
+
+        <div>
+          <label for="cli-reg-key" class="block text-xs font-semibold text-cocoa mb-1">Crea tu Clave de Acceso Única *</label>
+          <input id="cli-reg-key" type="text" required placeholder="Ej. GALA-VAL-2026" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm font-mono focus:outline-none focus:border-terracotta" />
+          <p class="text-[11px] text-espresso/70 mt-1">Con esta clave podrás volver a entrar a la tienda y quedará registrada en la lista de clientes.</p>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-terracotta hover:bg-terracottaDark text-white font-semibold text-sm transition cursor-pointer">
+          Registrarme e Ir a la Tienda
+        </button>
+      </form>
+
+      <!-- Formulario de ingreso con clave única -->
+      <form id="client-login-form" onsubmit="handleClientLogin(event)" class="hidden space-y-4">
+        <div>
+          <label for="cli-login-key" class="block text-xs font-semibold text-cocoa mb-1">Tu Clave de Acceso Única *</label>
+          <input id="cli-login-key" type="text" required placeholder="Ingresa tu clave única" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm font-mono focus:outline-none focus:border-terracotta" />
+        </div>
+        <button type="submit" class="w-full py-3 rounded-xl bg-terracotta hover:bg-terracottaDark text-white font-semibold text-sm transition cursor-pointer">
+          Entrar a la Tienda
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 2: LOGIN DE ADMINISTRADOR (Sin autocompletado)
+  ========================================================== -->
+  <div id="modal-admin-login" class="fixed inset-0 z-40 hidden bg-cocoa/50 backdrop-blur-xs items-center justify-center p-4">
+    <div class="bg-linen border border-cocoa/15 rounded-3xl max-w-md w-full p-6 sm:p-7 space-y-5 shadow-xl relative">
+      <button type="button" onclick="closeModal('modal-admin-login')" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-sand hover:bg-cocoa/10 text-cocoa font-bold text-sm cursor-pointer">x</button>
+
+      <div>
+        <span class="text-xs uppercase tracking-wider text-terracotta font-bold">Acceso Restringido</span>
+        <h3 class="font-editorial text-3xl font-bold text-cocoa mt-0.5">Ingreso de Administrador</h3>
+      </div>
+
+      <form id="admin-login-form" onsubmit="handleAdminLogin(event)" autocomplete="off" class="space-y-4">
+        <div>
+          <label for="adm-login-user" class="block text-xs font-semibold text-cocoa mb-1">Usuario *</label>
+          <input id="adm-login-user" name="gf_adm_u_field" type="text" required autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Ingresa tu usuario" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+        </div>
+
+        <div>
+          <label for="adm-login-pass" class="block text-xs font-semibold text-cocoa mb-1">Contraseña *</label>
+          <input id="adm-login-pass" name="gf_adm_p_field" type="password" required autocomplete="new-password" placeholder="Ingresa tu contraseña" class="w-full px-4 py-2.5 rounded-xl bg-cream border border-cocoa/15 text-sm focus:outline-none focus:border-terracotta" />
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-cocoa hover:bg-espresso text-white font-semibold text-sm transition cursor-pointer">
+          Iniciar Sesión
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 3: DETALLE DE PRODUCTO EN TIENDA
+  ========================================================== -->
+  <div id="modal-product-detail" class="fixed inset-0 z-40 hidden bg-cocoa/50 backdrop-blur-xs items-center justify-center p-4">
+    <div id="product-detail-card" class="bg-linen border border-cocoa/15 rounded-3xl max-w-xl w-full overflow-hidden shadow-xl relative"></div>
+  </div>
+
+  <!-- =========================================================
+       DRAWER / MODAL 4: CARRITO DE COMPRAS
+  ========================================================== -->
+  <div id="modal-cart" class="fixed inset-0 z-40 hidden bg-cocoa/50 backdrop-blur-xs items-center justify-end">
+    <div class="bg-linen border-l border-cocoa/15 h-full max-w-md w-full p-6 flex flex-col justify-between shadow-2xl">
+      <div class="flex items-center justify-between border-b border-cocoa/10 pb-4">
+        <div>
+          <h3 class="font-editorial text-2xl font-bold text-cocoa">Tu Carrito</h3>
+          <p class="text-xs text-espresso/75">Pedidos Gala Fest</p>
+        </div>
+        <button type="button" onclick="toggleCartDrawer(false)" class="w-8 h-8 rounded-full bg-sand hover:bg-cocoa/10 text-cocoa font-bold text-sm cursor-pointer">x</button>
+      </div>
+
+      <div id="cart-items-container" class="flex-1 overflow-y-auto py-4 space-y-3"></div>
+
+      <div class="border-t border-cocoa/10 pt-4 space-y-3">
+        <div class="flex items-center justify-between text-base font-bold text-cocoa">
+          <span>Total a pagar:</span>
+          <span id="cart-total-amount" class="font-mono text-terracotta">$0.00</span>
+        </div>
+        <button type="button" onclick="checkoutCart()" class="w-full py-3 rounded-xl bg-terracotta hover:bg-terracottaDark text-white font-semibold text-sm transition cursor-pointer">
+          Confirmar Pedido
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 5: HISTORIAL DE PEDIDOS DEL CLIENTE
+  ========================================================== -->
+  <div id="modal-client-orders" class="fixed inset-0 z-40 hidden bg-cocoa/50 backdrop-blur-xs items-center justify-center p-4">
+    <div class="bg-linen border border-cocoa/15 rounded-3xl max-w-2xl w-full p-6 sm:p-7 space-y-4 shadow-xl relative max-h-[85vh] flex flex-col">
+      <button type="button" onclick="closeModal('modal-client-orders')" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-sand hover:bg-cocoa/10 text-cocoa font-bold text-sm cursor-pointer">x</button>
+      <div>
+        <span class="text-xs uppercase tracking-wider text-terracotta font-bold">Seguimiento Gala Fest</span>
+        <h3 class="font-editorial text-3xl font-bold text-cocoa mt-0.5">Mis Pedidos</h3>
+      </div>
+      <div id="client-orders-list" class="flex-1 overflow-y-auto space-y-3 pr-1"></div>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================================
+       CONFIGURACIÓN Y ESTADO PERSISTENTE EN LOCALSTORAGE
+    ========================================================================== */
+    const STORAGE_KEYS = {
+      PRODUCTS: 'galafest_products_v1',
+      WASTE: 'galafest_waste_v1',
+      COSTS: 'galafest_costs_v1',
+      SUPPLIES: 'galafest_supplies_v1',
+      RECIPES: 'galafest_recipes_v1',
+      CLIENTS: 'galafest_clients_v1',
+      SALES: 'galafest_sales_v1',
+      ADMINS: 'galafest_admins_v1',
+      ACTIVE_CLIENT: 'galafest_active_client_v1',
+      ACTIVE_ADMIN: 'galafest_active_admin_v1'
+    };
+
+    const PLACEHOLDER_IMG = 'https://placehold.co/600x420/F1E8DC/3B281E?text=Gala+Fest';
+
+    const SEED_PRODUCTS = [
+      {
+        id: 'prod-1',
+        name: 'Kit Invitación Digital Gala Floral',
+        category: 'Diseños Digitales',
+        price: 18.00,
+        stock: 50,
+        description: 'Plantilla editable con RSVP interactivo, mapa de evento y paleta cálida editorial en alta resolución.',
+        photo: ''
+      },
+      {
+        id: 'prod-2',
+        name: 'Pack Branding & Menú Digital Evento',
+        category: 'Diseños Digitales',
+        price: 28.00,
+        stock: 30,
+        description: 'Diseño de menú de mesa, tarjetas de agradecimiento y piezas para redes sociales listas para imprimir o compartir.',
+        photo: ''
+      },
+      {
+        id: 'prod-3',
+        name: 'Caja x12 Trufas y Brownies Gala',
+        category: 'Dulces y Pasapalos',
+        price: 22.00,
+        stock: 18,
+        description: 'Selección artesanal de brownies de chocolate y trufas con cobertura fina para celebraciones y regalos.',
+        photo: ''
+      },
+      {
+        id: 'prod-4',
+        name: 'Bandeja x20 Pasapalos Variados',
+        category: 'Dulces y Pasapalos',
+        price: 26.00,
+        stock: 14,
+        description: 'Pasapalos horneados y fritos listos para servir en reuniones, cumpleaños y eventos sociales.',
+        photo: ''
+      }
+    ];
+
+    const SEED_COSTS = [
+      { id: 'cost-1', name: 'Chocolate Cobertura', packQty: 1000, unit: 'g', buyPrice: 12.00, unitCost: 0.012 },
+      { id: 'cost-2', name: 'Harina de Trigo', packQty: 1000, unit: 'g', buyPrice: 2.20, unitCost: 0.0022 },
+      { id: 'cost-3', name: 'Mantequilla sin Sal', packQty: 500, unit: 'g', buyPrice: 5.50, unitCost: 0.011 },
+      { id: 'cost-4', name: 'Caja Kraft Gala Fest', packQty: 20, unit: 'und', buyPrice: 10.00, unitCost: 0.50 }
+    ];
+
+    const SEED_SUPPLIES = [
+      { id: 'sup-1', name: 'Chocolate Cobertura', stock: 2400, unit: 'g', minStock: 800, linkedCostId: 'cost-1' },
+      { id: 'sup-2', name: 'Harina de Trigo', stock: 3000, unit: 'g', minStock: 1000, linkedCostId: 'cost-2' },
+      { id: 'sup-3', name: 'Cajas Kraft Gala Fest', stock: 12, unit: 'und', minStock: 15, linkedCostId: 'cost-4' }
+    ];
+
+    const SEED_RECIPES = [
+      {
+        id: 'rec-1',
+        name: 'Tanda de Brownies Gala',
+        notes: 'Dulces · Chocolate oscuro',
+        yieldPortions: 12,
+        yieldGrams: 720,
+        ingredients: [
+          { costId: 'cost-1', name: 'Chocolate Cobertura', unit: 'g', qty: 240, unitCost: 0.012, subtotal: 2.88 },
+          { costId: 'cost-2', name: 'Harina de Trigo', unit: 'g', qty: 180, unitCost: 0.0022, subtotal: 0.396 },
+          { costId: 'cost-3', name: 'Mantequilla sin Sal', unit: 'g', qty: 300, unitCost: 0.011, subtotal: 3.30 }
+        ],
+        totalCost: 6.576,
+        costPerPortion: 0.548,
+        costPerGram: 0.009133,
+        gramsPerPortion: 60
+      }
+    ];
+
+    const SEED_CLIENTS = [
+      {
+        id: 'cli-1',
+        name: 'Camila Mendoza',
+        contact: 'camila@ejemplo.com',
+        city: 'Caracas',
+        accessKey: 'GALA-CAM-101',
+        createdAt: '2026-10-12'
+      }
+    ];
+
+    const SEED_SALES = [
+      {
+        id: 'sale-101',
+        orderCode: 'GF-1001',
+        date: '2026-10-18',
+        status: 'Entregado',
+        clientName: 'Camila Mendoza',
+        clientKey: 'GALA-CAM-101',
+        clientCity: 'Caracas',
+        clientContact: 'camila@ejemplo.com',
+        items: [{ name: 'Kit Invitación Digital Gala Floral', qty: 1, price: 18.00 }],
+        total: 18.00
+      }
+    ];
+
+    const SEED_ADMINS = [
+      {
+        id: 'adm-master',
+        displayName: 'Admin Maestro',
+        username: 'admin_maestro',
+        password: 'master123',
+        isMaster: true
+      }
+    ];
+
+    const state = {
+      currentView: 'home',
+      storeCategory: 'Todos',
+      adminTab: 'orders',
+      orderStatusFilter: 'Todos',
+      products: [],
+      waste: [],
+      costs: [],
+      supplies: [],
+      recipes: [],
+      clients: [],
+      sales: [],
+      admins: [],
+      activeClient: null,
+      activeAdmin: null,
+      cart: [],
+      draftRecipeIngredients: []
+    };
+
+    function safeReadStorage(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (!raw) return structuredClone(fallback);
+        const parsed = JSON.parse(raw);
+        return Array.isArray(fallback) ? (Array.isArray(parsed) ? parsed : structuredClone(fallback)) : (parsed ?? structuredClone(fallback));
+      } catch (err) {
+        return structuredClone(fallback);
+      }
+    }
+
+    function persistToStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(state.products));
+        localStorage.setItem(STORAGE_KEYS.WASTE, JSON.stringify(state.waste));
+        localStorage.setItem(STORAGE_KEYS.COSTS, JSON.stringify(state.costs));
+        localStorage.setItem(STORAGE_KEYS.SUPPLIES, JSON.stringify(state.supplies));
+        localStorage.setItem(STORAGE_KEYS.RECIPES, JSON.stringify(state.recipes));
+        localStorage.setItem(STORAGE_KEYS.CLIENTS, JSON.stringify(state.clients));
+        localStorage.setItem(STORAGE_KEYS.SALES, JSON.stringify(state.sales));
+        localStorage.setItem(STORAGE_KEYS.ADMINS, JSON.stringify(state.admins));
+        if (state.activeClient) {
+          localStorage.setItem(STORAGE_KEYS.ACTIVE_CLIENT, JSON.stringify(state.activeClient));
+        } else {
+          localStorage.removeItem(STORAGE_KEYS.ACTIVE_CLIENT);
+        }
+        if (state.activeAdmin) {
+          localStorage.setItem(STORAGE_KEYS.ACTIVE_ADMIN, JSON.stringify(state.activeAdmin));
+        } else {
+          localStorage.removeItem(STORAGE_KEYS.ACTIVE_ADMIN);
+        }
+      } catch (err) {
+        showToast('No se pudo guardar en almacenamiento local (verifica espacio o imágenes).', 'error');
+      }
+    }
+
+    function loadInitialState() {
+      state.products = safeReadStorage(STORAGE_KEYS.PRODUCTS, SEED_PRODUCTS);
+      state.waste = safeReadStorage(STORAGE_KEYS.WASTE, []);
+      state.costs = safeReadStorage(STORAGE_KEYS.COSTS, SEED_COSTS);
+      state.supplies = safeReadStorage(STORAGE_KEYS.SUPPLIES, SEED_SUPPLIES);
+      state.recipes = safeReadStorage(STORAGE_KEYS.RECIPES, SEED_RECIPES);
+      state.clients = safeReadStorage(STORAGE_KEYS.CLIENTS, SEED_CLIENTS);
+      state.sales = safeReadStorage(STORAGE_KEYS.SALES, SEED_SALES);
+
+      const storedAdmins = safeReadStorage(STORAGE_KEYS.ADMINS, SEED_ADMINS);
+      const hasMaster = storedAdmins.some(a => a.isMaster || a.username === 'admin_maestro');
+      state.admins = hasMaster ? storedAdmins : [...structuredClone(SEED_ADMINS), ...storedAdmins];
+
+      state.activeClient = safeReadStorage(STORAGE_KEYS.ACTIVE_CLIENT, null);
+      state.activeAdmin = safeReadStorage(STORAGE_KEYS.ACTIVE_ADMIN, null);
+
+      const today = new Date().toISOString().split('T')[0];
+      const wasteDateEl = document.getElementById('waste-date');
+      if (wasteDateEl && !wasteDateEl.value) {
+        wasteDateEl.value = today;
+      }
+    }
+
+    /* =========================================================================
+       UTILIDADES UI Y NOTIFICACIONES
+    ========================================================================== */
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const el = document.createElement('div');
+      const colorClass =
+        type === 'error'
+          ? 'bg-red-800 text-white'
+          : type === 'success'
+            ? 'bg-sage text-white'
+            : 'bg-cocoa text-white';
+
+      el.className = `pointer-events-auto px-4 py-3 rounded-2xl shadow-lg text-xs sm:text-sm font-medium transition ${colorClass}`;
+      el.textContent = message;
+      container.appendChild(el);
+
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(6px)';
+        setTimeout(() => el.remove(), 220);
+      }, 3000);
+    }
+
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function showView(viewName) {
+      state.currentView = viewName;
+      ['home', 'store', 'admin'].forEach(v => {
+        const section = document.getElementById(`view-${v}`);
+        if (section) {
+          section.classList.toggle('hidden', v !== viewName);
+        }
+      });
+      renderHeaderActions();
+    }
+
+    function goHome() {
+      showView('home');
+    }
+
+    function renderHeaderActions() {
+      const container = document.getElementById('header-actions');
+      if (!container) return;
+
+      if (state.currentView === 'store') {
+        const totalQty = state.cart.reduce((sum, item) => sum + Number(item.qty || 0), 0);
+        container.innerHTML = `
+          <button type="button" onclick="goHome()" class="px-3.5 py-2 rounded-xl bg-sand hover:bg-cocoa/10 text-cocoa text-xs sm:text-sm font-semibold transition cursor-pointer">
+            Inicio
+          </button>
+          <button type="button" onclick="toggleCartDrawer(true)" class="px-3.5 py-2 rounded-xl bg-terracotta hover:bg-terracottaDark text-white text-xs sm:text-sm font-semibold transition cursor-pointer flex items-center gap-1.5">
+            <span>Carrito</span>
+            <span class="px-2 py-0.5 rounded-full bg-white/20 text-xs font-mono">${totalQty}</span>
+          </button>
+        `;
+        return;
+      }
+
+      if (state.currentView === 'admin') {
+        container.innerHTML = `
+          <button type="button" onclick="goHome()" class="px-3.5 py-2 rounded-xl bg-sand hover:bg-cocoa/10 text-cocoa text-xs sm:text-sm font-semibold transition cursor-pointer">
+            Inicio
+          </button>
+        `;
+        return;
+      }
+
+      container.innerHTML = `
+        <button type="button" onclick="openClientAccessModal()" class="px-3.5 py-2 rounded-xl bg-terracotta hover:bg-terracottaDark text-white text-xs sm:text-sm font-semibold transition cursor-pointer">
+          Cliente
+        </button>
+        <button type="button" onclick="openAdminLoginModal()" class="px-3.5 py-2 rounded-xl bg-sand hover:bg-cocoa text-cocoa hover:text-white border border-cocoa/15 text-xs sm:text-sm font-semibold transition cursor-pointer">
+          Admin
+        </button>
+      `;
+    }
+
+    function switchClientAuthMode(mode) {
+      const regBtn = document.getElementById('btn-mode-register');
+      const logBtn = document.getElementById('btn-mode-login');
+      const regForm = document.getElementById('client-register-form');
+      const logForm = document.getElementById('client-login-form');
+      if (!regBtn || !logBtn || !regForm || !logForm) return;
+
+      const isRegister = mode === 'register';
+      regBtn.className = isRegister
+        ? 'py-2 rounded-xl text-xs sm:text-sm font-semibold bg-cocoa text-white transition cursor-pointer'
+        : 'py-2 rounded-xl text-xs sm:text-sm font-semibold text-cocoa transition cursor-pointer';
+      logBtn.className = !isRegister
+        ? 'py-2 rounded-xl text-xs sm:text-sm font-semibold bg-cocoa text-white transition cursor-pointer'
+        : 'py-2 rounded-xl text-xs sm:text-sm font-semibold text-cocoa transition cursor-pointer';
+
+      regForm.classList.toggle('hidden', !isRegister);
+      logForm.classList.toggle('hidden', isRegister);
+    }
+
+    function openClientAccessModal() {
+      switchClientAuthMode(state.activeClient ? 'login' : 'register');
+      openModal('modal-client-access');
+    }
+
+    function normalizeAccessKey(rawKey) {
+      return String(rawKey ?? '').trim().replace(/\s+/g, ' ').toLowerCase();
+    }
+
+    function handleClientRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById('cli-reg-name').value.trim();
+      const contact = document.getElementById('cli-reg-contact').value.trim();
+      const city = document.getElementById('cli-reg-city').value.trim();
+      const rawKey = document.getElementById('cli-reg-key').value;
+      const accessKey = rawKey.trim().replace(/\s+/g, ' ');
+      const normalizedKey = normalizeAccessKey(accessKey);
+
+      if (!name || !contact || !city || !accessKey) {
+        showToast('Completa todos los campos para registrarte.', 'error');
+        return;
+      }
+
+      const duplicate = state.clients.some(c => normalizeAccessKey(c.accessKey) === normalizedKey);
+      if (duplicate) {
+        showToast('Esa Clave de Acceso Única ya está en uso por otro cliente. Elige una clave diferente.', 'error');
+        return;
+      }
+
+      const newClient = {
+        id: 'cli-' + Date.now(),
+        name,
+        contact,
+        city,
+        accessKey,
+        createdAt: new Date().toISOString().split('T')[0]
+      };
+
+      state.clients.unshift(newClient);
+      state.activeClient = newClient;
+      persistToStorage();
+
+      document.getElementById('client-register-form').reset();
+      closeModal('modal-client-access');
+      enterClientStore();
+      showToast(`Bienvenido/a, ${name}. Tu clave única es: ${accessKey}`, 'success');
+    }
+
+    function handleClientLogin(e) {
+      e.preventDefault();
+      const key = document.getElementById('cli-login-key').value;
+      const normalizedKey = normalizeAccessKey(key);
+      if (!normalizedKey) {
+        showToast('Ingresa tu Clave de Acceso Única.', 'error');
+        return;
+      }
+
+      const found = state.clients.find(c => normalizeAccessKey(c.accessKey) === normalizedKey);
+      if (!found) {
+        showToast('Clave no encontrada. Regístrate para crear tu Clave de Acceso Única.', 'error');
+        return;
+      }
+
+      state.activeClient = found;
+      persistToStorage();
+      closeModal('modal-client-access');
+      enterClientStore();
+      showToast(`Hola de nuevo, ${found.name}.`, 'success');
+    }
+
+    function getOrderStatusBadgeClass(status) {
+      switch (status) {
+        case 'Pendiente':
+          return 'bg-terracotta/15 text-terracotta border border-terracotta/30';
+        case 'En preparación':
+          return 'bg-goldSoft/25 text-cocoa border border-goldSoft/50';
+        case 'Listo':
+          return 'bg-sage/20 text-sage border border-sage/35';
+        case 'Entregado':
+          return 'bg-cocoa text-white';
+        case 'Cancelado':
+          return 'bg-red-100 text-red-800 border border-red-200';
+        default:
+          return 'bg-sand text-cocoa';
+      }
+    }
+
+    function updateClientOrdersBadge() {
+      const badge = document.getElementById('store-orders-count');
+      if (!badge) return;
+      if (!state.activeClient) {
+        badge.textContent = '0';
+        return;
+      }
+      const myKey = normalizeAccessKey(state.activeClient.accessKey);
+      const count = state.sales.filter(s => normalizeAccessKey(s.clientKey) === myKey).length;
+      badge.textContent = String(count);
+    }
+
+    function toggleClientOrdersModal() {
+      if (!state.activeClient) {
+        openClientAccessModal();
+        return;
+      }
+      const listEl = document.getElementById('client-orders-list');
+      const myKey = normalizeAccessKey(state.activeClient.accessKey);
+      const myOrders = state.sales.filter(s => normalizeAccessKey(s.clientKey) === myKey);
+
+      if (myOrders.length === 0) {
+        listEl.innerHTML = `<p class="text-sm text-espresso/75 text-center py-8">Aún no tienes pedidos registrados en Gala Fest.</p>`;
+      } else {
+        listEl.innerHTML = myOrders.map(ord => {
+          const st = ord.status || 'Pendiente';
+          return `
+            <div class="rounded-2xl bg-cream border border-cocoa/10 p-4 space-y-2">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <span class="font-mono text-xs font-bold text-cocoa">${escapeHtml(ord.orderCode || ord.id)}</span>
+                  <span class="text-xs text-espresso/70 ml-2">${escapeHtml(ord.date)}</span>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${getOrderStatusBadgeClass(st)}">${escapeHtml(st)}</span>
+              </div>
+              <div class="text-xs text-espresso space-y-1">
+                ${(ord.items || []).map(i => `<div class="flex justify-between"><span>${escapeHtml(i.name)} x${i.qty}</span><span class="font-mono">$${(Number(i.price) * Number(i.qty)).toFixed(2)}</span></div>`).join('')}
+              </div>
+              <div class="pt-2 border-t border-cocoa/10 flex justify-between text-xs font-bold text-cocoa">
+                <span>Total</span>
+                <span class="font-mono text-terracotta">$${Number(ord.total || 0).toFixed(2)}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+      openModal('modal-client-orders');
+    }
+
+    function enterClientStore() {
+      if (!state.activeClient) {
+        openClientAccessModal();
+        return;
+      }
+      document.getElementById('client-welcome-title').textContent = `Hola, ${state.activeClient.name}`;
+      document.getElementById('client-welcome-meta').textContent =
+        `${state.activeClient.city} · ${state.activeClient.contact} · Clave: ${state.activeClient.accessKey}`;
+      updateClientOrdersBadge();
+      showView('store');
+      renderStoreProducts();
+      renderCart();
+    }
+
+    function setStoreCategory(category) {
+      state.storeCategory = category;
+      document.querySelectorAll('.store-cat-btn').forEach(btn => {
+        const active = btn.getAttribute('data-store-cat') === category;
+        btn.className = active
+          ? 'store-cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer whitespace-nowrap bg-cocoa text-white'
+          : 'store-cat-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer whitespace-nowrap bg-sand text-cocoa hover:bg-cocoa/10';
+      });
+      renderStoreProducts();
+    }
+
+    function renderStoreProducts() {
+      const grid = document.getElementById('store-products-grid');
+      if (!grid) return;
+
+      const query = (document.getElementById('store-search-input')?.value || '').trim().toLowerCase();
+      const filtered = state.products.filter(p => {
+        const matchesCat = state.storeCategory === 'Todos' || p.category === state.storeCategory;
+        const matchesQuery =
+          !query ||
+          p.name.toLowerCase().includes(query) ||
+          (p.description || '').toLowerCase().includes(query) ||
+          p.category.toLowerCase().includes(query);
+        return matchesCat && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full rounded-3xl bg-linen border border-cocoa/10 p-10 text-center space-y-2">
+            <p class="font-editorial text-2xl font-bold text-cocoa">Sin productos en esta vista</p>
+            <p class="text-sm text-espresso/75">Prueba con otra categoría o limpia el término de búsqueda.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(prod => {
+        const imgSrc = prod.photo && prod.photo.trim() ? prod.photo : PLACEHOLDER_IMG;
+        const outOfStock = Number(prod.stock) <= 0;
+        return `
+          <article class="rounded-3xl bg-linen border border-cocoa/10 overflow-hidden flex flex-col justify-between shadow-2xs hover:shadow-sm transition">
+            <div>
+              <div class="aspect-4/3 bg-sand overflow-hidden relative cursor-pointer" onclick="openProductDetail('${prod.id}')">
+                <img src="${imgSrc}" alt="${escapeHtml(prod.name)}" onerror="this.src='${PLACEHOLDER_IMG}'" class="w-full h-full object-cover hover:scale-103 transition duration-300" />
+                <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-linen/95 text-cocoa text-[11px] font-semibold border border-cocoa/10">
+                  ${escapeHtml(prod.category)}
+                </span>
+              </div>
+
+              <div class="p-5 space-y-2">
+                <div class="flex items-start justify-between gap-2">
+                  <h3 class="font-editorial text-2xl font-bold text-cocoa leading-snug cursor-pointer" onclick="openProductDetail('${prod.id}')">
+                    ${escapeHtml(prod.name)}
+                  </h3>
+                  <span class="font-mono text-base font-bold text-terracotta shrink-0">$${Number(prod.price).toFixed(2)}</span>
+                </div>
+                <p class="text-xs sm:text-sm text-espresso/80 line-clamp-2">${escapeHtml(prod.description || 'Elaborado por Gala Fest.')}</p>
+              </div>
+            </div>
+
+            <div class="px-5 pb-5 pt-2 flex items-center justify-between gap-2">
+              <span class="text-xs font-medium ${outOfStock ? 'text-red-700 font-semibold' : 'text-espresso/75'}">
+                ${outOfStock ? 'Agotado' : `Disponibles: ${prod.stock}`}
+              </span>
+
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="openProductDetail('${prod.id}')" class="px-3 py-2 rounded-xl bg-sand hover:bg-cocoa/10 text-cocoa text-xs font-semibold cursor-pointer">
+                  Ver
+                </button>
+                <button
+                  type="button"
+                  ${outOfStock ? 'disabled' : ''}
+                  onclick="addToCart('${prod.id}')"
+                  class="px-3.5 py-2 rounded-xl ${outOfStock ? 'bg-cocoa/20 text-cocoa/40 cursor-not-allowed' : 'bg-terracotta hover:bg-terracottaDark text-white cursor-pointer'} text-xs font-semibold transition"
+                >
+                  Agregar
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function openProductDetail(productId) {
+      const prod = state.products.find(p => p.id === productId);
+      if (!prod) return;
+      const imgSrc = prod.photo && prod.photo.trim() ? prod.photo : PLACEHOLDER_IMG;
+      const outOfStock = Number(prod.stock) <= 0;
+
+      document.getElementById('product-detail-card').innerHTML = `
+        <button type="button" onclick="closeModal('modal-product-detail')" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-linen/95 hover:bg-sand text-cocoa font-bold text-sm shadow cursor-pointer">x</button>
+        <div class="aspect-16/10 bg-sand overflow-hidden">
+          <img src="${imgSrc}" alt="${escapeHtml(prod.name)}" onerror="this.src='${PLACEHOLDER_IMG}'" class="w-full h-full object-cover" />
+        </div>
+        <div class="p-6 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="px-3 py-1 rounded-full bg-sand text-cocoa text-xs font-semibold">${escapeHtml(prod.category)}</span>
+            <span class="font-mono text-xl font-bold text-terracotta">$${Number(prod.price).toFixed(2)}</span>
+          </div>
+          <h3 class="font-editorial text-3xl font-bold text-cocoa">${escapeHtml(prod.name)}</h3>
+          <p class="text-sm text-espresso/85 leading-relaxed">${escapeHtml(prod.description || 'Producto artesanal y creativo de Gala Fest.')}</p>
+          <div class="flex items-center justify-between pt-3 border-t border-cocoa/10">
+            <span class="text-xs font-semibold text-espresso/75">Stock disponible: ${prod.stock}</span>
+            <button
+              type="button"
+              ${outOfStock ? 'disabled' : ''}
+              onclick="addToCart('${prod.id}'); closeModal('modal-product-detail');"
+              class="px-5 py-2.5 rounded-xl ${outOfStock ? 'bg-cocoa/20 text-cocoa/40 cursor-not-allowed' : 'bg-terracotta hover:bg-terracottaDark text-white cursor-pointer'} text-sm font-semibold"
+            >
+              Agregar al Carrito
+            </button>
+          </div>
+        </div>
+      `;
+      openModal('modal-product-detail');
+    }
+
+    function toggleCartDrawer(show) {
+      if (show) {
+        renderCart();
+        openModal('modal-cart');
+      } else {
+        closeModal('modal-cart');
+      }
+    }
+
+    function addToCart(productId) {
+      const prod = state.products.find(p => p.id === productId);
+      if (!prod) return;
+      if (Number(prod.stock) <= 0) {
+        showToast('Este producto no tiene stock disponible.', 'error');
+        return;
+      }
+
+      const existing = state.cart.find(item => item.productId === productId);
+      const currentQty = existing ? existing.qty : 0;
+      if (currentQty + 1 > Number(prod.stock)) {
+        showToast('Has alcanzado el stock máximo disponible de este producto.', 'error');
+        return;
+      }
+
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        state.cart.push({
+          productId: prod.id,
+          name: prod.name,
+          price: Number(prod.price),
+          qty: 1
+        });
+      }
+
+      renderCart();
+      renderHeaderActions();
+      showToast(`"${prod.name}" agregado al carrito.`, 'success');
+    }
+
+    function updateCartQty(productId, delta) {
+      const idx = state.cart.findIndex(item => item.productId === productId);
+      if (idx === -1) return;
+      const prod = state.products.find(p => p.id === productId);
+      const nextQty = state.cart[idx].qty + delta;
+
+      if (nextQty <= 0) {
+        state.cart.splice(idx, 1);
+      } else if (prod && nextQty > Number(prod.stock)) {
+        showToast('Cantidad superior al stock disponible.', 'error');
+        return;
+      } else {
+        state.cart[idx].qty = nextQty;
+      }
+
+      renderCart();
+      renderHeaderActions();
+    }
+
+    function renderCart() {
+      const container = document.getElementById('cart-items-container');
+      const totalEl = document.getElementById('cart-total-amount');
+      const badgeEl = document.getElementById('store-cart-count');
+      if (!container || !totalEl) return;
+
+      const totalQty = state.cart.reduce((s, i) => s + i.qty, 0);
+      if (badgeEl) badgeEl.textContent = String(totalQty);
+
+      if (state.cart.length === 0) {
+        container.innerHTML = `<p class="text-sm text-espresso/70 text-center py-10">Tu carrito está vacío.</p>`;
+        totalEl.textContent = '$0.00';
+        return;
+      }
+
+      const total = state.cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      container.innerHTML = state.cart.map(item => `
+        <div class="rounded-2xl bg-cream border border-cocoa/10 p-3.5 flex items-center justify-between gap-3">
+          <div>
+            <h4 class="text-sm font-bold text-cocoa">${escapeHtml(item.name)}</h4>
+            <p class="text-xs font-mono text-espresso/80">$${item.price.toFixed(2)} c/u · Subtotal: $${(item.price * item.qty).toFixed(2)}</p>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button type="button" onclick="updateCartQty('${item.productId}', -1)" class="w-7 h-7 rounded-lg bg-sand hover:bg-cocoa/10 font-bold text-xs cursor-pointer">-</button>
+            <span class="w-6 text-center text-xs font-mono font-bold">${item.qty}</span>
+            <button type="button" onclick="updateCartQty('${item.productId}', 1)" class="w-7 h-7 rounded-lg bg-sand hover:bg-cocoa/10 font-bold text-xs cursor-pointer">+</button>
+          </div>
+        </div>
+      `).join('');
+
+      totalEl.textContent = `$${total.toFixed(2)}`;
+    }
+
+    function checkoutCart() {
+      if (!state.activeClient) {
+        openClientAccessModal();
+        return;
+      }
+      if (state.cart.length === 0) {
+        showToast('Agrega productos antes de confirmar el pedido.', 'error');
+        return;
+      }
+
+      // Verificar stock y descontar
+      for (const item of state.cart) {
+        const prod = state.products.find(p => p.id === item.productId);
+        if (!prod || Number(prod.stock) < item.qty) {
+          showToast(`Stock insuficiente para "${item.name}".`, 'error');
+          return;
+        }
+      }
+
+      for (const item of state.cart) {
+        const prod = state.products.find(p => p.id === item.productId);
+        if (prod) {
+          prod.stock = Number(prod.stock) - item.qty;
+        }
+      }
+
+      const total = state.cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+      const saleRecord = {
+        id: 'sale-' + Date.now(),
+        orderCode: 'GF-' + String(Math.floor(1000 + Math.random() * 9000)),
+        date: new Date().toISOString().split('T')[0],
+        status: 'Pendiente',
+        clientName: state.activeClient.name,
+        clientKey: state.activeClient.accessKey,
+        clientCity: state.activeClient.city || '',
+        clientContact: state.activeClient.contact || '',
+        items: state.cart.map(i => ({ name: i.name, qty: i.qty, price: i.price })),
+        total
+      };
+
+      state.sales.unshift(saleRecord);
+      state.cart = [];
+      persistToStorage();
+
+      updateClientOrdersBadge();
+      renderCart();
+      renderStoreProducts();
+      renderAdminInventory();
+      renderAdminOrders();
+      renderReportsPanel();
+      renderHeaderActions();
+      closeModal('modal-cart');
+      showToast(`Pedido ${saleRecord.orderCode} creado como Pendiente por $${total.toFixed(2)}.`, 'success');
+    }
+
+    /* =========================================================================
+       ACCESO Y GESTIÓN DE ADMINISTRADORES (Admin Maestro exclusivo)
+    ========================================================================== */
+    function openAdminLoginModal() {
+      const form = document.getElementById('admin-login-form');
+      if (form) form.reset();
+      document.getElementById('adm-login-user').value = '';
+      document.getElementById('adm-login-pass').value = '';
+      openModal('modal-admin-login');
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const username = document.getElementById('adm-login-user').value.trim();
+      const password = document.getElementById('adm-login-pass').value;
+
+      const found = state.admins.find(
+        a => a.username.toLowerCase() === username.toLowerCase() && a.password === password
+      );
+
+      if (!found) {
+        showToast('Usuario o contraseña incorrectos.', 'error');
+        return;
+      }
+
+      state.activeAdmin = {
+        id: found.id,
+        displayName: found.displayName,
+        username: found.username,
+        isMaster: Boolean(found.isMaster)
+      };
+      persistToStorage();
+
+      closeModal('modal-admin-login');
+      document.getElementById('admin-login-form').reset();
+      enterAdminPanel();
+      showToast(`Sesión iniciada como ${found.displayName}.`, 'success');
+    }
+
+    function logoutAdmin() {
+      state.activeAdmin = null;
+      persistToStorage();
+      goHome();
+      showToast('Sesión de administrador cerrada.', 'info');
+    }
+
+    function isMasterSession() {
+      return Boolean(state.activeAdmin && (state.activeAdmin.isMaster || state.activeAdmin.username === 'admin_maestro'));
+    }
+
+    function enterAdminPanel() {
+      if (!state.activeAdmin) {
+        openAdminLoginModal();
+        return;
+      }
+
+      const master = isMasterSession();
+      document.getElementById('admin-session-name').textContent = state.activeAdmin.displayName;
+      document.getElementById('admin-role-badge').textContent = master ? 'Admin Maestro · Control Total' : 'Administrador';
+
+      const adminTabBtn = document.getElementById('tab-btn-admins');
+      adminTabBtn.classList.toggle('hidden', !master);
+
+      if (!master && state.adminTab === 'admins') {
+        state.adminTab = 'orders';
+      }
+
+      showView('admin');
+      switchAdminTab(state.adminTab);
+    }
+
+    function switchAdminTab(tabName) {
+      if (tabName === 'admins' && !isMasterSession()) {
+        showToast('Solo el Admin Maestro puede acceder a la gestión de administradores.', 'error');
+        tabName = 'orders';
+      }
+
+      state.adminTab = tabName;
+
+      document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+        const active = btn.getAttribute('data-admin-tab') === tabName;
+        btn.className = active
+          ? `${btn.id === 'tab-btn-admins' && !isMasterSession() ? 'hidden ' : ''}admin-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer bg-cocoa text-white`
+          : `${btn.id === 'tab-btn-admins' && !isMasterSession() ? 'hidden ' : ''}admin-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition cursor-pointer bg-sand text-cocoa hover:bg-cocoa/10`;
+      });
+
+      document.querySelectorAll('.admin-panel').forEach(panel => {
+        panel.classList.add('hidden');
+        panel.classList.remove('grid');
+      });
+
+      const activePanel = document.getElementById(`admin-tab-${tabName}`);
+      if (activePanel) {
+        activePanel.classList.remove('hidden');
+        if (tabName !== 'clients' && tabName !== 'reports' && tabName !== 'orders') {
+          activePanel.classList.add('grid');
+        }
+      }
+
+      renderAdminOrders();
+      renderAdminInventory();
+      populateWasteProductSelect();
+      renderAdminWaste();
+      updateCostPreview();
+      renderAdminCosts();
+      populateSupplyCostSelect();
+      renderAdminSupplies();
+      populateRecipeIngredientSelect();
+      renderRecipeIngredientBuilder();
+      renderAdminRecipes();
+      renderAdminClients();
+      renderReportsPanel();
+      if (isMasterSession()) {
+        renderAdminUsersList();
+      }
+    }
+
+    /* =========================================================================
+       0. CONTROL DE PEDIDOS
+    ========================================================================== */
+    function setOrderStatusFilter(filterStatus) {
+      state.orderStatusFilter = filterStatus;
+      document.querySelectorAll('.order-filter-btn').forEach(btn => {
+        const active = btn.getAttribute('data-order-filter') === filterStatus;
+        btn.className = active
+          ? 'order-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap cursor-pointer bg-cocoa text-white'
+          : 'order-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap cursor-pointer bg-sand text-cocoa hover:bg-cocoa/10';
+      });
+      renderAdminOrders();
+    }
+
+    function updateOrderStatus(orderId, nextStatus) {
+      const order = state.sales.find(s => s.id === orderId);
+      if (!order) return;
+      order.status = nextStatus;
+      persistToStorage();
+      renderAdminOrders();
+      renderReportsPanel();
+      showToast(`Pedido ${order.orderCode || order.id} actualizado a "${nextStatus}".`, 'success');
+    }
+
+    function renderAdminOrders() {
+      const list = document.getElementById('admin-orders-list');
+      const pendingBadge = document.getElementById('admin-pending-orders-badge');
+      const statPending = document.getElementById('orders-stat-pending');
+      const statActive = document.getElementById('orders-stat-active');
+      const statDelivered = document.getElementById('orders-stat-delivered');
+
+      const pendingCount = state.sales.filter(s => (s.status || 'Pendiente') === 'Pendiente').length;
+      const activeCount = state.sales.filter(s => ['En preparación', 'Listo'].includes(s.status)).length;
+      const deliveredCount = state.sales.filter(s => s.status === 'Entregado').length;
+
+      if (pendingBadge) pendingBadge.textContent = String(pendingCount);
+      if (statPending) statPending.textContent = String(pendingCount);
+      if (statActive) statActive.textContent = String(activeCount);
+      if (statDelivered) statDelivered.textContent = String(deliveredCount);
+
+      if (!list) return;
+
+      const filtered = state.sales.filter(s => {
+        const st = s.status || 'Pendiente';
+        return state.orderStatusFilter === 'Todos' || st === state.orderStatusFilter;
+      });
+
+      if (filtered.length === 0) {
+        list.innerHTML = `<p class="text-sm text-espresso/70 py-8 text-center">No hay pedidos con el filtro "${escapeHtml(state.orderStatusFilter)}".</p>`;
+        return;
+      }
+
+      const statuses = ['Pendiente', 'En preparación', 'Listo', 'Entregado', 'Cancelado'];
+
+      list.innerHTML = filtered.map(ord => {
+        const currentStatus = ord.status || 'Pendiente';
+        const isPending = currentStatus === 'Pendiente';
+        return `
+          <div class="rounded-2xl ${isPending ? 'bg-cream border-2 border-terracotta/45' : 'bg-cream border border-cocoa/10'} p-4 space-y-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="font-mono text-xs font-bold text-cocoa">${escapeHtml(ord.orderCode || ord.id)}</span>
+                  <span class="px-2.5 py-0.5 rounded-full text-xs font-bold ${getOrderStatusBadgeClass(currentStatus)}">${escapeHtml(currentStatus)}</span>
+                  <span class="text-xs text-espresso/70 font-mono">${escapeHtml(ord.date || '')}</span>
+                </div>
+                <p class="text-sm font-bold text-cocoa mt-1">
+                  ${escapeHtml(ord.clientName)}
+                  <span class="font-mono text-xs font-normal text-espresso/80">(${escapeHtml(ord.clientKey)}${ord.clientCity ? ` · ${escapeHtml(ord.clientCity)}` : ''})</span>
+                </p>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <label class="text-xs font-semibold text-espresso">Estado:</label>
+                <select onchange="updateOrderStatus('${ord.id}', this.value)" class="px-3 py-1.5 rounded-xl bg-linen border border-cocoa/15 text-xs font-semibold text-cocoa focus:outline-none focus:border-terracotta cursor-pointer">
+                  ${statuses.map(st => `<option value="${st}" ${currentStatus === st ? 'selected' : ''}>${st}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+
+            <div class="rounded-xl bg-linen border border-cocoa/10 p-3 text-xs space-y-1">
+              ${(ord.items || []).map(item => `
+                <div class="flex items-center justify-between text-espresso">
+                  <span>${escapeHtml(item.name)} <strong class="font-mono">x${item.qty}</strong></span>
+                  <span class="font-mono font-semibold">$${(Number(item.price) * Number(item.qty)).toFixed(2)}</span>
+                </div>
+              `).join('')}
+              <div class="pt-1.5 mt-1.5 border-t border-cocoa/10 flex items-center justify-between font-bold text-cocoa">
+                <span>Total del pedido</span>
+                <span class="font-mono text-sm text-terracotta">$${Number(ord.total || 0).toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* =========================================================================
+       1. INVENTARIO DE PRODUCTOS + FOTO EN BASE64
+    ========================================================================== */
+    function handleProductPhotoUpload(e) {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        showToast('Selecciona un archivo de imagen válido.', 'error');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64 = String(reader.result || '');
+        document.getElementById('inv-photo-data').value = base64;
+        document.getElementById('inv-photo-preview').src = base64;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearProductPhoto() {
+      document.getElementById('inv-photo-data').value = '';
+      document.getElementById('inv-photo-file').value = '';
+      document.getElementById('inv-photo-preview').src = PLACEHOLDER_IMG;
+    }
+
+    function handleSaveProduct(e) {
+      e.preventDefault();
+      const editId = document.getElementById('inv-edit-id').value.trim();
+      const name = document.getElementById('inv-name').value.trim();
+      const category = document.getElementById('inv-category').value;
+      const price = parseFloat(document.getElementById('inv-price').value);
+      const stock = parseInt(document.getElementById('inv-stock').value, 10);
+      const description = document.getElementById('inv-desc').value.trim();
+      const photo = document.getElementById('inv-photo-data').value;
+
+      if (!name || isNaN(price) || price < 0 || isNaN(stock) || stock < 0) {
+        showToast('Verifica nombre, precio y stock del producto.', 'error');
+        return;
+      }
+
+      if (editId) {
+        const idx = state.products.findIndex(p => p.id === editId);
+        if (idx !== -1) {
+          state.products[idx] = {
+            ...state.products[idx],
+            name,
+            category,
+            price,
+            stock,
+            description,
+            photo
+          };
+          showToast(`Producto "${name}" actualizado.`, 'success');
+        }
+      } else {
+        state.products.unshift({
+          id: 'prod-' + Date.now(),
+          name,
+          category,
+          price,
+          stock,
+          description,
+          photo
+        });
+        showToast(`Producto "${name}" cargado al inventario.`, 'success');
+      }
+
+      persistToStorage();
+      resetInventoryForm();
+      renderAdminInventory();
+      populateWasteProductSelect();
+      renderStoreProducts();
+      renderReportsPanel();
+    }
+
+    function editProduct(id) {
+      const prod = state.products.find(p => p.id === id);
+      if (!prod) return;
+      document.getElementById('inv-edit-id').value = prod.id;
+      document.getElementById('inv-name').value = prod.name;
+      document.getElementById('inv-category').value = prod.category;
+      document.getElementById('inv-price').value = prod.price;
+      document.getElementById('inv-stock').value = prod.stock;
+      document.getElementById('inv-desc').value = prod.description || '';
+      document.getElementById('inv-photo-data').value = prod.photo || '';
+      document.getElementById('inv-photo-preview').src = prod.photo || PLACEHOLDER_IMG;
+      document.getElementById('inv-form-title').textContent = 'Editar Producto';
+      showToast(`Editando "${prod.name}".`, 'info');
+    }
+
+    function deleteProduct(id) {
+      state.products = state.products.filter(p => p.id !== id);
+      persistToStorage();
+      renderAdminInventory();
+      populateWasteProductSelect();
+      renderStoreProducts();
+      renderReportsPanel();
+      showToast('Producto eliminado del inventario.', 'info');
+    }
+
+    function resetInventoryForm() {
+      document.getElementById('inventory-form').reset();
+      document.getElementById('inv-edit-id').value = '';
+      document.getElementById('inv-form-title').textContent = 'Cargar Producto al Inventario';
+      clearProductPhoto();
+    }
+
+    function renderAdminInventory() {
+      const list = document.getElementById('admin-inventory-list');
+      const badge = document.getElementById('inv-count-badge');
+      if (!list || !badge) return;
+
+      badge.textContent = `${state.products.length} ${state.products.length === 1 ? 'producto' : 'productos'}`;
+
+      if (state.products.length === 0) {
+        list.innerHTML = `<p class="text-sm text-espresso/70 py-8 text-center">No hay productos registrados todavía.</p>`;
+        return;
+      }
+
+      list.innerHTML = state.products.map(p => {
+        const imgSrc = p.photo && p.photo.trim() ? p.photo : PLACEHOLDER_IMG;
+        return `
+          <div class="rounded-2xl bg-cream border border-cocoa/10 p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-center gap-3.5">
+              <img src="${imgSrc}" alt="${escapeHtml(p.name)}" onerror="this.src='${PLACEHOLDER_IMG}'" class="w-16 h-16 rounded-xl object-cover bg-sand shrink-0 border border-cocoa/10" />
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <h4 class="font-bold text-sm text-cocoa">${escapeHtml(p.name)}</h4>
+                  <span class="px-2 py-0.5 rounded-full bg-sand text-[11px] font-semibold text-espresso">${escapeHtml(p.category)}</span>
+                </div>
+                <p class="text-xs font-mono text-espresso/80 mt-0.5">
+                  Precio: <strong class="text-terracotta">$${Number(p.price).toFixed(2)}</strong> · Stock: <strong>${p.stock}</strong>
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 self-end sm:self-center">
+              <button type="button" onclick="editProduct('${p.id}')" class="px-3 py-1.5 rounded-xl bg-linen hover:bg-sand border border-cocoa/15 text-xs font-semibold text-cocoa cursor-pointer">
+                Editar
+              </button>
+              <button type="button" onclick="deleteProduct('${p.id}')" class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-xs font-semibold text-red-700 cursor-pointer">
+                Eliminar
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* =========================================================================
+       2. CARGA DE MERMA
+    ========================================================================== */
+    function populateWasteProductSelect() {
+      const sel = document.getElementById('waste-product-select');
+      if (!sel) return;
+      if (state.products.length === 0) {
+        sel.innerHTML = `<option value="">Sin productos disponibles</option>`;
+        return;
+      }
+      sel.innerHTML = state.products.map(p =>
+        `<option value="${p.id}">${escapeHtml(p.name)} (Stock: ${p.stock})</option>`
+      ).join('');
+    }
+
+    function handleSaveWaste(e) {
+      e.preventDefault();
+      const productId = document.getElementById('waste-product-select').value;
+      const qty = parseInt(document.getElementById('waste-qty').value, 10);
+      const date = document.getElementById('waste-date').value;
+      const reason = document.getElementById('waste-reason').value.trim();
+
+      const prod = state.products.find(p => p.id === productId);
+      if (!prod) {
+        showToast('Selecciona un producto válido.', 'error');
+        return;
+      }
+      if (isNaN(qty) || qty <= 0) {
+        showToast('Ingresa una cantidad mayor a cero.', 'error');
+        return;
+      }
+      if (Number(prod.stock) < qty) {
+        showToast(`La merma (${qty}) supera el stock actual (${prod.stock}).`, 'error');
+        return;
+      }
+
+      prod.stock = Number(prod.stock) - qty;
+      state.waste.unshift({
+        id: 'wst-' + Date.now(),
+        productId: prod.id,
+        productName: prod.name,
+        qty,
+        date: date || new Date().toISOString().split('T')[0],
+        reason
+      });
+
+      persistToStorage();
+      document.getElementById('waste-qty').value = '';
+      document.getElementById('waste-reason').value = '';
+      populateWasteProductSelect();
+      renderAdminWaste();
+      renderAdminInventory();
+      renderStoreProducts();
+      renderReportsPanel();
+      showToast(`Merma de ${qty} und registrada para "${prod.name}".`, 'success');
+    }
+
+    function renderAdminWaste() {
+      const list = document.getElementById('admin-waste-list');
+      const badge = document.getElementById('waste-count-badge');
+      if (!list || !badge) return;
+
+      badge.textContent = `${state.waste.length} ${state.waste.length === 1 ? 'registro' : 'registros'}`;
+
+      if (state.waste.length === 0) {
+        list.innerHTML = `<p class="text-sm text-espresso/70 py-8 text-center">No hay mermas registradas.</p>`;
+        return;
+      }
+
+      list.innerHTML = state.waste.map(w => `
+        <div class="rounded-2xl bg-cream border border-cocoa/10 p-3.5 flex items-center justify-between gap-3">
+          <div>
+            <h4 class="font-bold text-sm text-cocoa">${escapeHtml(w.productName)} · <span class="font-mono text-red-800">-${w.qty} und</span></h4>
+            <p class="text-xs text-espresso/80 mt-0.5">${escapeHtml(w.reason)}</p>
+            <p class="text-[11px] font-mono text-espresso/65 mt-0.5">Fecha: ${escapeHtml(w.date)}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /* =========================================================================
+       3. CÁLCULO DE COSTOS (con edición en cascada hacia recetas)
+    ========================================================================== */
+    function updateCostPreview() {
+      const packQty = parseFloat(document.getElementById('cost-pack-qty')?.value);
+      const unit = document.getElementById('cost-unit')?.value || 'g';
+      const buyPrice = parseFloat(document.getElementById('cost-buy-price')?.value);
+      const previewEl = document.getElementById('cost-unit-preview');
+      if (!previewEl) return;
+
+      if (!isNaN(packQty) && packQty > 0 && !isNaN(buyPrice) && buyPrice >= 0) {
+        const unitCost = buyPrice / packQty;
+        previewEl.textContent = `$${unitCost.toFixed(4)} / ${unit}`;
+      } else {
+        previewEl.textContent = `$0.0000 / ${unit}`;
+      }
+    }
+
+    function handleSaveCost(e) {
+      e.preventDefault();
+      const editId = document.getElementById('cost-edit-id').value.trim();
+      const name = document.getElementById('cost-name').value.trim();
+      const packQty = parseFloat(document.getElementById('cost-pack-qty').value);
+      const unit = document.getElementById('cost-unit').value;
+      const buyPrice = parseFloat(document.getElementById('cost-buy-price').value);
+
+      if (!name || isNaN(packQty) || packQty <= 0 || isNaN(buyPrice) || buyPrice < 0) {
+        showToast('Completa correctamente el contenido, unidad y precio de compra.', 'error');
+        return;
+      }
+
+      const unitCost = buyPrice / packQty;
+      const costItem = {
+        id: editId || ('cost-' + Date.now()),
+        name,
+        packQty,
+        unit,
+        buyPrice,
+        unitCost
+      };
+
+      if (editId) {
+        const idx = state.costs.findIndex(c => c.id === editId);
+        if (idx !== -1) {
+          state.costs[idx] = costItem;
+          recalculateRecipesForCostItem(costItem);
+          showToast(`Costo "${name}" editado y recetas recalculadas.`, 'success');
+        }
+      } else {
+        state.costs.unshift(costItem);
+        showToast(`Costo "${name}" agregado a la lista.`, 'success');
+      }
+
+      persistToStorage();
+      resetCostForm();
+      renderAdminCosts();
+      populateSupplyCostSelect();
+      populateRecipeIngredientSelect();
+      renderAdminRecipes();
+      renderReportsPanel();
+    }
+
+    function editCostItem(costId) {
+      const item = state.costs.find(c => c.id === costId);
+      if (!item) return;
+
+      document.getElementById('cost-edit-id').value = item.id;
+      document.getElementById('cost-name').value = item.name;
+      document.getElementById('cost-pack-qty').value = item.packQty;
+      document.getElementById('cost-unit').value = item.unit;
+      document.getElementById('cost-buy-price').value = item.buyPrice;
+      document.getElementById('cost-form-title').textContent = 'Editar Registro de Costo';
+      updateCostPreview();
+      showToast(`Editando costo "${item.name}".`, 'info');
+    }
+
+    function deleteCostItem(costId) {
+      state.costs = state.costs.filter(c => c.id !== costId);
+      persistToStorage();
+      renderAdminCosts();
+      populateSupplyCostSelect();
+      populateRecipeIngredientSelect();
+      renderReportsPanel();
+      showToast('Registro eliminado de la lista de costos.', 'info');
+    }
+
+    function resetCostForm() {
+      document.getElementById('cost-form').reset();
+      document.getElementById('cost-edit-id').value = '';
+      document.getElementById('cost-form-title').textContent = 'Calcular y Guardar Costo';
+      updateCostPreview();
+    }
+
+    function renderAdminCosts() {
+      const list = document.getElementById('admin-costs-list');
+      const badge = document.getElementById('costs-count-badge');
+      if (!list || !badge) return;
+
+      badge.textContent = `${state.costs.length} ${state.costs.length === 1 ? 'insumo' : 'insumos'}`;
+
+      if (state.costs.length === 0) {
+        list.innerHTML = `<p class="text-sm text-espresso/70 py-8 text-center">No hay costos registrados todavía.</p>`;
+        return;
+      }
+
+      list.innerHTML = state.costs.map(c => `
+        <div class="rounded-2xl bg-cream border border-cocoa/10 p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h4 class="font-bold text-sm text-cocoa">${escapeHtml(c.name)}</h4>
+            <p class="text-xs font-mono text-espresso/80 mt-0.5">
+              Empaque: <strong>${c.packQty} ${escapeHtml(c.unit)}</strong> · Compra: <strong>$${Number(c.buyPrice).toFixed(2)}</strong> · Unitario: <strong class="text-terracotta">$${Number(c.unitCost).toFixed(4)}/${escapeHtml(c.unit)}</strong>
+            </p>
+          </div>
+          <div class="flex items-center gap-2 self-end sm:self-center">
+            <button type="button" onclick="editCostItem('${c.id}')" class="px-3 py-1.5 rounded-xl bg-linen hover:bg-sand border border-cocoa/15 text-xs font-semibold text-cocoa cursor-pointer">
+              Editar
+            </button>
+            <button type="button" onclick="deleteCostItem('${c.id}')" class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-xs font-semibold text-red-700 cursor-pointer">
+              Eliminar
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /* =========================================================================
+       4. INVENTARIO DE INSUMOS (independiente del área de costos)
+    ========================================================================== */
+    function populateSupplyCostSelect() {
+      const sel = document.getElementById('supply-linked-cost');
+      if (!sel) return;
+      const options = [`<option value="">Sin vínculo directo a costo</option>`].concat(
+        state.costs.map(c => `<option value="${c.id}">${escapeHtml(c.name)} ($${Number(c.unitCost).toFixed(4)}/${escapeHtml(c.unit)})</option>`)
+      );
+      sel.innerHTML = options.join('');
+    }
+
+    function handleSaveSupply(e) {
+      e.preventDefault();
+      const editId = document.getElementById('supply-edit-id').value.trim();
+      const name = document.getElementById('supply-name').value.trim();
+      const stock = parseFloat(document.getElementById('supply-stock').value);
+      const unit = document.getElementById('supply-unit').value;
+      const minStock = parseFloat(document.getElementById('supply-min').value);
+      const linkedCostId = document.getElementById('supply-linked-cost').value;
+
+      if (!name || isNaN(stock) || stock < 0 || isNaN(minStock) || minStock < 0) {
+        showToast('Verifica los datos del insumo.', 'error');
+        return;
+      }
+
+      const item = {
+        id: editId || ('sup-' + Date.now()),
+        name,
+        stock,
+        unit,
+        minStock,
+        linkedCostId
+      };
+
+      if (editId) {
+        const idx = state.supplies.findIndex(s => s.id === editId);
+        if (idx !== -1) state.supplies[idx] = item;
+        showToast(`Insumo "${name}" actualizado.`, 'success');
+      } else {
+        state.supplies.unshift(item);
+        showToast(`Insumo "${name}" guardado en inventario.`, 'success');
+      }
+
+      persistToStorage();
+      resetSupplyForm();
+      renderAdminSupplies();
+      renderReportsPanel();
+    }
+
+    function adjustSupplyStock(supplyId, delta) {
+      const sup = state.supplies.find(s => s.id === supplyId);
+      if (!sup) return;
+      const next = Number(sup.stock) + delta;
+      if (next < 0) {
+        showToast('El stock no puede ser menor que cero.', 'error');
+        return;
+      }
+      sup.stock = next;
+      persistToStorage();
+      renderAdminSupplies();
+      renderReportsPanel();
+    }
+
+    function editSupply(supplyId) {
+      const sup = state.supplies.find(s => s.id === supplyId);
+      if (!sup) return;
+      document.getElementById('supply-edit-id').value = sup.id;
+      document.getElementById('supply-name').value = sup.name;
+      document.getElementById('supply-stock').value = sup.stock;
+      document.getElementById('supply-unit').value = sup.unit;
+      document.getElementById('supply-min').value = sup.minStock;
+      document.getElementById('supply-linked-cost').value = sup.linkedCostId || '';
+      document.getElementById('supply-form-title').textContent = 'Editar Insumo';
+    }
+
+    function deleteSupply(supplyId) {
+      state.supplies = state.supplies.filter(s => s.id !== supplyId);
+      persistToStorage();
+      renderAdminSupplies();
+      renderReportsPanel();
+      showToast('Insumo eliminado.', 'info');
+    }
+
+    function resetSupplyForm() {
+      document.getElementById('supply-form').reset();
+      document.getElementById('supply-edit-id').value = '';
+      document.getElementById('supply-form-title').textContent = 'Registrar / Actualizar Insumo';
+    }
+
+    function renderAdminSupplies() {
+      const list = document.getElementById('admin-supplies-list');
+      const badge = document.getElementById('supplies-count-badge');
+      if (!list || !badge) return;
+
+      badge.textContent = `${state.supplies.length} ${state.supplies.length === 1 ? 'insumo' : 'insumos'}`;
+
+      if (state.supplies.length === 0) {
+        list.innerHTML = `<p class="text-sm text-espresso/70 py-8 text-center">No hay insumos registrados en el inventario.</p>`;
+        return;
+      }
+
+      list.innerHTML = state.supplies.map(s => {
+        const isLow = Number(s.stock) <= Number(s.minStock);
+        const step = s.unit === 'und' ? 1 : 100;
+        return `
+          <div class="rounded-2xl bg-cream border ${isLow ? 'border-red-300' : 'border-cocoa/10'} p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <h4 class="font-bold text-sm text-cocoa">${escapeHtml(s.name)}</h4>
+                ${isLow ? `<span class="px-2 py-0.5 rounded-full bg-red-100 text-red-800 text-[10px] font-bold">Stock bajo</span>` : ''}
+              </div>
+              <p class="text-xs font-mono text-espresso/80 mt-0.5">
+                Stock: <strong>${Number(s.stock)} ${escapeHtml(s.unit)}</strong> · Mínimo: ${Number(s.minStock)} ${escapeHtml(s.unit)}
+              </p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-1.5">
+              <button type="button" onclick="adjustSupplyStock('${s.id}', -${step})" class="px-2.5 py-1 rounded-lg bg-sand hover:bg-cocoa/10 text-xs font-bold cursor-pointer">-${step}</button>
+              <button type="button" onclick="adjustSupplyStock('${s.id}', ${step})" class="px-2.5 py-1 rounded-lg bg-sand hover:bg-cocoa/10 text-xs font-bold cursor-pointer">+${step}</button>
+              <button type="button" onclick="editSupply('${s.id}')" class="px-2.5 py-1 rounded-lg bg-linen hover:bg-sand border border-cocoa/15 text-xs font-semibold cursor-pointer">Editar</button>
+              <button type="button" onclick="deleteSupply('${s.id}')" class="px-2.5 py-1 rounded-lg bg-red-50 hover:bg-red-100 text-xs font-semibold text-red-700 cursor-pointer">Eliminar</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* =========================================================================
+       5. CREACIÓN DE RECETAS (rendimiento en raciones/unidades y gramos)
+    ========================================================================== */
+    function recalculateRecipesForCostItem(costItem) {
+      state.recipes = state.recipes.map(rec => {
+        let changed = false;
+        const updatedIngredients = (rec.ingredients || []).map(ing => {
+          if (ing.costId === costItem.id) {
+            changed = true;
+            const nextSubtotal = Number(ing.qty) * Number(costItem.unitCost);
+            return {
+              ...ing,
+              name: costItem.name,
+              unit: costItem.unit,
+              unitCost: Number(costItem.unitCost),
+              subtotal: nextSubtotal
+            };
+          }
+          return ing;
+        });
+
+        if (!changed) return rec;
+        const metrics = computeRecipeMetrics(updatedIngredients, rec.yieldPortions, rec.yieldGrams);
+        return {
+          ...rec,
+          ingredients: updatedIngredients,
+          ...metrics
+        };
+      });
+    }
+
+    function populateRecipeIngredientSelect() {
+      const sel = document.getElementById('recipe-cost-select');
+      if (!sel) return;
+      if (state.costs.length === 0) {
+        sel.innerHTML = `<option value="">Agrega registros en Cálculo de Costos primero</option>`;
+        return;
+      }
+      sel.innerHTML = state.costs.map(c =>
+        `<option value="${c.id}">${escapeHtml(c.name)} ($${Number(c.unitCost).toFixed(4)}/${escapeHtml(c.unit)})</option>`
+      ).join('');
+    }
+
+    function addIngredientToDraftRecipe() {
+      const costId = document.getElementById('recipe-cost-select').value;
+      const qty = parseFloat(document.getElementById('recipe-ing-qty').value);
+      const costItem = state.costs.find(c => c.id === costId);
+
+      if (!costItem) {
+        showToast('Selecciona un insumo de la lista de costos.', 'error');
+        return;
+      }
+      if (isNaN(qty) || qty <= 0) {
+        showToast('Ingresa una cantidad válida mayor a cero.', 'error');
+        return;
+      }
+
+      const subtotal = qty * Number(costItem.unitCost);
+      state.draftRecipeIngredients.push({
+        costId: costItem.id,
+        name: costItem.name,
+        unit: costItem.unit,
+        qty,
+        unitCost: Number(costItem.unitCost),
+        subtotal
+      });
+
+      document.getElementById('recipe-ing-qty').value = '';
+      renderRecipeIngredientBuilder();
+    }
+
+    function removeDraftIngredient(index) {
+      state.draftRecipeIngredients.splice(index, 1);
+      renderRecipeIngredientBuilder();
+    }
+
+    function computeRecipeMetrics(ingredients, rawPortions, rawGrams) {
+      const portionsNum = parseFloat(rawPortions);
+      const gramsNum = parseFloat(rawGrams);
+      const yieldPortions = !isNaN(portionsNum) && portionsNum > 0 ? portionsNum : 1;
+      const yieldGrams = !isNaN(gramsNum) && gramsNum > 0 ? gramsNum : 0;
+
+      const totalCost = (ingredients || []).reduce((acc, item) => acc + Number(item.subtotal || 0), 0);
+      const costPerPortion = totalCost / yieldPortions;
+      const costPerGram = yieldGrams > 0 ? totalCost / yieldGrams : 0;
+      const gramsPerPortion = yieldGrams > 0 ? yieldGrams / yieldPortions : 0;
+
+      return {
+        yieldPortions,
+        yieldGrams,
+        totalCost,
+        costPerPortion,
+        costPerGram,
+        gramsPerPortion
+      };
+    }
+
+    function renderRecipeIngredientBuilder() {
+      const container = document.getElementById('recipe-draft-ingredients');
+      const totalEl = document.getElementById('recipe-draft-total');
+      const perPortionEl = document.getElementById('recipe-draft-per-portion');
+      const perGramEl = document.getElementById('recipe-draft-per-gram');
+      const gramsPerPortionEl = document.getElementById('recipe-draft-grams-per-portion');
+      if (!container || !totalEl || !perPortionEl || !perGramEl || !gramsPerPortionEl) return;
+
+      if (state.draftRecipeIngredients.length === 0) {
+        container.innerHTML = `<p class="text-xs text-espresso/65 py-2">Aún no has añadido ingredientes a esta receta.</p>`;
+      } else {
+        container.innerHTML = state.draftRecipeIngredients.map((ing, idx) => `
+          <div class="flex items-center justify-between gap-2 rounded-xl bg-linen border border-cocoa/10 px-3 py-2 text-xs">
+            <span class="font-medium text-cocoa">
+              ${escapeHtml(ing.name)} · <span class="font-mono">${ing.qty} ${escapeHtml(ing.unit)}</span>
+            </span>
+            <div class="flex items-center gap-2">
+              <span class="font-mono font-bold text-espresso">$${Number(ing.subtotal).toFixed(3)}</span>
+              <button type="button" onclick="removeDraftIngredient(${idx})" class="text-red-700 font-bold hover:underline cursor-pointer">x</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      const rawPortions = document.getElementById('recipe-yield-portions')?.value;
+      const rawGrams = document.getElementById('recipe-yield-grams')?.value;
+      const metrics = computeRecipeMetrics(state.draftRecipeIngredients, rawPortions, rawGrams);
+
+      totalEl.textContent = `$${metrics.totalCost.toFixed(2)}`;
+      perPortionEl.textContent = `$${metrics.costPerPortion.toFixed(2)}`;
+      perGramEl.textContent = metrics.yieldGrams > 0 ? `$${metrics.costPerGram.toFixed(4)} / g` : 'Indica peso (g)';
+      gramsPerPortionEl.textContent = metrics.yieldGrams > 0 ? `${metrics.gramsPerPortion.toFixed(1)} g` : '0.0 g';
+    }
+
+    function handleSaveRecipe(e) {
+      e.preventDefault();
+      const editId = document.getElementById('recipe-edit-id').value.trim();
+      const name = document.getElementById('recipe-name').value.trim();
+      const notes = document.getElementById('recipe-notes').value.trim();
+      const rawPortions = document.getElementById('recipe-yield-portions').value;
+      const rawGrams = document.getElementById('recipe-yield-grams').value;
+
+      if (!name) {
+        showToast('Ingresa el nombre de la receta.', 'error');
+        return;
+      }
+      if (state.draftRecipeIngredients.length === 0) {
+        showToast('Agrega al menos un ingrediente desde la lista de costos.', 'error');
+        return;
+      }
+
+      const metrics = computeRecipeMetrics(state.draftRecipeIngredients, rawPortions, rawGrams);
+      if (metrics.yieldGrams <= 0) {
+        showToast('Ingresa el peso total de la receta en gramos (mayor a 0).', 'error');
+        return;
+      }
+
+      const recipeRecord = {
+        id: editId || ('rec-' + Date.now()),
+        name,
+        notes,
+        ingredients: structuredClone(state.draftRecipeIngredients),
+        ...metrics
+      };
+
+      if (editId) {
+        const idx = state.recipes.findIndex(r => r.id === editId);
+        if (idx !== -1) {
+          state.recipes[idx] = recipeRecord;
+          showToast(`Receta "${name}" actualizada.`, 'success');
+        }
+      } else {
+        state.recipes.unshift(recipeRecord);
+        showToast(`Receta "${name}" guardada.`, 'success');
+      }
+
+      persistToStorage();
+      resetRecipeForm();
+      renderAdminRecipes();
+      renderReportsPanel();
+    }
+
+    function editRecipe(recipeId) {
+      const rec = state.recipes.find(r => r.id === recipeId);
+      if (!rec) return;
+      document.getElementById('recipe-edit-id').value = rec.id;
+      document.getElementById('recipe-name').value = rec.name;
+      document.getElementById('recipe-notes').value = rec.notes || '';
+      document.getElementById('recipe-yield-portions').value = rec.yieldPortions ?? 1;
+      document.getElementById('recipe-yield-grams').value = rec.yieldGrams ?? 0;
+      document.getElementById('recipe-form-title').textContent = 'Editar Receta';
+      state.draftRecipeIngredients = structuredClone(rec.ingredients || []);
+      renderRecipeIngredientBuilder();
+      showToast(`Editando receta "${rec.name}".`, 'info');
+    }
+
+    function deleteRecipe(recipeId) {
+      state.recipes = state.recipes.filter(r => r.id !== recipeId);
+      persistToStorage();
+      renderAdminRecipes();
+      renderReportsPanel();
+      showToast('Receta eliminada.', 'info');
+    }
+
+    function resetRecipeForm() {
+      document.getElementById('recipe-form').reset();
+      document.getElementById('recipe-edit-id').value = '';
+      document.getElementById('recipe-yield-portions').value = '12';
+      document.getElementById('recipe-yield-grams').value = '600';
+      document.getElementById('recipe-form-title').textContent = 'Crear o Editar Receta';
+      state.draftRecipeIngredients = [];
+      renderRecipeIngredientBuilder();
+    }
+
+    function renderAdminRecipes() {
+      const list = document.getElementById('admin-recipes-list');
+      const badge = document.getElementById('recipes-count-badge');
+      if (!list || !badge) return;
+
+      badge.textContent = `${state.recipes.length} ${state.recipes.length === 1 ? 'receta' : 'recetas'}`;
+
+      if (state.recipes.length === 0) {
+        list.innerHTML = `<p class="text-sm text-espresso/70 py-8 text-center">No hay recetas creadas todavía.</p>`;
+        return;
+      }
+
+      list.innerHTML = state.recipes.map(rec => {
+        const portions = Math.max(0.01, Number(rec.yieldPortions) || 1);
+        const grams = Number(rec.yieldGrams) || 0;
+        const totalCost = Number(rec.totalCost) || 0;
+        const costPerPortion = Number(rec.costPerPortion) || (totalCost / portions);
+        const costPerGram = grams > 0 ? (Number(rec.costPerGram) || (totalCost / grams)) : 0;
+        const gramsPerPortion = grams > 0 ? (Number(rec.gramsPerPortion) || (grams / portions)) : 0;
+
+        return `
+          <div class="rounded-2xl bg-cream border border-cocoa/10 p-4 space-y-2.5">
+            <div class="flex flex-wrap items-start justify-between gap-2">
+              <div>
+                <h4 class="font-bold text-sm text-cocoa">${escapeHtml(rec.name)}</h4>
+                ${rec.notes ? `<p class="text-[11px] text-espresso/75">${escapeHtml(rec.notes)}</p>` : ''}
+                <p class="text-[11px] font-mono text-espresso/80 mt-0.5">
+                  Raciones: <strong>${portions}</strong> · Peso: <strong>${grams.toFixed(1)} g</strong> · Prom.: <strong>${gramsPerPortion.toFixed(1)} g/rac.</strong>
+                </p>
+              </div>
+              <div class="text-right font-mono">
+                <p class="text-sm font-bold text-cocoa">Total: $${totalCost.toFixed(2)}</p>
+                <p class="text-xs font-bold text-terracotta">$${costPerPortion.toFixed(2)} / rac.</p>
+                <p class="text-[11px] text-espresso/80">$${costPerGram.toFixed(4)} / g</p>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-cocoa/10">
+              <div class="flex flex-wrap gap-1.5">
+                ${(rec.ingredients || []).map(i => `
+                  <span class="px-2.5 py-0.5 rounded-full bg-linen border border-cocoa/10 text-[11px] text-espresso font-mono">
+                    ${escapeHtml(i.name)}: ${i.qty} ${escapeHtml(i.unit)} ($${Number(i.subtotal).toFixed(2)})
+                  </span>
+                `).join('')}
+              </div>
+
+              <div class="flex items-center gap-2 shrink-0">
+                <button type="button" onclick="editRecipe('${rec.id}')" class="px-3 py-1.5 rounded-xl bg-linen hover:bg-sand border border-cocoa/15 text-xs font-semibold text-cocoa cursor-pointer">
+                  Editar
+                </button>
+                <button type="button" onclick="deleteRecipe('${rec.id}')" class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-xs font-semibold text-red-700 cursor-pointer">
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* =========================================================================
+       6. LISTA DE CLIENTES
+    ========================================================================== */
+    function renderAdminClients() {
+      const container = document.getElementById('admin-clients-list');
+      const badge = document.getElementById('clients-count-badge');
+      if (!container || !badge) return;
+
+      badge.textContent = `${state.clients.length} ${state.clients.length === 1 ? 'cliente' : 'clientes'}`;
+
+      if (state.clients.length === 0) {
+        container.innerHTML = `<p class="text-sm text-espresso/70 py-6 text-center">No hay clientes registrados todavía.</p>`;
+        return;
+      }
+
+      container.innerHTML = `
+        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+          <thead>
+            <tr class="border-b border-cocoa/15 text-espresso/75">
+              <th class="py-2.5 px-3 font-semibold">Nombre</th>
+              <th class="py-2.5 px-3 font-semibold">Contacto</th>
+              <th class="py-2.5 px-3 font-semibold">Ciudad</th>
+              <th class="py-2.5 px-3 font-semibold">Clave Única</th>
+              <th class="py-2.5 px-3 font-semibold">Registro</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-cocoa/10">
+            ${state.clients.map(c => `
+              <tr class="hover:bg-cream/70">
+                <td class="py-2.5 px-3 font-semibold text-cocoa">${escapeHtml(c.name)}</td>
+                <td class="py-2.5 px-3 text-espresso">${escapeHtml(c.contact)}</td>
+                <td class="py-2.5 px-3 text-espresso">${escapeHtml(c.city || '-')}</td>
+                <td class="py-2.5 px-3 font-mono font-bold text-terracotta">${escapeHtml(c.accessKey)}</td>
+                <td class="py-2.5 px-3 font-mono text-xs text-espresso/75">${escapeHtml(c.createdAt || '')}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    /* =========================================================================
+       7. REPORTES TOTALES (PDF Y EXCEL)
+    ========================================================================== */
+    function buildReportData() {
+      const totalSales = state.sales.reduce((acc, s) => acc + Number(s.total || 0), 0);
+      const totalWasteUnits = state.waste.reduce((acc, w) => acc + Number(w.qty || 0), 0);
+      const totalInventoryUnits = state.products.reduce((acc, p) => acc + Number(p.stock || 0), 0);
+      const totalInventoryValue = state.products.reduce((acc, p) => acc + Number(p.stock || 0) * Number(p.price || 0), 0);
+
+      const recipesReport = state.recipes.map(rec => {
+        const portions = Math.max(0.01, Number(rec.yieldPortions) || 1);
+        const grams = Number(rec.yieldGrams) || 0;
+        const totalCost = Number(rec.totalCost || 0);
+        const costPerPortion = Number(rec.costPerPortion) || (totalCost / portions);
+        const costPerGram = grams > 0 ? (Number(rec.costPerGram) || (totalCost / grams)) : 0;
+        const gramsPerPortion = grams > 0 ? (Number(rec.gramsPerPortion) || (grams / portions)) : 0;
+        return {
+          name: rec.name,
+          yieldPortions: portions,
+          yieldGrams: grams,
+          gramsPerPortion,
+          totalCost,
+          costPerPortion,
+          costPerGram
+        };
+      });
+
+      return {
+        generatedAt: new Date().toLocaleString('es-ES'),
+        totalSales,
+        salesCount: state.sales.length,
+        clientsCount: state.clients.length,
+        totalWasteUnits,
+        totalInventoryUnits,
+        totalInventoryValue,
+        sales: state.sales,
+        clients: state.clients,
+        recipesReport,
+        waste: state.waste,
+        products: state.products,
+        supplies: state.supplies
+      };
+    }
+
+    function renderReportsPanel() {
+      const container = document.getElementById('reports-summary-content');
+      if (!container) return;
+      const d = buildReportData();
+
+      container.innerHTML = `
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="rounded-2xl bg-cream border border-cocoa/10 p-4">
+            <p class="text-xs text-espresso/75 font-semibold">Ventas Totales (${d.salesCount})</p>
+            <p class="font-mono text-2xl font-bold text-terracotta mt-1">$${d.totalSales.toFixed(2)}</p>
+          </div>
+          <div class="rounded-2xl bg-cream border border-cocoa/10 p-4">
+            <p class="text-xs text-espresso/75 font-semibold">Cartera de Clientes</p>
+            <p class="font-mono text-2xl font-bold text-cocoa mt-1">${d.clientsCount}</p>
+          </div>
+          <div class="rounded-2xl bg-cream border border-cocoa/10 p-4">
+            <p class="text-xs text-espresso/75 font-semibold">Merma Registrada</p>
+            <p class="font-mono text-2xl font-bold text-red-800 mt-1">${d.totalWasteUnits} und</p>
+          </div>
+          <div class="rounded-2xl bg-cream border border-cocoa/10 p-4">
+            <p class="text-xs text-espresso/75 font-semibold">Inventario (${d.totalInventoryUnits} und)</p>
+            <p class="font-mono text-2xl font-bold text-sage mt-1">$${d.totalInventoryValue.toFixed(2)}</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="rounded-2xl bg-cream border border-cocoa/10 p-4 space-y-2">
+            <h4 class="font-bold text-sm text-cocoa">Costos de Recetas (${d.recipesReport.length})</h4>
+            ${d.recipesReport.length === 0
+              ? `<p class="text-xs text-espresso/70">Sin recetas.</p>`
+              : d.recipesReport.map(r => `
+                <div class="rounded-xl bg-linen border border-cocoa/10 px-3 py-2 text-xs flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <span class="font-bold text-cocoa">${escapeHtml(r.name)}</span>
+                    <span class="block font-mono text-[11px] text-espresso/75">${r.yieldPortions} rac. · ${r.yieldGrams.toFixed(0)} g · ${r.gramsPerPortion.toFixed(1)} g/rac.</span>
+                  </div>
+                  <div class="text-right font-mono">
+                    <span class="font-bold text-cocoa">$${r.totalCost.toFixed(2)}</span>
+                    <span class="block text-[11px] text-terracotta font-bold">$${r.costPerPortion.toFixed(2)}/rac · $${r.costPerGram.toFixed(4)}/g</span>
+                  </div>
+                </div>
+              `).join('')
+            }
+          </div>
+
+          <div class="rounded-2xl bg-cream border border-cocoa/10 p-4 space-y-2">
+            <h4 class="font-bold text-sm text-cocoa">Últimas Ventas y Mermas</h4>
+            <div class="space-y-1.5 text-xs">
+              ${d.sales.slice(0, 4).map(s => `
+                <div class="rounded-xl bg-linen border border-cocoa/10 px-3 py-2 flex items-center justify-between">
+                  <span><strong>${escapeHtml(s.clientName)}</strong> <span class="font-mono text-[11px] text-espresso/70">(${escapeHtml(s.date)})</span></span>
+                  <span class="font-mono font-bold text-terracotta">$${Number(s.total).toFixed(2)}</span>
+                </div>
+              `).join('')}
+              ${d.waste.slice(0, 4).map(w => `
+                <div class="rounded-xl bg-linen border border-cocoa/10 px-3 py-2 flex items-center justify-between">
+                  <span>Merma: <strong>${escapeHtml(w.productName)}</strong> (${escapeHtml(w.reason)})</span>
+                  <span class="font-mono font-bold text-red-800">-${w.qty} und</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function exportSelectedReport() {
+      const format = document.getElementById('report-format-select')?.value || 'pdf';
+      const d = buildReportData();
+
+      if (format === 'pdf') {
+        const win = window.open('', '_blank', 'width=900,height=700');
+        if (!win) {
+          showToast('Permite las ventanas emergentes para generar el reporte PDF.', 'error');
+          return;
+        }
+        win.document.write(`
+          <!DOCTYPE html>
+          <html lang="es">
+          <head>
+            <meta charset="UTF-8" />
+            <title>Reporte General — Gala Fest</title>
+            <style>
+              body { font-family: Arial, sans-serif; color: #3B281E; padding: 28px; }
+              h1 { margin: 0 0 6px; font-size: 24px; color: #B56547; }
+              h2 { font-size: 16px; margin-top: 24px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+              table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
+              th, td { border: 1px solid #e2d8cc; padding: 7px 9px; text-align: left; }
+              th { background: #F1E8DC; }
+            </style>
+          </head>
+          <body>
+            <h1>Gala Fest — Reporte General</h1>
+            <p>Generado: ${escapeHtml(d.generatedAt)} · Ventas totales: <strong>$${d.totalSales.toFixed(2)}</strong> · Clientes: <strong>${d.clientsCount}</strong> · Merma: <strong>${d.totalWasteUnits} und</strong></p>
+
+            <h2>1. Ventas y Control de Pedidos</h2>
+            <table>
+              <thead><tr><th>Código</th><th>Fecha</th><th>Estado</th><th>Cliente</th><th>Clave</th><th>Total ($)</th></tr></thead>
+              <tbody>
+                ${d.sales.map(s => `<tr><td>${escapeHtml(s.orderCode || s.id)}</td><td>${escapeHtml(s.date)}</td><td>${escapeHtml(s.status || 'Pendiente')}</td><td>${escapeHtml(s.clientName)}</td><td>${escapeHtml(s.clientKey)}</td><td>$${Number(s.total).toFixed(2)}</td></tr>`).join('')}
+              </tbody>
+            </table>
+
+            <h2>2. Cartera de Clientes</h2>
+            <table>
+              <thead><tr><th>Nombre</th><th>Contacto</th><th>Ciudad</th><th>Clave Única</th></tr></thead>
+              <tbody>
+                ${d.clients.map(c => `<tr><td>${escapeHtml(c.name)}</td><td>${escapeHtml(c.contact)}</td><td>${escapeHtml(c.city || '-')}</td><td>${escapeHtml(c.accessKey)}</td></tr>`).join('')}
+              </tbody>
+            </table>
+
+            <h2>3. Costos de Recetas</h2>
+            <table>
+              <thead><tr><th>Receta</th><th>Raciones</th><th>Peso Total (g)</th><th>g / Ración</th><th>Costo Total ($)</th><th>Por Ración ($)</th><th>Por Gramo ($/g)</th></tr></thead>
+              <tbody>
+                ${d.recipesReport.map(r => `<tr><td>${escapeHtml(r.name)}</td><td>${r.yieldPortions}</td><td>${r.yieldGrams.toFixed(1)} g</td><td>${r.gramsPerPortion.toFixed(1)} g</td><td>$${r.totalCost.toFixed(2)}</td><td>$${r.costPerPortion.toFixed(2)}</td><td>$${r.costPerGram.toFixed(4)}</td></tr>`).join('')}
+              </tbody>
+            </table>
+
+            <h2>4. Merma Registrada</h2>
+            <table>
+              <thead><tr><th>Fecha</th><th>Producto</th><th>Cantidad</th><th>Motivo</th></tr></thead>
+              <tbody>
+                ${d.waste.map(w => `<tr><td>${escapeHtml(w.date)}</td><td>${escapeHtml(w.productName)}</td><td>${w.qty}</td><td>${escapeHtml(w.reason)}</td></tr>`).join('')}
+              </tbody>
+            </table>
+
+            <h2>5. Inventario de Productos e Insumos</h2>
+            <table>
+              <thead><tr><th>Tipo</th><th>Nombre</th><th>Stock</th><th>Precio / Unidad</th></tr></thead>
+              <tbody>
+                ${d.products.map(p => `<tr><td>Producto (${escapeHtml(p.category)})</td><td>${escapeHtml(p.name)}</td><td>${p.stock} und</td><td>$${Number(p.price).toFixed(2)}</td></tr>`).join('')}
+                ${d.supplies.map(s => `<tr><td>Insumo</td><td>${escapeHtml(s.name)}</td><td>${s.stock} ${escapeHtml(s.unit)}</td><td>Mín: ${s.minStock} ${escapeHtml(s.unit)}</td></tr>`).join('')}
+              </tbody>
+            </table>
+
+            <script>window.onload = function() { window.print(); };<\/script>
+          </body>
+          </html>
+        `);
+        win.document.close();
+        showToast('Reporte PDF listo para imprimir o guardar.', 'success');
+      } else {
+        // Exportación compatible con Excel (.xls con tabla HTML UTF-8)
+        const tableHtml = `
+          <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+          <head><meta charset="UTF-8" /></head>
+          <body>
+            <table border="1">
+              <tr><th>Seccion</th><th>Campo_1</th><th>Campo_2</th><th>Campo_3</th><th>Campo_4</th><th>Campo_5</th></tr>
+              ${d.sales.map(s => `<tr><td>PEDIDO_VENTA</td><td>${escapeHtml(s.orderCode || s.id)}</td><td>${escapeHtml(s.date)}</td><td>${escapeHtml(s.status || 'Pendiente')}</td><td>${escapeHtml(s.clientName)} (${escapeHtml(s.clientKey)})</td><td>$${Number(s.total).toFixed(2)}</td></tr>`).join('')}
+              ${d.clients.map(c => `<tr><td>CLIENTE</td><td>${escapeHtml(c.name)}</td><td>${escapeHtml(c.contact)}</td><td>${escapeHtml(c.city || '')}</td><td>${escapeHtml(c.accessKey)}</td><td>${escapeHtml(c.createdAt || '')}</td></tr>`).join('')}
+              ${d.recipesReport.map(r => `<tr><td>RECETA</td><td>${escapeHtml(r.name)}</td><td>${r.yieldPortions} rac</td><td>${r.yieldGrams.toFixed(1)} g</td><td>Total $${r.totalCost.toFixed(2)}</td><td>Rac $${r.costPerPortion.toFixed(2)} | g $${r.costPerGram.toFixed(4)}</td></tr>`).join('')}
+              ${d.waste.map(w => `<tr><td>MERMA</td><td>${escapeHtml(w.date)}</td><td>${escapeHtml(w.productName)}</td><td>${w.qty} und</td><td>${escapeHtml(w.reason)}</td><td></td></tr>`).join('')}
+              ${d.products.map(p => `<tr><td>INV_PRODUCTO</td><td>${escapeHtml(p.name)}</td><td>${p.category}</td><td>${p.stock} und</td><td>$${Number(p.price).toFixed(2)}</td><td></td></tr>`).join('')}
+              ${d.supplies.map(s => `<tr><td>INV_INSUMO</td><td>${escapeHtml(s.name)}</td><td>${s.stock} ${s.unit}</td><td>Min ${s.minStock} ${s.unit}</td><td></td><td></td></tr>`).join('')}
+            </table>
+          </body>
+          </html>
+        `;
+        const blob = new Blob(['\uFEFF' + tableHtml], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `Reporte_Gala_Fest_${new Date().toISOString().split('T')[0]}.xls`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        showToast('Reporte Excel (.xls) descargado.', 'success');
+      }
+    }
+
+    /* =========================================================================
+       8. GESTIÓN DE ADMINS (Solo Admin Maestro)
+    ========================================================================== */
+    function handleSaveAdminUser(e) {
+      e.preventDefault();
+      if (!isMasterSession()) {
+        showToast('Solo el Admin Maestro puede crear o editar usuarios administradores.', 'error');
+        return;
+      }
+
+      const editId = document.getElementById('admin-user-edit-id').value.trim();
+      const displayName = document.getElementById('admin-user-display').value.trim();
+      const username = document.getElementById('admin-user-username').value.trim();
+      const password = document.getElementById('admin-user-password').value;
+
+      if (!displayName || !username || password.length < 4) {
+        showToast('Completa nombre, usuario y contraseña (mínimo 4 caracteres).', 'error');
+        return;
+      }
+
+      const duplicate = state.admins.some(
+        a => a.username.toLowerCase() === username.toLowerCase() && a.id !== editId
+      );
+      if (duplicate) {
+        showToast('Ese nombre de usuario ya existe.', 'error');
+        return;
+      }
+
+      if (editId) {
+        const idx = state.admins.findIndex(a => a.id === editId);
+        if (idx !== -1) {
+          const isMaster = Boolean(state.admins[idx].isMaster);
+          state.admins[idx] = {
+            ...state.admins[idx],
+            displayName,
+            username: isMaster ? state.admins[idx].username : username,
+            password
+          };
+          if (state.activeAdmin?.id === editId) {
+            state.activeAdmin.displayName = displayName;
+            state.activeAdmin.username = state.admins[idx].username;
+          }
+          showToast('Usuario administrador actualizado.', 'success');
+        }
+      } else {
+        state.admins.push({
+          id: 'adm-' + Date.now(),
+          displayName,
+          username,
+          password,
+          isMaster: false
+        });
+        showToast(`Usuario "${username}" creado.`, 'success');
+      }
+
+      persistToStorage();
+      resetAdminUserForm();
+      renderAdminUsersList();
+    }
+
+    function editAdminUser(id) {
+      if (!isMasterSession()) return;
+      const adm = state.admins.find(a => a.id === id);
+      if (!adm) return;
+      document.getElementById('admin-user-edit-id').value = adm.id;
+      document.getElementById('admin-user-display').value = adm.displayName;
+      document.getElementById('admin-user-username').value = adm.username;
+      document.getElementById('admin-user-password').value = adm.password;
+      document.getElementById('admin-user-form-title').textContent = 'Editar Usuario Admin';
+    }
+
+    function deleteAdminUser(id) {
+      if (!isMasterSession()) return;
+      const target = state.admins.find(a => a.id === id);
+      if (!target || target.isMaster) {
+        showToast('No se puede eliminar al Admin Maestro.', 'error');
+        return;
+      }
+      state.admins = state.admins.filter(a => a.id !== id);
+      persistToStorage();
+      renderAdminUsersList();
+      showToast('Usuario administrador eliminado.', 'info');
+    }
+
+    function resetAdminUserForm() {
+      document.getElementById('admin-user-form').reset();
+      document.getElementById('admin-user-edit-id').value = '';
+      document.getElementById('admin-user-form-title').textContent = 'Crear / Editar Usuario Admin';
+    }
+
+    function renderAdminUsersList() {
+      if (!isMasterSession()) return;
+      const list = document.getElementById('admin-users-list');
+      const badge = document.getElementById('admins-count-badge');
+      if (!list || !badge) return;
+
+      badge.textContent = `${state.admins.length} ${state.admins.length === 1 ? 'usuario' : 'usuarios'}`;
+
+      list.innerHTML = state.admins.map(a => `
+        <div class="rounded-2xl bg-cream border border-cocoa/10 p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="flex items-center gap-2">
+              <h4 class="font-bold text-sm text-cocoa">${escapeHtml(a.displayName)}</h4>
+              ${a.isMaster ? `<span class="px-2 py-0.5 rounded-full bg-terracotta/15 text-terracotta text-[10px] font-bold">Admin Maestro</span>` : ''}
+            </div>
+            <p class="text-xs font-mono text-espresso/80 mt-0.5">Usuario: <strong>${escapeHtml(a.username)}</strong></p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="editAdminUser('${a.id}')" class="px-3 py-1.5 rounded-xl bg-linen hover:bg-sand border border-cocoa/15 text-xs font-semibold text-cocoa cursor-pointer">
+              Editar
+            </button>
+            ${!a.isMaster ? `
+              <button type="button" onclick="deleteAdminUser('${a.id}')" class="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-xs font-semibold text-red-700 cursor-pointer">
+                Eliminar
+              </button>
+            ` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /* =========================================================================
+       INICIALIZACIÓN
+    ========================================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      loadInitialState();
+      updateClientOrdersBadge();
+      renderAdminOrders();
+      showView('home');
+      renderStoreProducts();
+      renderCart();
+    });
+  </script>
+</body>
+</html>
